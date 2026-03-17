@@ -20,9 +20,7 @@ export default function NewPostPage() {
   function validate() {
     const e = {};
     if (!form.title.trim()) e.title = "Title is required";
-    else if (form.title.trim().length < 5) e.title = "Title must be at least 5 characters";
     if (!form.description.trim()) e.description = "Description is required";
-    else if (form.description.trim().length < 20) e.description = "Must be at least 20 characters";
     if (!form.date) e.date = "Date is required";
     return e;
   }
