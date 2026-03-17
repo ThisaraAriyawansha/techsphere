@@ -56,7 +56,7 @@ export default function AdminDashboard() {
     <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>
       {/* Header */}
       <div style={{
-        background: "#03002e", padding: "0 32px",
+        background: "#010048", padding: "0 32px",
         display: "flex", alignItems: "center",
         justifyContent: "space-between", height: 60,
       }}>
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
             <p style={{ fontSize: 11, color: "#aaa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>
               Total Posts
             </p>
-            <p style={{ fontSize: 32, fontWeight: 700, color: "#03002e" }}>{posts.length}</p>
+            <p style={{ fontSize: 32, fontWeight: 700, color: "#010048" }}>{posts.length}</p>
           </div>
         </div>
 
@@ -103,9 +103,9 @@ export default function AdminDashboard() {
             borderBottom: "1px solid #e8e8e8",
             display: "flex", alignItems: "center", justifyContent: "space-between",
           }}>
-            <h2 style={{ fontSize: 15, fontWeight: 600, color: "#03002e" }}>All Posts</h2>
+            <h2 style={{ fontSize: 15, fontWeight: 600, color: "#010048" }}>All Posts</h2>
             <a href="/new" style={{
-              fontSize: 12, color: "white", background: "#03002e",
+              fontSize: 12, color: "white", background: "#010048",
               padding: "6px 14px", textDecoration: "none", fontWeight: 600,
             }}>
               + New Post
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
                         target="_blank"
                         rel="noreferrer"
                         style={{
-                          fontSize: 14, color: "#03002e", fontWeight: 500,
+                          fontSize: 14, color: "#010048", fontWeight: 500,
                           textDecoration: "none", display: "block",
                           maxWidth: 440, overflow: "hidden",
                           textOverflow: "ellipsis", whiteSpace: "nowrap",
@@ -189,7 +189,7 @@ export default function AdminDashboard() {
         <div style={{
           position: "fixed", bottom: 24, left: "50%",
           transform: "translateX(-50%)",
-          background: "#03002e", color: "white",
+          background: "#010048", color: "white",
           padding: "12px 24px", fontSize: 13, fontWeight: 500,
           boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
           zIndex: 9999,

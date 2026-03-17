@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
         <form onSubmit={handleSubmit}>
           {/* Email */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#03002e", marginBottom: 6, letterSpacing: "0.3px" }}>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#010048", marginBottom: 6, letterSpacing: "0.3px" }}>
               Email
             </label>
             <input
@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
               style={{
                 width: "100%", padding: "10px 12px",
                 border: "1px solid #e8e8e8", outline: "none",
-                fontSize: 14, color: "#03002e",
+                fontSize: 14, color: "#010048",
                 boxSizing: "border-box",
                 fontFamily: "inherit",
               }}
@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
 
           {/* Password */}
           <div style={{ marginBottom: 24 }}>
-            <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#03002e", marginBottom: 6, letterSpacing: "0.3px" }}>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#010048", marginBottom: 6, letterSpacing: "0.3px" }}>
               Password
             </label>
             <input
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
               style={{
                 width: "100%", padding: "10px 12px",
                 border: "1px solid #e8e8e8", outline: "none",
-                fontSize: 14, color: "#03002e",
+                fontSize: 14, color: "#010048",
                 boxSizing: "border-box",
                 fontFamily: "inherit",
               }}
@@ -101,7 +101,7 @@ export default function AdminLoginPage() {
             disabled={loading}
             style={{
               width: "100%", padding: "11px",
-              background: loading ? "#888" : "#03002e",
+              background: loading ? "#888" : "#010048",
               color: "white", fontWeight: 600,
               fontSize: 13, border: "none",
               cursor: loading ? "not-allowed" : "pointer",

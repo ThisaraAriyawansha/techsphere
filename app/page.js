@@ -23,7 +23,7 @@ export default function HomePage() {
     <div>
       {/* ── Hero ──────────────────────────────────────────── */}
       <section style={{
-        background: "#03002e",
+        background: "#010048",
         padding: "90px 24px 80px",
       }}>
         <div style={{ maxWidth: 700, margin: "0 auto" }}>
@@ -56,7 +56,7 @@ export default function HomePage() {
             <a href="/new" style={{
               padding: "12px 28px",
               background: "#ffffff",
-              color: "#03002e",
+              color: "#010048",
               fontSize: 13, fontWeight: 600,
               textDecoration: "none",
               letterSpacing: "0.3px",
@@ -105,7 +105,7 @@ export default function HomePage() {
             { label: "Login Required", value: "Never" },
           ].map((s) => (
             <div key={s.label} style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 20, fontWeight: 700, color: "#03002e" }}>{s.value}</div>
+              <div style={{ fontSize: 20, fontWeight: 700, color: "#010048" }}>{s.value}</div>
               <div style={{ fontSize: 11, color: "#aaa", fontWeight: 500, marginTop: 2, letterSpacing: "0.5px", textTransform: "uppercase" }}>{s.label}</div>
             </div>
           ))}
@@ -122,11 +122,11 @@ export default function HomePage() {
           display: "flex", alignItems: "flex-end",
           justifyContent: "space-between", flexWrap: "wrap",
           gap: 16, marginBottom: 40,
-          borderBottom: "2px solid #03002e",
+          borderBottom: "2px solid #010048",
           paddingBottom: 16,
         }}>
           <div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#03002e", letterSpacing: "-0.3px" }}>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#010048", letterSpacing: "-0.3px" }}>
               Latest Posts
             </h2>
             <p style={{ color: "#aaa", fontSize: 13, marginTop: 4 }}>
@@ -144,8 +144,7 @@ export default function HomePage() {
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-            gap: 1,
-            border: "1px solid #e8e8e8",
+            gap: 20,
           }}>
             {filtered.map((post, i) => (
               <PostCard key={post.id} post={post} index={i} />
@@ -179,11 +178,11 @@ function SearchBar({ value, onChange }) {
           padding: "9px 14px 9px 34px",
           border: "1px solid #e8e8e8",
           background: "#fff",
-          fontSize: 13, color: "#03002e",
+          fontSize: 13, color: "#010048",
           width: 220, outline: "none",
           transition: "border-color 0.15s",
         }}
-        onFocus={e => e.currentTarget.style.borderColor = "#03002e"}
+        onFocus={e => e.currentTarget.style.borderColor = "#010048"}
         onBlur={e => e.currentTarget.style.borderColor = "#e8e8e8"}
       />
     </div>
@@ -207,8 +206,7 @@ function PostCard({ post }) {
         display: "flex",
         flexDirection: "column",
         background: hovered ? "#f9f9fb" : "#ffffff",
-        borderRight: "1px solid #e8e8e8",
-        borderBottom: "1px solid #e8e8e8",
+        border: "1px solid #e8e8e8",
         textDecoration: "none",
         transition: "background 0.15s",
         overflow: "hidden",
@@ -232,7 +230,7 @@ function PostCard({ post }) {
       ) : (
         <div style={{
           height: 4,
-          background: hovered ? "#03002e" : "#e8e8e8",
+          background: hovered ? "#010048" : "#e8e8e8",
           transition: "background 0.2s",
         }}/>
       )}
@@ -248,7 +246,7 @@ function PostCard({ post }) {
         {/* Title */}
         <h3 style={{
           fontSize: 16, fontWeight: 600,
-          color: "#03002e", lineHeight: 1.4,
+          color: "#010048", lineHeight: 1.4,
           marginBottom: 10, flex: 1,
         }}>{post.title}</h3>
 
@@ -266,7 +264,7 @@ function PostCard({ post }) {
         {/* Read more */}
         <div style={{
           display: "flex", alignItems: "center", gap: 6,
-          color: hovered ? "#03002e" : "#aaa",
+          color: hovered ? "#010048" : "#aaa",
           fontSize: 12, fontWeight: 600,
           letterSpacing: "0.5px", textTransform: "uppercase",
           transition: "color 0.15s",
@@ -287,13 +285,12 @@ function LoadingGrid() {
     <div style={{
       display: "grid",
       gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-      gap: 1, border: "1px solid #e8e8e8",
+      gap: 20,
     }}>
       {[1, 2, 3, 4, 5, 6].map((i) => (
         <div key={i} style={{
           background: "#fff", padding: 24,
-          borderRight: "1px solid #e8e8e8",
-          borderBottom: "1px solid #e8e8e8",
+          border: "1px solid #e8e8e8",
         }}>
           {[50, 90, 70, 80, 40].map((w, j) => (
             <div key={j} style={{
@@ -324,7 +321,7 @@ function EmptyState({ search }) {
       {!search && (
         <a href="/new" style={{
           display: "inline-block", padding: "10px 24px",
-          background: "#03002e", color: "white",
+          background: "#010048", color: "white",
           fontWeight: 600, fontSize: 13, textDecoration: "none",
           letterSpacing: "0.3px",
         }}>Write First Post</a>

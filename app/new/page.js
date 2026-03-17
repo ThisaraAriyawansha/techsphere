@@ -70,7 +70,7 @@ export default function NewPostPage() {
         letterSpacing: "0.5px", textTransform: "uppercase",
         transition: "color 0.15s",
       }}
-      onMouseEnter={e => e.currentTarget.style.color = "#03002e"}
+      onMouseEnter={e => e.currentTarget.style.color = "#010048"}
       onMouseLeave={e => e.currentTarget.style.color = "#aaa"}>
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
           <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -79,7 +79,7 @@ export default function NewPostPage() {
       </a>
 
       {/* Header */}
-      <div style={{ marginBottom: 40, borderBottom: "2px solid #03002e", paddingBottom: 20 }}>
+      <div style={{ marginBottom: 40, borderBottom: "2px solid #010048", paddingBottom: 20 }}>
         <p style={{
           fontSize: 11, fontWeight: 600, letterSpacing: "3px",
           color: "#aaa", textTransform: "uppercase", marginBottom: 12,
@@ -88,7 +88,7 @@ export default function NewPostPage() {
         </p>
         <h1 style={{
           fontSize: 32, fontWeight: 700,
-          color: "#03002e", letterSpacing: "-0.5px",
+          color: "#010048", letterSpacing: "-0.5px",
           lineHeight: 1.1,
         }}>
           Share Your Insight
@@ -108,7 +108,7 @@ export default function NewPostPage() {
             value={form.title}
             onChange={(e) => set("title", e.target.value)}
             style={inputStyle(!!errors.title)}
-            onFocus={e => e.currentTarget.style.borderColor = "#03002e"}
+            onFocus={e => e.currentTarget.style.borderColor = "#010048"}
             onBlur={e => e.currentTarget.style.borderColor = errors.title ? "#ef4444" : "#e8e8e8"}
           />
         </Field>
@@ -119,7 +119,7 @@ export default function NewPostPage() {
             value={form.date}
             onChange={(e) => set("date", e.target.value)}
             style={inputStyle(!!errors.date)}
-            onFocus={e => e.currentTarget.style.borderColor = "#03002e"}
+            onFocus={e => e.currentTarget.style.borderColor = "#010048"}
             onBlur={e => e.currentTarget.style.borderColor = errors.date ? "#ef4444" : "#e8e8e8"}
           />
         </Field>
@@ -133,13 +133,13 @@ export default function NewPostPage() {
             cursor: "pointer",
             transition: "border-color 0.15s",
           }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = "#03002e"}
+          onMouseEnter={e => e.currentTarget.style.borderColor = "#010048"}
           onMouseLeave={e => e.currentTarget.style.borderColor = "#c8c8c8"}>
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
-                stroke="#03002e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                stroke="#010048" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span style={{ fontSize: 13, color: imageFile ? "#03002e" : "#aaa", fontWeight: 500 }}>
+            <span style={{ fontSize: 13, color: imageFile ? "#010048" : "#aaa", fontWeight: 500 }}>
               {imageFile ? imageFile.name : "Click to browse image"}
             </span>
             <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
@@ -153,7 +153,7 @@ export default function NewPostPage() {
               {uploadProgress !== null && (
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: "#e8e8e8" }}>
                   <div style={{
-                    height: "100%", background: "#03002e",
+                    height: "100%", background: "#010048",
                     width: `${uploadProgress}%`, transition: "width 0.3s",
                   }}/>
                 </div>
@@ -177,7 +177,7 @@ export default function NewPostPage() {
               ...inputStyle(!!errors.description),
               resize: "vertical", lineHeight: 1.7, minHeight: 180,
             }}
-            onFocus={e => e.currentTarget.style.borderColor = "#03002e"}
+            onFocus={e => e.currentTarget.style.borderColor = "#010048"}
             onBlur={e => e.currentTarget.style.borderColor = errors.description ? "#ef4444" : "#e8e8e8"}
           />
         </Field>
@@ -198,7 +198,7 @@ export default function NewPostPage() {
           disabled={loading}
           style={{
             width: "100%", padding: "14px",
-            background: loading ? "#aaa" : "#03002e",
+            background: loading ? "#aaa" : "#010048",
             color: "white", fontSize: 14, fontWeight: 600,
             border: "none", cursor: loading ? "not-allowed" : "pointer",
             letterSpacing: "0.5px",
@@ -224,7 +224,7 @@ function inputStyle(hasError) {
     width: "100%", padding: "11px 13px",
     border: `1px solid ${hasError ? "#ef4444" : "#e8e8e8"}`,
     background: "#fff",
-    fontSize: 14, color: "#03002e",
+    fontSize: 14, color: "#010048",
     outline: "none",
     transition: "border-color 0.15s",
   };
@@ -234,7 +234,7 @@ function Field({ label, error, hint, extra, children }) {
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 7 }}>
-        <label style={{ fontSize: 12, fontWeight: 600, color: "#03002e", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+        <label style={{ fontSize: 12, fontWeight: 600, color: "#010048", letterSpacing: "0.5px", textTransform: "uppercase" }}>
           {label}
         </label>
         {extra}

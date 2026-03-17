@@ -18,7 +18,7 @@ export default function Navbar() {
           <img src="/logo/logo.png" alt="TechSphere" style={{ width: 32, height: 32, objectFit: "contain" }} />
           <span style={{
             fontSize: 17, fontWeight: 700,
-            color: "#03002e", letterSpacing: "0.2px",
+            color: "#010048", letterSpacing: "0.2px",
           }}>TechSphere</span>
         </a>
 
@@ -27,7 +27,7 @@ export default function Navbar() {
           <NavLink href="/">Explore</NavLink>
           <a href="/new" style={{
             padding: "8px 18px",
-            background: "#03002e",
+            background: "#010048",
             color: "#ffffff",
             fontSize: 13, fontWeight: 600,
             textDecoration: "none",
@@ -53,7 +53,7 @@ function NavLink({ href, children }) {
       textDecoration: "none",
       transition: "color 0.15s",
     }}
-    onMouseEnter={e => e.currentTarget.style.color = "#03002e"}
+    onMouseEnter={e => e.currentTarget.style.color = "#010048"}
     onMouseLeave={e => e.currentTarget.style.color = "#555555"}>
       {children}
     </a>

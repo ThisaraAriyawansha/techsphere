@@ -66,7 +66,7 @@ export default function BlogPostPage() {
           letterSpacing: "0.5px", textTransform: "uppercase",
           transition: "color 0.15s",
         }}
-        onMouseEnter={e => e.currentTarget.style.color = "#03002e"}
+        onMouseEnter={e => e.currentTarget.style.color = "#010048"}
         onMouseLeave={e => e.currentTarget.style.color = "#aaa"}>
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
             <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -122,7 +122,7 @@ export default function BlogPostPage() {
 
           <h1 style={{
             fontSize: "clamp(24px, 3.5vw, 36px)",
-            fontWeight: 700, color: "#03002e",
+            fontWeight: 700, color: "#010048",
             lineHeight: 1.2, letterSpacing: "-0.5px",
           }}>
             {post.title}
@@ -161,7 +161,7 @@ export default function BlogPostPage() {
         justifyContent: "space-between", flexWrap: "wrap", gap: 16,
       }}>
         <div>
-          <p style={{ color: "#03002e", fontWeight: 600, fontSize: 15 }}>
+          <p style={{ color: "#010048", fontWeight: 600, fontSize: 15 }}>
             Have something to share?
           </p>
           <p style={{ color: "#aaa", fontSize: 13, marginTop: 4 }}>
@@ -170,7 +170,7 @@ export default function BlogPostPage() {
         </div>
         <a href="/new" style={{
           padding: "10px 22px",
-          background: "#03002e",
+          background: "#010048",
           color: "white", fontWeight: 600, fontSize: 13,
           textDecoration: "none", letterSpacing: "0.3px",
           transition: "opacity 0.15s",
@@ -212,13 +212,13 @@ function NotFoundState() {
       <p style={{ fontSize: 11, color: "#aaa", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 16 }}>
         404 — Not Found
       </p>
-      <h2 style={{ fontSize: 28, fontWeight: 700, color: "#03002e", marginBottom: 12 }}>Post Not Found</h2>
+      <h2 style={{ fontSize: 28, fontWeight: 700, color: "#010048", marginBottom: 12 }}>Post Not Found</h2>
       <p style={{ color: "#aaa", fontSize: 14, marginBottom: 32 }}>
         This post may have been removed or the link is incorrect.
       </p>
       <a href="/" style={{
         display: "inline-block", padding: "11px 28px",
-        background: "#03002e", color: "white",
+        background: "#010048", color: "white",
         fontWeight: 600, fontSize: 13, textDecoration: "none",
         letterSpacing: "0.3px",
       }}>← Back to Home</a>
