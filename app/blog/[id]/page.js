@@ -1,16 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getPost, deletePost } from "../../../lib/firebase";
+import { getPost } from "../../../lib/firebase";
 
 export default function BlogPostPage() {
-  const { id } = useParams();
-  const router = useRouter();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(false);
-  const [confirm, setConfirm] = useState(false);
+  const { id }  = useParams();
+  const router  = useRouter();
+  const [post,     setPost]     = useState(null);
+  const [loading,  setLoading]  = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [isAdmin,  setIsAdmin]  = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    setIsAdmin(sessionStorage.getItem("techsphere_admin") === "true");
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -24,13 +28,15 @@ export default function BlogPostPage() {
   }, [id]);
 
   async function handleDelete() {
+    if (!confirm(`Delete "${post.title}"?\n\nThis cannot be undone.`)) return;
     setDeleting(true);
     try {
-      await deletePost(id);
+      const res = await fetch(`/api/posts/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error();
       router.push("/");
     } catch {
+      alert("Failed to delete post. Try again.");
       setDeleting(false);
-      setConfirm(false);
     }
   }
 
@@ -47,79 +53,54 @@ export default function BlogPostPage() {
   if (notFound) return <NotFoundState />;
 
   return (
-    <div style={{ maxWidth: 760, margin: "0 auto", padding: "56px 24px 100px" }}>
-      {/* Back */}
-      <a href="/" style={{
-        display: "inline-flex", alignItems: "center", gap: 6,
-        color: "#6b7280", fontSize: 14, fontWeight: 500,
-        textDecoration: "none", marginBottom: 40,
-        transition: "color 0.2s",
-      }}
-      onMouseEnter={e => e.currentTarget.style.color = "#1d4ed8"}
-      onMouseLeave={e => e.currentTarget.style.color = "#6b7280"}>
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
-          <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        All Posts
-      </a>
+    <div style={{ maxWidth: 800, margin: "0 auto", padding: "56px 24px 100px" }}>
+      {/* Top bar: back link + admin delete */}
+      <div style={{
+        display: "flex", alignItems: "center",
+        justifyContent: "space-between", marginBottom: 40,
+      }}>
+        <a href="/" style={{
+          display: "inline-flex", alignItems: "center", gap: 6,
+          color: "#aaa", fontSize: 12, fontWeight: 500,
+          textDecoration: "none",
+          letterSpacing: "0.5px", textTransform: "uppercase",
+          transition: "color 0.15s",
+        }}
+        onMouseEnter={e => e.currentTarget.style.color = "#03002e"}
+        onMouseLeave={e => e.currentTarget.style.color = "#aaa"}>
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+            <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          All Posts
+        </a>
 
-      {/* Article card */}
+        {isAdmin && (
+          <button
+            onClick={handleDelete}
+            disabled={deleting}
+            style={{
+              background: deleting ? "#f5f5f5" : "transparent",
+              border: "1px solid #e0e0e0",
+              color: deleting ? "#aaa" : "#c0392b",
+              padding: "6px 16px", fontSize: 12,
+              cursor: deleting ? "not-allowed" : "pointer",
+              fontWeight: 600, fontFamily: "inherit",
+              display: "inline-flex", alignItems: "center", gap: 6,
+            }}
+          >
+            {deleting ? "Deleting…" : "Delete Post"}
+          </button>
+        )}
+      </div>
+
+      {/* Article */}
       <article style={{
         background: "white",
-        border: "1.5px solid #e8eaed",
-        borderRadius: 24,
-        overflow: "hidden",
-        boxShadow: "0 4px 32px rgba(0,0,0,0.07)",
+        border: "1px solid #e8e8e8",
       }}>
-        {/* Top banner */}
-        <div style={{
-          background: "linear-gradient(135deg, #0a1628 0%, #0d1f3c 60%, #1a3a6b 100%)",
-          padding: "48px 48px 40px",
-          position: "relative", overflow: "hidden",
-        }}>
-          {/* Decorative blobs */}
-          <div style={{
-            position: "absolute", top: -40, right: -40,
-            width: 200, height: 200, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(29,78,216,0.3) 0%, transparent 70%)",
-          }}/>
-          <div style={{
-            position: "absolute", bottom: -30, left: -30,
-            width: 150, height: 150, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(96,165,250,0.15) 0%, transparent 70%)",
-          }}/>
-
-          {/* Date badge */}
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            padding: "5px 12px", borderRadius: 999,
-            background: "rgba(255,255,255,0.10)",
-            border: "1px solid rgba(255,255,255,0.18)",
-            marginBottom: 18,
-            position: "relative",
-          }}>
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
-              <rect x="3" y="4" width="18" height="18" rx="3" stroke="rgba(255,255,255,0.7)" strokeWidth="2"/>
-              <path d="M16 2v4M8 2v4M3 10h18" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>
-              {displayDate}
-            </span>
-          </div>
-
-          <h1 style={{
-            fontSize: "clamp(26px, 4vw, 38px)",
-            fontWeight: 750, color: "white",
-            lineHeight: 1.15, letterSpacing: "-0.6px",
-            maxWidth: 580, position: "relative",
-          }}>
-            {post.title}
-          </h1>
-        </div>
-
         {/* Cover image */}
         {post.imageUrl && (
-          <div style={{ height: 340, overflow: "hidden" }}>
+          <div style={{ height: 360, overflow: "hidden", background: "#f5f5f5" }}>
             <img
               src={post.imageUrl}
               alt={post.title}
@@ -128,11 +109,32 @@ export default function BlogPostPage() {
           </div>
         )}
 
-        {/* Content body */}
-        <div style={{ padding: "44px 48px" }}>
+        {/* Header */}
+        <div style={{
+          padding: "40px 48px 32px",
+          borderBottom: "1px solid #e8e8e8",
+        }}>
+          <span style={{
+            fontSize: 11, color: "#aaa", fontWeight: 500,
+            letterSpacing: "1px", textTransform: "uppercase",
+            display: "block", marginBottom: 16,
+          }}>{displayDate}</span>
+
+          <h1 style={{
+            fontSize: "clamp(24px, 3.5vw, 36px)",
+            fontWeight: 700, color: "#03002e",
+            lineHeight: 1.2, letterSpacing: "-0.5px",
+          }}>
+            {post.title}
+          </h1>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: "40px 48px" }}>
           <p style={{
-            fontSize: 17, color: "#374151",
-            lineHeight: 1.85, whiteSpace: "pre-wrap",
+            fontSize: 16, color: "#333",
+            lineHeight: 1.9, whiteSpace: "pre-wrap",
+            fontWeight: 300,
           }}>
             {post.description}
           </p>
@@ -140,107 +142,41 @@ export default function BlogPostPage() {
 
         {/* Footer */}
         <div style={{
-          borderTop: "1px solid #f0f2f5",
+          borderTop: "1px solid #e8e8e8",
           padding: "20px 48px",
-          display: "flex", justifyContent: "space-between",
-          alignItems: "center", flexWrap: "wrap", gap: 12,
+          display: "flex", alignItems: "center", gap: 8,
           background: "#fafafa",
         }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: 8,
-              background: "linear-gradient(135deg, #0d1f3c, #1d4ed8)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="1.5"/>
-                <path d="M12 3C12 3 8 8 8 12s4 9 4 9" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                <path d="M12 3c0 0 4 5 4 9s-4 9-4 9" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                <path d="M3 12h18" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <span style={{ fontSize: 13, color: "#6b7280", fontWeight: 500 }}>TechSphere</span>
-          </div>
-
-          {/* Delete button */}
-          {!confirm ? (
-            <button
-              onClick={() => setConfirm(true)}
-              style={{
-                display: "flex", alignItems: "center", gap: 5,
-                padding: "7px 14px", borderRadius: 8,
-                border: "1px solid #fee2e2",
-                background: "rgba(239,68,68,0.04)",
-                color: "#dc2626", fontSize: 13, fontWeight: 500,
-                cursor: "pointer", transition: "all 0.2s",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "rgba(239,68,68,0.10)";
-                e.currentTarget.style.borderColor = "#fca5a5";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "rgba(239,68,68,0.04)";
-                e.currentTarget.style.borderColor = "#fee2e2";
-              }}
-            >
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24">
-                <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              Delete
-            </button>
-          ) : (
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <span style={{ fontSize: 13, color: "#6b7280" }}>Are you sure?</span>
-              <button
-                onClick={handleDelete}
-                disabled={deleting}
-                style={{
-                  padding: "6px 14px", borderRadius: 8,
-                  background: "#dc2626", color: "white",
-                  border: "none", fontSize: 13, fontWeight: 600,
-                  cursor: deleting ? "not-allowed" : "pointer",
-                  opacity: deleting ? 0.6 : 1,
-                }}>
-                {deleting ? "Deleting..." : "Yes, Delete"}
-              </button>
-              <button
-                onClick={() => setConfirm(false)}
-                style={{
-                  padding: "6px 14px", borderRadius: 8,
-                  background: "#f5f5f7", color: "#374151",
-                  border: "1px solid #e8eaed", fontSize: 13, fontWeight: 500,
-                  cursor: "pointer",
-                }}>
-                Cancel
-              </button>
-            </div>
-          )}
+          <img src="/logo/logo.png" alt="TechSphere" style={{ width: 24, height: 24, objectFit: "contain" }} />
+          <span style={{ fontSize: 13, color: "#aaa", fontWeight: 500 }}>TechSphere</span>
         </div>
       </article>
 
-      {/* Write another */}
+      {/* Write another CTA */}
       <div style={{
-        marginTop: 32, padding: "28px 32px",
-        background: "linear-gradient(135deg, #0a1628 0%, #0d1f3c 100%)",
-        borderRadius: 20,
+        marginTop: 32,
+        border: "1px solid #e8e8e8",
+        padding: "28px 32px",
         display: "flex", alignItems: "center",
         justifyContent: "space-between", flexWrap: "wrap", gap: 16,
       }}>
         <div>
-          <p style={{ color: "white", fontWeight: 650, fontSize: 16 }}>
+          <p style={{ color: "#03002e", fontWeight: 600, fontSize: 15 }}>
             Have something to share?
           </p>
-          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 14 }}>
+          <p style={{ color: "#aaa", fontSize: 13, marginTop: 4 }}>
             Publish your own post in seconds.
           </p>
         </div>
         <a href="/new" style={{
-          padding: "10px 22px", borderRadius: 999,
-          background: "linear-gradient(135deg, #1d4ed8, #3b82f6)",
-          color: "white", fontWeight: 600, fontSize: 14,
-          textDecoration: "none",
-          boxShadow: "0 4px 16px rgba(29,78,216,0.40)",
-        }}>
+          padding: "10px 22px",
+          background: "#03002e",
+          color: "white", fontWeight: 600, fontSize: 13,
+          textDecoration: "none", letterSpacing: "0.3px",
+          transition: "opacity 0.15s",
+        }}
+        onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+        onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
           Write a Post →
         </a>
       </div>
@@ -250,17 +186,14 @@ export default function BlogPostPage() {
 
 function LoadingState() {
   return (
-    <div style={{ maxWidth: 760, margin: "0 auto", padding: "56px 24px" }}>
-      <div style={{
-        background: "white", borderRadius: 24,
-        border: "1.5px solid #e8eaed", overflow: "hidden",
-      }}>
-        <div style={{ background: "#f5f5f7", height: 200 }}/>
-        <div style={{ padding: "44px 48px" }}>
-          {[80, 60, 100, 90, 75].map((w, i) => (
+    <div style={{ maxWidth: 800, margin: "0 auto", padding: "56px 24px" }}>
+      <div style={{ background: "white", border: "1px solid #e8e8e8" }}>
+        <div style={{ background: "#f5f5f5", height: 200 }}/>
+        <div style={{ padding: "40px 48px" }}>
+          {[60, 90, 80, 100, 75].map((w, i) => (
             <div key={i} style={{
-              height: 14, width: `${w}%`, borderRadius: 6,
-              background: "linear-gradient(90deg, #f5f5f7 25%, #e8eaed 50%, #f5f5f7 75%)",
+              height: i === 1 ? 18 : 13, width: `${w}%`,
+              background: "linear-gradient(90deg, #f5f5f5 25%, #ebebeb 50%, #f5f5f5 75%)",
               backgroundSize: "200% 100%",
               animation: "shimmer 1.4s infinite",
               marginBottom: 12,
@@ -276,25 +209,18 @@ function LoadingState() {
 function NotFoundState() {
   return (
     <div style={{ textAlign: "center", padding: "100px 24px" }}>
-      <div style={{
-        width: 80, height: 80, borderRadius: 22,
-        background: "linear-gradient(135deg, #f0f2f5, #e8eaed)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        margin: "0 auto 24px",
-      }}>
-        <svg width="36" height="36" fill="none" viewBox="0 0 24 24">
-          <path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-            stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
-      </div>
-      <h2 style={{ fontSize: 26, fontWeight: 700, color: "#0a1628", marginBottom: 10 }}>Post Not Found</h2>
-      <p style={{ color: "#9ca3af", fontSize: 15, marginBottom: 28 }}>
+      <p style={{ fontSize: 11, color: "#aaa", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 16 }}>
+        404 — Not Found
+      </p>
+      <h2 style={{ fontSize: 28, fontWeight: 700, color: "#03002e", marginBottom: 12 }}>Post Not Found</h2>
+      <p style={{ color: "#aaa", fontSize: 14, marginBottom: 32 }}>
         This post may have been removed or the link is incorrect.
       </p>
       <a href="/" style={{
-        display: "inline-block", padding: "11px 24px", borderRadius: 999,
-        background: "linear-gradient(135deg, #0d1f3c, #1d4ed8)",
-        color: "white", fontWeight: 600, fontSize: 14, textDecoration: "none",
+        display: "inline-block", padding: "11px 28px",
+        background: "#03002e", color: "white",
+        fontWeight: 600, fontSize: 13, textDecoration: "none",
+        letterSpacing: "0.3px",
       }}>← Back to Home</a>
     </div>
   );

@@ -22,7 +22,7 @@ export default function NewPostPage() {
     if (!form.title.trim()) e.title = "Title is required";
     else if (form.title.trim().length < 5) e.title = "Title must be at least 5 characters";
     if (!form.description.trim()) e.description = "Description is required";
-    else if (form.description.trim().length < 20) e.description = "Description must be at least 20 characters";
+    else if (form.description.trim().length < 20) e.description = "Must be at least 20 characters";
     if (!form.date) e.date = "Date is required";
     return e;
   }
@@ -47,6 +47,12 @@ export default function NewPostPage() {
     }
   }
 
+  function set(key, val) {
+    setForm((f) => ({ ...f, [key]: val }));
+    setErrors((e) => { const next = { ...e }; delete next[key]; return next; });
+    if (key === "description") setCharCount(val.length);
+  }
+
   function handleImageChange(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -54,127 +60,100 @@ export default function NewPostPage() {
     setImagePreview(URL.createObjectURL(file));
   }
 
-  function set(key, val) {
-    setForm((f) => ({ ...f, [key]: val }));
-    setErrors((e) => { const next = { ...e }; delete next[key]; return next; });
-    if (key === "description") setCharCount(val.length);
-  }
-
   return (
-    <div style={{
-      maxWidth: 720, margin: "0 auto",
-      padding: "56px 24px 80px",
-    }}>
-      {/* Back link */}
+    <div style={{ maxWidth: 720, margin: "0 auto", padding: "56px 24px 80px" }}>
+      {/* Back */}
       <a href="/" style={{
         display: "inline-flex", alignItems: "center", gap: 6,
-        color: "#6b7280", fontSize: 14, fontWeight: 500,
+        color: "#aaa", fontSize: 12, fontWeight: 500,
         textDecoration: "none", marginBottom: 36,
-        transition: "color 0.2s",
+        letterSpacing: "0.5px", textTransform: "uppercase",
+        transition: "color 0.15s",
       }}
-      onMouseEnter={e => e.currentTarget.style.color = "#1d4ed8"}
-      onMouseLeave={e => e.currentTarget.style.color = "#6b7280"}>
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+      onMouseEnter={e => e.currentTarget.style.color = "#03002e"}
+      onMouseLeave={e => e.currentTarget.style.color = "#aaa"}>
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
           <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-        Back to TechSphere
+        Back
       </a>
 
       {/* Header */}
-      <div style={{ marginBottom: 40 }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 7,
-          padding: "4px 12px", borderRadius: 999,
-          background: "rgba(29,78,216,0.08)",
-          border: "1px solid rgba(29,78,216,0.18)",
-          marginBottom: 16,
+      <div style={{ marginBottom: 40, borderBottom: "2px solid #03002e", paddingBottom: 20 }}>
+        <p style={{
+          fontSize: 11, fontWeight: 600, letterSpacing: "3px",
+          color: "#aaa", textTransform: "uppercase", marginBottom: 12,
         }}>
-          <span style={{ fontSize: 13, color: "#1d4ed8", fontWeight: 600 }}>
-            ✦ Open Publishing · No Account Needed
-          </span>
-        </div>
+          Open Publishing · No Account Needed
+        </p>
         <h1 style={{
-          fontSize: 36, fontWeight: 750,
-          color: "#0a1628", letterSpacing: "-0.8px",
-          lineHeight: 1.1, marginBottom: 10,
+          fontSize: 32, fontWeight: 700,
+          color: "#03002e", letterSpacing: "-0.5px",
+          lineHeight: 1.1,
         }}>
           Share Your Insight
         </h1>
-        <p style={{ color: "#6b7280", fontSize: 16 }}>
-          Your post will be live instantly for everyone to read.
-        </p>
       </div>
 
-      {/* Form card */}
+      {/* Form */}
       <div style={{
         background: "white",
-        border: "1.5px solid #e8eaed",
-        borderRadius: 24,
-        padding: "40px 40px",
-        boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+        border: "1px solid #e8e8e8",
+        padding: "36px",
       }}>
-        {/* Title */}
-        <Field
-          label="Post Title"
-          error={errors.title}
-          hint="Give your post a clear, compelling title"
-        >
+        <Field label="Post Title" error={errors.title} hint="Give your post a clear, compelling title">
           <input
             type="text"
             placeholder="e.g. Why TypeScript Changed Everything"
             value={form.title}
             onChange={(e) => set("title", e.target.value)}
             style={inputStyle(!!errors.title)}
+            onFocus={e => e.currentTarget.style.borderColor = "#03002e"}
+            onBlur={e => e.currentTarget.style.borderColor = errors.title ? "#ef4444" : "#e8e8e8"}
           />
         </Field>
 
-        {/* Date */}
-        <Field
-          label="Date"
-          error={errors.date}
-          hint="When was this written?"
-        >
+        <Field label="Date" error={errors.date} hint="When was this written?">
           <input
             type="date"
             value={form.date}
             onChange={(e) => set("date", e.target.value)}
             style={inputStyle(!!errors.date)}
+            onFocus={e => e.currentTarget.style.borderColor = "#03002e"}
+            onBlur={e => e.currentTarget.style.borderColor = errors.date ? "#ef4444" : "#e8e8e8"}
           />
         </Field>
 
-        {/* Cover Image */}
         <Field label="Cover Image" hint="Optional — browse a photo from your device">
           <label style={{
             display: "flex", alignItems: "center", gap: 12,
-            padding: "11px 14px", borderRadius: 10,
-            border: "1.5px dashed #c7d2fe",
-            background: "#f5f7ff", cursor: "pointer",
-            transition: "border-color 0.2s",
-          }}>
-            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+            padding: "11px 14px",
+            border: "1px dashed #c8c8c8",
+            background: "#fafafa",
+            cursor: "pointer",
+            transition: "border-color 0.15s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = "#03002e"}
+          onMouseLeave={e => e.currentTarget.style.borderColor = "#c8c8c8"}>
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
-                stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                stroke="#03002e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span style={{ fontSize: 14, color: imagePreview ? "#0a1628" : "#6b7280", fontWeight: 500 }}>
+            <span style={{ fontSize: 13, color: imageFile ? "#03002e" : "#aaa", fontWeight: 500 }}>
               {imageFile ? imageFile.name : "Click to browse image"}
             </span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: "none" }}
-            />
+            <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
           </label>
           {imagePreview && (
-            <div style={{ marginTop: 10, borderRadius: 10, overflow: "hidden", border: "1.5px solid #e8eaed", height: 160, position: "relative" }}>
+            <div style={{
+              marginTop: 10, overflow: "hidden",
+              border: "1px solid #e8e8e8", height: 160, position: "relative",
+            }}>
               <img src={imagePreview} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               {uploadProgress !== null && (
-                <div style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0,
-                  height: 4, background: "rgba(0,0,0,0.15)",
-                }}>
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: "#e8e8e8" }}>
                   <div style={{
-                    height: "100%", background: "#1d4ed8",
+                    height: "100%", background: "#03002e",
                     width: `${uploadProgress}%`, transition: "width 0.3s",
                   }}/>
                 </div>
@@ -183,16 +162,11 @@ export default function NewPostPage() {
           )}
         </Field>
 
-        {/* Description */}
         <Field
-          label="Description"
+          label="Content"
           error={errors.description}
           hint="Write your full post content here"
-          extra={
-            <span style={{ fontSize: 12, color: "#9ca3af" }}>
-              {charCount} chars
-            </span>
-          }
+          extra={<span style={{ fontSize: 11, color: "#aaa" }}>{charCount} chars</span>}
         >
           <textarea
             placeholder="Share your tech insight, experience, or opinion..."
@@ -201,67 +175,43 @@ export default function NewPostPage() {
             rows={8}
             style={{
               ...inputStyle(!!errors.description),
-              resize: "vertical",
-              lineHeight: 1.7,
-              minHeight: 180,
+              resize: "vertical", lineHeight: 1.7, minHeight: 180,
             }}
+            onFocus={e => e.currentTarget.style.borderColor = "#03002e"}
+            onBlur={e => e.currentTarget.style.borderColor = errors.description ? "#ef4444" : "#e8e8e8"}
           />
         </Field>
 
-        {/* Submit error */}
         {errors.submit && (
           <div style={{
-            padding: "12px 16px", borderRadius: 10,
-            background: "rgba(239,68,68,0.07)",
-            border: "1px solid rgba(239,68,68,0.20)",
-            color: "#dc2626", fontSize: 14, marginBottom: 24,
+            padding: "12px 16px",
+            border: "1px solid #fca5a5",
+            background: "#fff5f5",
+            color: "#dc2626", fontSize: 13, marginBottom: 24,
           }}>
             {errors.submit}
           </div>
         )}
 
-        {/* Submit button */}
         <button
           onClick={handleSubmit}
           disabled={loading}
           style={{
             width: "100%", padding: "14px",
-            borderRadius: 12,
-            background: loading
-              ? "#9ca3af"
-              : "linear-gradient(135deg, #0d1f3c 0%, #1d4ed8 100%)",
-            color: "white", fontSize: 16, fontWeight: 650,
+            background: loading ? "#aaa" : "#03002e",
+            color: "white", fontSize: 14, fontWeight: 600,
             border: "none", cursor: loading ? "not-allowed" : "pointer",
-            boxShadow: loading ? "none" : "0 4px 20px rgba(29,78,216,0.35)",
-            transition: "all 0.2s ease",
+            letterSpacing: "0.5px",
+            transition: "opacity 0.15s",
             display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
           }}
-          onMouseEnter={e => {
-            if (!loading) e.currentTarget.style.transform = "translateY(-1px)";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.transform = "translateY(0)";
-          }}
+          onMouseEnter={e => { if (!loading) e.currentTarget.style.opacity = "0.88"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
         >
-          {loading ? (
-            <>
-              <Spinner />
-              Publishing...
-            </>
-          ) : (
-            <>
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
-                <path d="M12 19V5M5 12l7-7 7 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Publish Post
-            </>
-          )}
+          {loading ? <><Spinner /> Publishing...</> : "Publish Post"}
         </button>
 
-        <p style={{
-          textAlign: "center", fontSize: 12,
-          color: "#9ca3af", marginTop: 16,
-        }}>
+        <p style={{ textAlign: "center", fontSize: 11, color: "#bbb", marginTop: 14, letterSpacing: "0.3px" }}>
           By publishing, you agree to share this content openly on TechSphere.
         </p>
       </div>
@@ -269,39 +219,31 @@ export default function NewPostPage() {
   );
 }
 
-/* ── Helpers ─────────────────────────────────────────────────── */
-
 function inputStyle(hasError) {
   return {
-    width: "100%", padding: "12px 14px",
-    borderRadius: 10,
-    border: `1.5px solid ${hasError ? "#ef4444" : "#e8eaed"}`,
-    background: hasError ? "rgba(239,68,68,0.02)" : "#fafafa",
-    fontSize: 15, color: "#0a1628",
-    transition: "border-color 0.2s, box-shadow 0.2s, background 0.2s",
+    width: "100%", padding: "11px 13px",
+    border: `1px solid ${hasError ? "#ef4444" : "#e8e8e8"}`,
+    background: "#fff",
+    fontSize: 14, color: "#03002e",
+    outline: "none",
+    transition: "border-color 0.15s",
   };
 }
 
 function Field({ label, error, hint, extra, children }) {
   return (
     <div style={{ marginBottom: 24 }}>
-      <div style={{
-        display: "flex", justifyContent: "space-between",
-        alignItems: "center", marginBottom: 6,
-      }}>
-        <label style={{
-          fontSize: 13, fontWeight: 650,
-          color: "#374151", letterSpacing: "0.1px",
-        }}>{label}</label>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 7 }}>
+        <label style={{ fontSize: 12, fontWeight: 600, color: "#03002e", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+          {label}
+        </label>
         {extra}
       </div>
       {children}
       {error ? (
-        <p style={{ fontSize: 12, color: "#ef4444", marginTop: 5, display: "flex", gap: 4 }}>
-          <span>⚠</span> {error}
-        </p>
+        <p style={{ fontSize: 12, color: "#ef4444", marginTop: 5 }}>⚠ {error}</p>
       ) : hint ? (
-        <p style={{ fontSize: 12, color: "#9ca3af", marginTop: 5 }}>{hint}</p>
+        <p style={{ fontSize: 12, color: "#bbb", marginTop: 5 }}>{hint}</p>
       ) : null}
     </div>
   );
@@ -310,9 +252,10 @@ function Field({ label, error, hint, extra, children }) {
 function Spinner() {
   return (
     <div style={{
-      width: 16, height: 16, borderRadius: "50%",
+      width: 14, height: 14,
       border: "2px solid rgba(255,255,255,0.3)",
       borderTopColor: "white",
+      borderRadius: "50%",
       animation: "spin 0.7s linear infinite",
     }}>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
