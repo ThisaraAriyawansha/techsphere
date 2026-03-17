@@ -117,6 +117,17 @@ export default function BlogPostPage() {
           </h1>
         </div>
 
+        {/* Cover image */}
+        {post.imageUrl && (
+          <div style={{ height: 340, overflow: "hidden" }}>
+            <img
+              src={post.imageUrl}
+              alt={post.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </div>
+        )}
+
         {/* Content body */}
         <div style={{ padding: "44px 48px" }}>
           <p style={{

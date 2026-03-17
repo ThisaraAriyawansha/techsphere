@@ -247,14 +247,12 @@ function PostCard({ post, index }) {
       href={`/blog/${post.id}`}
       style={{
         display: "block",
-        background: hovered
-          ? "white"
-          : "white",
+        background: "white",
         border: hovered
           ? "1.5px solid rgba(29,78,216,0.30)"
           : "1.5px solid #e8eaed",
         borderRadius: 18,
-        padding: "28px 28px 24px",
+        overflow: "hidden",
         textDecoration: "none",
         transition: "all 0.25s ease",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
@@ -266,15 +264,30 @@ function PostCard({ post, index }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Top accent line */}
-      <div style={{
-        height: 3, borderRadius: 2,
-        background: hovered
-          ? "linear-gradient(90deg, #1d4ed8, #60a5fa)"
-          : "linear-gradient(90deg, #e8eaed, #e8eaed)",
-        marginBottom: 20,
-        transition: "background 0.3s ease",
-      }}/>
+      {/* Cover image */}
+      {post.imageUrl ? (
+        <div style={{ height: 180, overflow: "hidden" }}>
+          <img
+            src={post.imageUrl}
+            alt={post.title}
+            style={{
+              width: "100%", height: "100%", objectFit: "cover",
+              transition: "transform 0.4s ease",
+              transform: hovered ? "scale(1.04)" : "scale(1)",
+            }}
+          />
+        </div>
+      ) : (
+        <div style={{
+          height: 4,
+          background: hovered
+            ? "linear-gradient(90deg, #1d4ed8, #60a5fa)"
+            : "linear-gradient(90deg, #e8eaed, #e8eaed)",
+          transition: "background 0.3s ease",
+        }}/>
+      )}
+
+      <div style={{ padding: "24px 28px 24px" }}>
 
       {/* Date */}
       <div style={{
@@ -323,6 +336,7 @@ function PostCard({ post, index }) {
         >
           <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
+      </div>
       </div>
     </a>
   );

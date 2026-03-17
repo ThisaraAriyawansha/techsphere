@@ -1,14 +1,17 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createPost } from "../../lib/firebase";
+import { createPost, uploadImage } from "../../lib/firebase";
 
 export default function NewPostPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ title: "", description: "", date: today() });
+  const [form, setForm] = useState({ title: "", description: "", date: today(), imageUrl: "" });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [charCount, setCharCount] = useState(0);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(null);
 
   function today() {
     return new Date().toISOString().split("T")[0];
@@ -29,14 +32,26 @@ export default function NewPostPage() {
     if (Object.keys(e).length) { setErrors(e); return; }
     setLoading(true);
     try {
-      const id = await createPost(form);
+      let imageUrl = "";
+      if (imageFile) {
+        imageUrl = await uploadImage(imageFile, setUploadProgress);
+      }
+      const id = await createPost({ ...form, imageUrl });
       router.push(`/blog/${id}`);
     } catch (err) {
       console.error(err);
       setErrors({ submit: "Something went wrong. Please try again." });
     } finally {
       setLoading(false);
+      setUploadProgress(null);
     }
+  }
+
+  function handleImageChange(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
   }
 
   function set(key, val) {
@@ -125,6 +140,47 @@ export default function NewPostPage() {
             onChange={(e) => set("date", e.target.value)}
             style={inputStyle(!!errors.date)}
           />
+        </Field>
+
+        {/* Cover Image */}
+        <Field label="Cover Image" hint="Optional — browse a photo from your device">
+          <label style={{
+            display: "flex", alignItems: "center", gap: 12,
+            padding: "11px 14px", borderRadius: 10,
+            border: "1.5px dashed #c7d2fe",
+            background: "#f5f7ff", cursor: "pointer",
+            transition: "border-color 0.2s",
+          }}>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
+                stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span style={{ fontSize: 14, color: imagePreview ? "#0a1628" : "#6b7280", fontWeight: 500 }}>
+              {imageFile ? imageFile.name : "Click to browse image"}
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
+          </label>
+          {imagePreview && (
+            <div style={{ marginTop: 10, borderRadius: 10, overflow: "hidden", border: "1.5px solid #e8eaed", height: 160, position: "relative" }}>
+              <img src={imagePreview} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              {uploadProgress !== null && (
+                <div style={{
+                  position: "absolute", bottom: 0, left: 0, right: 0,
+                  height: 4, background: "rgba(0,0,0,0.15)",
+                }}>
+                  <div style={{
+                    height: "100%", background: "#1d4ed8",
+                    width: `${uploadProgress}%`, transition: "width 0.3s",
+                  }}/>
+                </div>
+              )}
+            </div>
+          )}
         </Field>
 
         {/* Description */}
