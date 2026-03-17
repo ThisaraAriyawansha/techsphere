@@ -225,7 +225,7 @@ export default function AdminDashboard() {
                   Delete post?
                 </p>
                 <p style={{ fontSize: 13, color: "#777", lineHeight: 1.6 }}>
-                  <span style={{ fontWeight: 500, color: "#010048" }}>"{confirm.title}"</span> will be permanently removed from the platform.
+                  <span style={{ fontWeight: 500, color: "#010048" }}>&quot;{confirm.title}&quot;</span> will be permanently removed from the platform.
                 </p>
               </div>
             </div>
