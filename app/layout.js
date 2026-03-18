@@ -20,16 +20,15 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
       <body>
         <Navbar />
-        <main style={{ minHeight: "calc(100vh - 64px - 160px)" }}>{children}</main>
+        <main style={{ minHeight: "calc(100vh - 64px - 200px)" }}>{children}</main>
         <Footer />
       </body>
     </html>
   );
 }
-

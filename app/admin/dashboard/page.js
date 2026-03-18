@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   const [loading,  setLoading]  = useState(true);
   const [deleting, setDeleting] = useState(null);
   const [toast,    setToast]    = useState("");
-  const [confirm,  setConfirm]  = useState(null); // post to confirm delete
+  const [confirm,  setConfirm]  = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -53,132 +53,170 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>
+    <div style={{ minHeight: "100vh", background: "#FAF8F5" }}>
 
       {/* Header */}
       <div style={{
-        background: "#010048", padding: "0 24px",
+        background: "#1A1A1A",
+        borderBottom: "3px solid #C41E3A",
+        padding: "0 24px",
         display: "flex", alignItems: "center",
-        justifyContent: "space-between", height: 60,
+        justifyContent: "space-between", height: 56,
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <img src="/logo/logo.png" alt="TechSphere" style={{ height: 26, objectFit: "contain" }} />
-          <span style={{ color: "white", fontWeight: 700, fontSize: 15 }}>Admin Dashboard</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{
+            fontFamily: "var(--font-serif)",
+            color: "white", fontWeight: 700, fontSize: 18,
+            letterSpacing: "-0.2px",
+          }}>TechSphere</span>
+          <span style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 9, color: "rgba(255,255,255,0.35)",
+            letterSpacing: "2px", textTransform: "uppercase",
+            borderLeft: "1px solid rgba(255,255,255,0.1)",
+            paddingLeft: 12,
+          }}>Admin Dashboard</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <a href="/" style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, textDecoration: "none" }}
-            onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-            onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.5)"}>
+          <a href="/" style={{
+            fontFamily: "var(--font-sans)",
+            color: "rgba(255,255,255,0.45)", fontSize: 11, textDecoration: "none",
+            letterSpacing: "0.5px",
+            transition: "color 0.15s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+          onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.45)"}>
             ← View Site
           </a>
           <button onClick={handleLogout} style={{
-            background: "transparent", border: "1px solid rgba(255,255,255,0.2)",
-            color: "rgba(255,255,255,0.7)", padding: "6px 14px",
-            fontSize: 12, cursor: "pointer", fontFamily: "inherit",
+            background: "transparent", border: "1px solid rgba(255,255,255,0.15)",
+            color: "rgba(255,255,255,0.55)", padding: "5px 14px",
+            fontFamily: "var(--font-sans)", fontSize: 10, cursor: "pointer",
+            letterSpacing: "1px", textTransform: "uppercase", fontWeight: 700,
             transition: "border-color 0.15s, color 0.15s",
           }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; e.currentTarget.style.color = "#fff"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}>
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"; e.currentTarget.style.color = "#fff"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "rgba(255,255,255,0.55)"; }}>
             Logout
           </button>
         </div>
       </div>
 
       {/* Body */}
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 16px" }}>
+      <div style={{ maxWidth: 920, margin: "0 auto", padding: "32px 16px" }}>
 
         {/* Stats */}
         <div style={{ marginBottom: 24 }}>
           <div style={{
-            background: "white", border: "1px solid #e8e8e8",
-            padding: "20px 24px", display: "inline-block", minWidth: 140,
+            background: "white", border: "1px solid #D4CFC8",
+            borderTop: "3px solid #1A1A1A",
+            padding: "20px 28px", display: "inline-block", minWidth: 160,
           }}>
-            <p style={{ fontSize: 11, color: "#aaa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>
+            <p style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 9, color: "#999", letterSpacing: "1.5px",
+              textTransform: "uppercase", marginBottom: 8, fontWeight: 700,
+            }}>
               Total Posts
             </p>
-            <p style={{ fontSize: 32, fontWeight: 700, color: "#010048" }}>{posts.length}</p>
+            <p style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: 36, fontWeight: 700, color: "#1A1A1A",
+              letterSpacing: "-1px",
+            }}>{posts.length}</p>
           </div>
         </div>
 
         {/* Posts Table */}
-        <div style={{ background: "white", border: "1px solid #e8e8e8" }}>
+        <div style={{ background: "white", border: "1px solid #D4CFC8", borderTop: "3px solid #1A1A1A" }}>
           <div style={{
-            padding: "14px 20px",
-            borderBottom: "1px solid #e8e8e8",
+            padding: "14px 24px",
+            borderBottom: "1px solid #EAE7E0",
             display: "flex", alignItems: "center", justifyContent: "space-between",
             flexWrap: "wrap", gap: 10,
           }}>
-            <h2 style={{ fontSize: 15, fontWeight: 600, color: "#010048" }}>All Posts</h2>
+            <h2 style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: 17, fontWeight: 700, color: "#1A1A1A",
+            }}>All Posts</h2>
             <a href="/new" style={{
-              fontSize: 12, color: "white", background: "#010048",
-              padding: "7px 16px", textDecoration: "none", fontWeight: 600,
-              whiteSpace: "nowrap",
-            }}>
+              fontFamily: "var(--font-sans)",
+              fontSize: 10, color: "white", background: "#C41E3A",
+              padding: "7px 16px", textDecoration: "none", fontWeight: 700,
+              whiteSpace: "nowrap", letterSpacing: "1px", textTransform: "uppercase",
+              transition: "opacity 0.15s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
               + New Post
             </a>
           </div>
 
           {loading ? (
-            <div style={{ padding: "48px 24px", textAlign: "center", color: "#aaa", fontSize: 14 }}>
+            <div style={{ padding: "48px 24px", textAlign: "center", fontFamily: "var(--font-sans)", color: "#999", fontSize: 14 }}>
               Loading posts…
             </div>
           ) : posts.length === 0 ? (
-            <div style={{ padding: "48px 24px", textAlign: "center", color: "#aaa", fontSize: 14 }}>
+            <div style={{ padding: "48px 24px", textAlign: "center", fontFamily: "var(--font-sans)", color: "#999", fontSize: 14 }}>
               No posts found.
             </div>
           ) : (
             <div style={{ overflowX: "auto" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 480 }}>
                 <thead>
-                  <tr style={{ background: "#fafafa" }}>
+                  <tr style={{ background: "#FAF8F5" }}>
                     {["Title", "Date", "Actions"].map(h => (
                       <th key={h} style={{
-                        textAlign: "left", padding: "10px 20px",
-                        fontSize: 11, fontWeight: 600, color: "#aaa",
-                        letterSpacing: "0.8px", textTransform: "uppercase",
-                        borderBottom: "1px solid #e8e8e8",
+                        textAlign: "left", padding: "10px 24px",
+                        fontFamily: "var(--font-sans)",
+                        fontSize: 9, fontWeight: 700, color: "#999",
+                        letterSpacing: "1.5px", textTransform: "uppercase",
+                        borderBottom: "1px solid #D4CFC8",
                       }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {posts.map((post, i) => (
-                    <tr key={post.id} style={{ borderBottom: i < posts.length - 1 ? "1px solid #f0f0f0" : "none" }}>
-                      <td style={{ padding: "14px 20px" }}>
+                    <tr key={post.id} style={{ borderBottom: i < posts.length - 1 ? "1px solid #EAE7E0" : "none" }}>
+                      <td style={{ padding: "14px 24px" }}>
                         <a
                           href={`/blog/${post.id}`}
                           target="_blank"
                           rel="noreferrer"
                           style={{
-                            fontSize: 14, color: "#010048", fontWeight: 500,
+                            fontFamily: "var(--font-serif)",
+                            fontSize: 14, color: "#1A1A1A", fontWeight: 600,
                             textDecoration: "none", display: "block",
                             maxWidth: 340, overflow: "hidden",
                             textOverflow: "ellipsis", whiteSpace: "nowrap",
                           }}
-                          onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
-                          onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}
+                          onMouseEnter={e => { e.currentTarget.style.color = "#C41E3A"; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = "#1A1A1A"; }}
                         >
                           {post.title}
                         </a>
                       </td>
-                      <td style={{ padding: "14px 20px", fontSize: 13, color: "#888", whiteSpace: "nowrap" }}>
+                      <td style={{ padding: "14px 24px", fontFamily: "var(--font-sans)", fontSize: 12, color: "#999", whiteSpace: "nowrap" }}>
                         {post.date || "—"}
                       </td>
-                      <td style={{ padding: "14px 20px" }}>
+                      <td style={{ padding: "14px 24px" }}>
                         <button
                           onClick={() => setConfirm(post)}
                           disabled={deleting === post.id}
                           style={{
                             background: deleting === post.id ? "#f5f5f5" : "transparent",
-                            border: "1px solid #e0e0e0",
-                            color: deleting === post.id ? "#aaa" : "#c0392b",
-                            padding: "5px 14px", fontSize: 12,
+                            border: "1px solid #D4CFC8",
+                            color: deleting === post.id ? "#999" : "#C41E3A",
+                            padding: "4px 14px",
+                            fontFamily: "var(--font-sans)", fontSize: 10,
                             cursor: deleting === post.id ? "not-allowed" : "pointer",
-                            fontWeight: 600, fontFamily: "inherit",
+                            fontWeight: 700, letterSpacing: "0.5px",
+                            textTransform: "uppercase",
                             transition: "all 0.15s",
                           }}
-                          onMouseEnter={e => { if (deleting !== post.id) e.currentTarget.style.background = "#fff0f0"; }}
-                          onMouseLeave={e => { if (deleting !== post.id) e.currentTarget.style.background = "transparent"; }}
+                          onMouseEnter={e => { if (deleting !== post.id) { e.currentTarget.style.background = "#fff0f0"; e.currentTarget.style.borderColor = "#C41E3A"; } }}
+                          onMouseLeave={e => { if (deleting !== post.id) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "#D4CFC8"; } }}
                         >
                           {deleting === post.id ? "Deleting…" : "Delete"}
                         </button>
@@ -192,60 +230,62 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* ── Custom Confirm Modal ── */}
+      {/* Confirm Modal */}
       {confirm && (
         <div style={{
           position: "fixed", inset: 0,
-          background: "rgba(0,0,0,0.35)",
+          background: "rgba(0,0,0,0.5)",
           display: "flex", alignItems: "center", justifyContent: "center",
           zIndex: 9999, padding: 24,
         }}
         onClick={() => setConfirm(null)}>
           <div style={{
             background: "#fff",
-            border: "1px solid #e8e8e8",
+            border: "1px solid #D4CFC8",
+            borderTop: "3px solid #C41E3A",
             padding: "28px 28px 24px",
             maxWidth: 380, width: "100%",
-            boxSizing: "border-box",
           }}
           onClick={e => e.stopPropagation()}>
-            {/* Icon + title */}
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 16 }}>
               <div style={{
                 flexShrink: 0, width: 36, height: 36,
                 background: "#fff5f5", border: "1px solid #fcd0d0",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
-                  <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="#c0392b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="#C41E3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
-                <p style={{ fontSize: 14, fontWeight: 600, color: "#010048", marginBottom: 4 }}>
+                <p style={{ fontFamily: "var(--font-serif)", fontSize: 15, fontWeight: 700, color: "#1A1A1A", marginBottom: 6 }}>
                   Delete post?
                 </p>
-                <p style={{ fontSize: 13, color: "#777", lineHeight: 1.6 }}>
-                  <span style={{ fontWeight: 500, color: "#010048" }}>&quot;{confirm.title}&quot;</span> will be permanently removed from the platform.
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#666", lineHeight: 1.6 }}>
+                  <span style={{ fontWeight: 600, color: "#1A1A1A" }}>&quot;{confirm.title}&quot;</span> will be permanently removed.
                 </p>
               </div>
             </div>
 
-            {/* Actions */}
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 20 }}>
               <button onClick={() => setConfirm(null)} style={{
-                padding: "8px 18px", fontSize: 13, fontWeight: 500,
-                border: "1px solid #e8e8e8", background: "#fff",
-                color: "#555", cursor: "pointer", fontFamily: "inherit",
+                padding: "8px 18px",
+                fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700,
+                border: "1px solid #D4CFC8", background: "#fff",
+                color: "#666", cursor: "pointer",
+                letterSpacing: "0.5px", textTransform: "uppercase",
                 transition: "border-color 0.15s",
               }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = "#aaa"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#e8e8e8"}>
+              onMouseEnter={e => e.currentTarget.style.borderColor = "#999"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "#D4CFC8"}>
                 Cancel
               </button>
               <button onClick={confirmDelete} style={{
-                padding: "8px 18px", fontSize: 13, fontWeight: 600,
-                border: "none", background: "#c0392b",
-                color: "#fff", cursor: "pointer", fontFamily: "inherit",
+                padding: "8px 18px",
+                fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700,
+                border: "none", background: "#C41E3A",
+                color: "#fff", cursor: "pointer",
+                letterSpacing: "0.5px", textTransform: "uppercase",
                 transition: "opacity 0.15s",
               }}
               onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
@@ -262,10 +302,13 @@ export default function AdminDashboard() {
         <div style={{
           position: "fixed", bottom: 24, left: "50%",
           transform: "translateX(-50%)",
-          background: "#010048", color: "white",
-          padding: "12px 24px", fontSize: 13, fontWeight: 500,
-          boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+          background: "#1A1A1A", color: "white",
+          padding: "12px 24px",
+          fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600,
+          letterSpacing: "0.5px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
           zIndex: 9999, whiteSpace: "nowrap",
+          borderTop: "2px solid #C41E3A",
         }}>
           {toast}
         </div>

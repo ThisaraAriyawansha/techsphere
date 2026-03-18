@@ -4,42 +4,62 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer style={{ background: "#f5f5f7", borderTop: "1px solid #e2e2e7" }}>
+    <footer style={{ background: "#1A1A1A", borderTop: "4px solid #C41E3A" }}>
 
-      {/* Main grid — responsive via globals.css .footer-grid */}
+      {/* Main grid */}
       <div className="footer-grid">
 
         {/* Brand */}
         <div>
-          <a href="/" style={{ display: "flex", alignItems: "center", gap: 9, textDecoration: "none", marginBottom: 14 }}>
-            <img src="/logo/logo.png" alt="TechSphere" style={{ width: 26, height: 26, objectFit: "contain" }} />
-            <span style={{ color: "#010048", fontWeight: 700, fontSize: 14 }}>TechSphere</span>
+          <a href="/" style={{ display: "inline-block", textDecoration: "none", marginBottom: 16 }}>
+            <div style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: 24,
+              fontWeight: 900,
+              color: "#FFFFFF",
+              letterSpacing: "-0.3px",
+              lineHeight: 1,
+            }}>TechSphere</div>
+            <div style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 9,
+              color: "rgba(255,255,255,0.35)",
+              letterSpacing: "2.5px",
+              textTransform: "uppercase",
+              marginTop: 4,
+            }}>Technology & Innovation</div>
           </a>
-          <p style={{ fontSize: 13, color: "#6e6e73", lineHeight: 1.7, maxWidth: 260, marginBottom: 20 }}>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", lineHeight: 1.75, maxWidth: 240, marginBottom: 20, fontFamily: "var(--font-sans)" }}>
             A free, open platform for the tech community to share ideas, tutorials, and insights. No login required.
           </p>
           <a href="/newsletter" style={{
             display: "inline-flex", alignItems: "center", gap: 6,
-            padding: "8px 16px",
-            background: "#010048",
-            color: "#fff",
-            fontSize: 12, fontWeight: 600,
+            padding: "9px 18px",
+            border: "1px solid #C41E3A",
+            color: "#C41E3A",
+            fontSize: 11, fontWeight: 700,
             textDecoration: "none",
-            letterSpacing: "0.3px",
-            transition: "opacity 0.2s",
+            letterSpacing: "1px",
+            textTransform: "uppercase",
+            fontFamily: "var(--font-sans)",
+            transition: "background 0.15s, color 0.15s",
           }}
-          onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+          onMouseEnter={e => { e.currentTarget.style.background = "#C41E3A"; e.currentTarget.style.color = "#fff"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#C41E3A"; }}>
             Get Newsletter
           </a>
         </div>
 
         {/* Platform */}
         <div>
-          <h4 style={{ fontSize: 11, fontWeight: 700, color: "#1d1d1f", letterSpacing: "0.8px", textTransform: "uppercase", marginBottom: 16 }}>
-            Platform
-          </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <h4 style={{
+            fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.35)",
+            letterSpacing: "2px", textTransform: "uppercase", marginBottom: 18,
+            fontFamily: "var(--font-sans)",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            paddingBottom: 10,
+          }}>Platform</h4>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { label: "Explore Posts", href: "/" },
               { label: "Browse Topics", href: "/topics" },
@@ -53,10 +73,14 @@ export default function Footer() {
 
         {/* Company */}
         <div>
-          <h4 style={{ fontSize: 11, fontWeight: 700, color: "#1d1d1f", letterSpacing: "0.8px", textTransform: "uppercase", marginBottom: 16 }}>
-            Company
-          </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <h4 style={{
+            fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.35)",
+            letterSpacing: "2px", textTransform: "uppercase", marginBottom: 18,
+            fontFamily: "var(--font-sans)",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            paddingBottom: 10,
+          }}>Company</h4>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { label: "About TechSphere", href: "/about" },
               { label: "Privacy Policy", href: "/privacy" },
@@ -69,10 +93,14 @@ export default function Footer() {
 
         {/* Topics */}
         <div>
-          <h4 style={{ fontSize: 11, fontWeight: 700, color: "#1d1d1f", letterSpacing: "0.8px", textTransform: "uppercase", marginBottom: 16 }}>
-            Topics
-          </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <h4 style={{
+            fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.35)",
+            letterSpacing: "2px", textTransform: "uppercase", marginBottom: 18,
+            fontFamily: "var(--font-sans)",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            paddingBottom: 10,
+          }}>Sections</h4>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { label: "AI & Machine Learning", href: "/topics" },
               { label: "Web Development", href: "/topics" },
@@ -87,13 +115,13 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div style={{ borderTop: "1px solid #e2e2e7", padding: "18px 24px" }}>
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "18px 24px" }}>
         <div style={{
           maxWidth: 1100, margin: "0 auto",
           display: "flex", alignItems: "center",
           justifyContent: "space-between", flexWrap: "wrap", gap: 12,
         }}>
-          <p style={{ fontSize: 12, color: "#aeaeb2" }}>
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-sans)", letterSpacing: "0.3px" }}>
             © {year} TechSphere — Open for everyone, always free.
           </p>
           <div style={{ display: "flex", gap: 20 }}>
@@ -102,7 +130,16 @@ export default function Footer() {
               { label: "Terms", href: "/terms" },
               { label: "About", href: "/about" },
             ].map(({ label, href }) => (
-              <FooterLink key={label} href={href} small>{label}</FooterLink>
+              <a key={label} href={href} style={{
+                fontSize: 11, color: "rgba(255,255,255,0.25)",
+                textDecoration: "none",
+                fontFamily: "var(--font-sans)",
+                transition: "color 0.15s",
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = "rgba(255,255,255,0.7)"}
+              onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.25)"}>
+                {label}
+              </a>
             ))}
           </div>
         </div>
@@ -111,18 +148,16 @@ export default function Footer() {
   );
 }
 
-function FooterLink({ href, children, small }) {
+function FooterLink({ href, children }) {
   return (
     <a href={href} style={{
-      fontSize: small ? 12 : 13,
-      color: "#6e6e73",
-      textDecoration: "none",
-      fontWeight: 400,
-      transition: "color 0.15s",
-      lineHeight: 1.4,
+      fontSize: 13, color: "rgba(255,255,255,0.45)",
+      textDecoration: "none", fontWeight: 400,
+      fontFamily: "var(--font-sans)",
+      transition: "color 0.15s", lineHeight: 1.4,
     }}
-    onMouseEnter={e => e.currentTarget.style.color = "#010048"}
-    onMouseLeave={e => e.currentTarget.style.color = "#6e6e73"}>
+    onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+    onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.45)"}>
       {children}
     </a>
   );

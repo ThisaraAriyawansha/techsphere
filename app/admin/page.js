@@ -34,22 +34,29 @@ export default function AdminLoginPage() {
       alignItems: "center",
       justifyContent: "center",
       padding: "24px",
+      background: "#FAF8F5",
     }}>
       <div style={{
         width: "100%",
         maxWidth: 400,
         background: "#ffffff",
-        border: "1px solid #e8e8e8",
+        border: "1px solid #D4CFC8",
+        borderTop: "3px solid #1A1A1A",
         padding: "40px 36px",
-        boxSizing: "border-box",
       }}>
 
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <img src="/logo/logo.png" alt="TechSphere" style={{ height: 44, objectFit: "contain", display: "block", margin: "0 auto" }} />
+          <div style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: 22, fontWeight: 900, color: "#1A1A1A",
+            letterSpacing: "-0.3px", marginBottom: 4,
+          }}>TechSphere</div>
+          <div style={{ width: 24, height: 2, background: "#C41E3A", margin: "0 auto 10px" }}/>
           <p style={{
-            marginTop: 10, fontSize: 11, color: "#aaa",
-            letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600,
+            fontFamily: "var(--font-sans)",
+            fontSize: 10, color: "#999",
+            letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700,
           }}>
             Admin Access
           </p>
@@ -59,8 +66,11 @@ export default function AdminLoginPage() {
           {/* Email */}
           <div>
             <label style={{
-              display: "block", fontSize: 12, fontWeight: 600,
-              color: "#010048", marginBottom: 6, letterSpacing: "0.3px",
+              display: "block",
+              fontFamily: "var(--font-sans)",
+              fontSize: 10, fontWeight: 700,
+              color: "#1A1A1A", marginBottom: 7,
+              letterSpacing: "1px", textTransform: "uppercase",
             }}>
               Email
             </label>
@@ -74,24 +84,27 @@ export default function AdminLoginPage() {
                 display: "block",
                 width: "100%",
                 padding: "10px 12px",
-                border: "1px solid #e8e8e8",
+                border: "1px solid #D4CFC8",
                 outline: "none",
+                fontFamily: "var(--font-sans)",
                 fontSize: 14,
-                color: "#010048",
-                boxSizing: "border-box",
-                fontFamily: "inherit",
+                color: "#1A1A1A",
+                background: "#fff",
                 transition: "border-color 0.15s",
               }}
-              onFocus={e => e.currentTarget.style.borderColor = "#010048"}
-              onBlur={e => e.currentTarget.style.borderColor = "#e8e8e8"}
+              onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
+              onBlur={e => e.currentTarget.style.borderColor = "#D4CFC8"}
             />
           </div>
 
           {/* Password */}
           <div>
             <label style={{
-              display: "block", fontSize: 12, fontWeight: 600,
-              color: "#010048", marginBottom: 6, letterSpacing: "0.3px",
+              display: "block",
+              fontFamily: "var(--font-sans)",
+              fontSize: 10, fontWeight: 700,
+              color: "#1A1A1A", marginBottom: 7,
+              letterSpacing: "1px", textTransform: "uppercase",
             }}>
               Password
             </label>
@@ -105,16 +118,16 @@ export default function AdminLoginPage() {
                 display: "block",
                 width: "100%",
                 padding: "10px 12px",
-                border: "1px solid #e8e8e8",
+                border: "1px solid #D4CFC8",
                 outline: "none",
+                fontFamily: "var(--font-sans)",
                 fontSize: 14,
-                color: "#010048",
-                boxSizing: "border-box",
-                fontFamily: "inherit",
+                color: "#1A1A1A",
+                background: "#fff",
                 transition: "border-color 0.15s",
               }}
-              onFocus={e => e.currentTarget.style.borderColor = "#010048"}
-              onBlur={e => e.currentTarget.style.borderColor = "#e8e8e8"}
+              onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
+              onBlur={e => e.currentTarget.style.borderColor = "#D4CFC8"}
             />
           </div>
 
@@ -124,13 +137,12 @@ export default function AdminLoginPage() {
               padding: "10px 14px",
               background: "#fff5f5",
               border: "1px solid #fcd0d0",
-              boxSizing: "border-box",
             }}>
               <svg width="15" height="15" fill="none" viewBox="0 0 24 24" style={{ flexShrink: 0, marginTop: 1 }}>
-                <circle cx="12" cy="12" r="9" stroke="#c0392b" strokeWidth="2"/>
-                <path d="M12 8v4M12 16h.01" stroke="#c0392b" strokeWidth="2" strokeLinecap="round"/>
+                <circle cx="12" cy="12" r="9" stroke="#C41E3A" strokeWidth="2"/>
+                <path d="M12 8v4M12 16h.01" stroke="#C41E3A" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              <span style={{ fontSize: 13, color: "#c0392b", fontWeight: 500 }}>{error}</span>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#C41E3A", fontWeight: 500 }}>{error}</span>
             </div>
           )}
 
@@ -140,14 +152,13 @@ export default function AdminLoginPage() {
             style={{
               width: "100%",
               padding: "11px",
-              background: loading ? "#888" : "#010048",
+              background: loading ? "#888" : "#1A1A1A",
               color: "white",
-              fontWeight: 600,
-              fontSize: 13,
+              fontFamily: "var(--font-sans)", fontWeight: 700,
+              fontSize: 11,
               border: "none",
               cursor: loading ? "not-allowed" : "pointer",
-              letterSpacing: "0.5px",
-              fontFamily: "inherit",
+              letterSpacing: "1.5px", textTransform: "uppercase",
               marginTop: 8,
               transition: "opacity 0.15s",
             }}
@@ -160,11 +171,13 @@ export default function AdminLoginPage() {
 
         <div style={{ marginTop: 24, textAlign: "center" }}>
           <a href="/" style={{
-            fontSize: 12, color: "#aaa", textDecoration: "none",
+            fontFamily: "var(--font-sans)",
+            fontSize: 11, color: "#999", textDecoration: "none",
+            letterSpacing: "0.5px",
             transition: "color 0.15s",
           }}
-          onMouseEnter={e => e.currentTarget.style.color = "#010048"}
-          onMouseLeave={e => e.currentTarget.style.color = "#aaa"}>
+          onMouseEnter={e => e.currentTarget.style.color = "#1A1A1A"}
+          onMouseLeave={e => e.currentTarget.style.color = "#999"}>
             ← Back to site
           </a>
         </div>
