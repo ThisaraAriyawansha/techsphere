@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getPosts } from "../../lib/firebase";
 
 const CATEGORIES = [
@@ -29,6 +29,9 @@ export default function BlogPage() {
   const [view, setView]         = useState("grid"); // "grid" | "list"
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("category");
+    if (cat) setCategory(cat);
     getPosts().then(setPosts).catch(console.error).finally(() => setLoading(false));
   }, []);
 
@@ -74,31 +77,10 @@ export default function BlogPage() {
       {/* ── Filters bar ──────────────────────────── */}
       <div style={{ background: "#F0F0FA", borderBottom: "1px solid #DDE0F5", position: "sticky", top: 66, zIndex: 10 }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
 
-            {/* Category tabs */}
-            <div className="topics-scroll" style={{ display: "flex", flex: 1 }}>
-              {CATEGORIES.map(({ label, key }) => (
-                <button
-                  key={label}
-                  onClick={() => setCategory(key)}
-                  style={{
-                    padding: "12px 14px",
-                    background: "transparent",
-                    color: category === key ? "#010057" : "#55557A",
-                    borderBottom: category === key ? "2px solid #010057" : "2px solid transparent",
-                    borderTop: "none", borderLeft: "none", borderRight: "none",
-                    fontFamily: "var(--font-sans)",
-                    fontSize: 11, fontWeight: 700,
-                    letterSpacing: "1.2px", textTransform: "uppercase",
-                    cursor: "pointer",
-                    transition: "color 0.15s, border-color 0.15s",
-                    whiteSpace: "nowrap",
-                  }}>
-                  {label}
-                </button>
-              ))}
-            </div>
+            {/* Category tabs with scroll arrows */}
+            <BlogCategoryTabs categories={CATEGORIES} category={category} setCategory={setCategory} />
 
             {/* Right controls */}
             <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 2 }}>
@@ -213,7 +195,7 @@ export default function BlogPage() {
             ))}
           </div>
         ) : (
-          <div style={{ borderLeft: "1px solid #DDE0F5" }}>
+          <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
             {filtered.map(post => (
               <BlogListItem key={post.id} post={post} />
             ))}
@@ -225,6 +207,65 @@ export default function BlogPage() {
 }
 
 /* ── Blog grid card ───────────────────────────── */
+function BlogCategoryTabs({ categories, category, setCategory }) {
+  const scrollRef = useRef(null);
+  const drag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+
+  function onMouseDown(e) {
+    const el = scrollRef.current;
+    drag.current = { active: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft, moved: false };
+    el.style.cursor = "grabbing";
+  }
+  function onMouseMove(e) {
+    if (!drag.current.active) return;
+    e.preventDefault();
+    const el = scrollRef.current;
+    const dx = e.pageX - el.offsetLeft - drag.current.startX;
+    if (Math.abs(dx) > 4) drag.current.moved = true;
+    el.scrollLeft = drag.current.scrollLeft - dx;
+  }
+  function onMouseUp() {
+    drag.current.active = false;
+    if (scrollRef.current) scrollRef.current.style.cursor = "grab";
+  }
+
+  useEffect(() => {
+    window.addEventListener("mouseup", onMouseUp);
+    return () => window.removeEventListener("mouseup", onMouseUp);
+  }, []);
+
+  return (
+    <div
+      ref={scrollRef}
+      className="topics-scroll"
+      style={{ display: "flex", flex: 1, minWidth: 0, cursor: "grab", userSelect: "none" }}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+    >
+      {categories.map(({ label, key }) => (
+        <button
+          key={label}
+          onClick={() => { if (!drag.current.moved) setCategory(key); }}
+          style={{
+            padding: "12px 14px",
+            background: "transparent",
+            color: category === key ? "#010057" : "#55557A",
+            borderBottom: category === key ? "2px solid #010057" : "2px solid transparent",
+            borderTop: "none", borderLeft: "none", borderRight: "none",
+            fontFamily: "var(--font-sans)",
+            fontSize: 11, fontWeight: 700,
+            letterSpacing: "1.2px", textTransform: "uppercase",
+            cursor: "inherit",
+            transition: "color 0.15s, border-color 0.15s",
+            whiteSpace: "nowrap",
+          }}>
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function BlogCard({ post }) {
   const [hov, setHov] = useState(false);
   let date = "—";
@@ -309,9 +350,8 @@ function BlogListItem({ post }) {
       onMouseLeave={() => setHov(false)}
       style={{
         display: "flex", gap: 20, alignItems: "flex-start",
-        padding: "24px 24px",
-        borderRight: "1px solid #DDE0F5",
-        borderBottom: "1px solid #DDE0F5",
+        padding: "20px 24px",
+        border: "1px solid #DDE0F5",
         textDecoration: "none",
         background: hov ? "#F0F0FA" : "#fff",
         transition: "background 0.15s",
@@ -377,9 +417,9 @@ function BlogListItem({ post }) {
 function LoadingState({ view }) {
   if (view === "list") {
     return (
-      <div style={{ borderLeft: "1px solid #DDE0F5" }}>
+      <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
         {[1,2,3,4,5].map(i => (
-          <div key={i} style={{ display: "flex", gap: 20, padding: "24px", borderRight: "1px solid #DDE0F5", borderBottom: "1px solid #DDE0F5" }}>
+          <div key={i} style={{ display: "flex", gap: 20, padding: "20px 24px", border: "1px solid #DDE0F5" }}>
             <div style={{ width: 120, height: 90, background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", flexShrink: 0 }}/>
             <div style={{ flex: 1 }}>
               <div style={{ height: 10, width: "20%", background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 12 }}/>

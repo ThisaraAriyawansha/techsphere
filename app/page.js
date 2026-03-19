@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getPosts } from "../lib/firebase";
 
 const TOPICS = [
@@ -194,32 +194,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Topic filter tabs ─────────────────────── */}
-      <div style={{ background: "#F0F0FA", borderBottom: "1px solid #DDE0F5" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
-          <div className="topics-scroll" style={{ display: "flex" }}>
-            {TOPICS.map(({ label, key }) => (
-              <button
-                key={label}
-                onClick={() => setTopic(key)}
-                style={{
-                  padding: "11px 15px",
-                  background: "transparent",
-                  color: activeTopic === key ? "#010057" : "#55557A",
-                  borderBottom: activeTopic === key ? "2px solid #010057" : "2px solid transparent",
-                  borderTop: "none", borderLeft: "none", borderRight: "none",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 11, fontWeight: 700,
-                  letterSpacing: "1.2px", textTransform: "uppercase",
-                  cursor: "pointer",
-                  transition: "color 0.15s, border-color 0.15s",
-                  whiteSpace: "nowrap",
-                }}>
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <TopicsBar topics={TOPICS} activeTopic={activeTopic} setTopic={setTopic} />
 
       {/* ── Main content ──────────────────────────── */}
       <section id="posts" style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px 80px" }}>
@@ -483,6 +458,69 @@ function SearchBar({ value, onChange }) {
         onFocus={e => e.currentTarget.style.borderColor = "#010057"}
         onBlur={e => e.currentTarget.style.borderColor = "#DDE0F5"}
       />
+    </div>
+  );
+}
+
+function TopicsBar({ topics, activeTopic, setTopic }) {
+  const scrollRef = useRef(null);
+  const drag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+
+  function onMouseDown(e) {
+    const el = scrollRef.current;
+    drag.current = { active: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft, moved: false };
+    el.style.cursor = "grabbing";
+  }
+  function onMouseMove(e) {
+    if (!drag.current.active) return;
+    e.preventDefault();
+    const el = scrollRef.current;
+    const dx = e.pageX - el.offsetLeft - drag.current.startX;
+    if (Math.abs(dx) > 4) drag.current.moved = true;
+    el.scrollLeft = drag.current.scrollLeft - dx;
+  }
+  function onMouseUp() {
+    drag.current.active = false;
+    if (scrollRef.current) scrollRef.current.style.cursor = "grab";
+  }
+
+  useEffect(() => {
+    window.addEventListener("mouseup", onMouseUp);
+    return () => window.removeEventListener("mouseup", onMouseUp);
+  }, []);
+
+  return (
+    <div style={{ background: "#F0F0FA", borderBottom: "1px solid #DDE0F5" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
+        <div
+          ref={scrollRef}
+          className="topics-scroll"
+          style={{ display: "flex", cursor: "grab", userSelect: "none" }}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+        >
+          {topics.map(({ label, key }) => (
+            <button
+              key={label}
+              onClick={() => { if (!drag.current.moved) setTopic(key); }}
+              style={{
+                padding: "11px 15px",
+                background: "transparent",
+                color: activeTopic === key ? "#010057" : "#55557A",
+                borderBottom: activeTopic === key ? "2px solid #010057" : "2px solid transparent",
+                borderTop: "none", borderLeft: "none", borderRight: "none",
+                fontFamily: "var(--font-sans)",
+                fontSize: 11, fontWeight: 700,
+                letterSpacing: "1.2px", textTransform: "uppercase",
+                cursor: "inherit",
+                transition: "color 0.15s, border-color 0.15s",
+                whiteSpace: "nowrap",
+              }}>
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

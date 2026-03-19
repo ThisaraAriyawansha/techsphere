@@ -69,23 +69,19 @@ export default function TopicsPage() {
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: 0,
-          border: "1px solid #DDE0F5",
-          borderRight: "none",
-          borderBottom: "none",
+          gap: 20,
         }}>
           {TOPICS.map(topic => (
             <a
               key={topic.id}
-              href={`/?search=${encodeURIComponent(topic.title.split(" ")[0])}`}
+              href={`/blog?category=${encodeURIComponent(topic.id)}`}
               id={topic.id}
               className="h-bg"
               style={{
                 display: "block",
                 textDecoration: "none",
                 background: "#fff",
-                borderRight: "1px solid #DDE0F5",
-                borderBottom: "1px solid #DDE0F5",
+                border: "1px solid #DDE0F5",
                 overflow: "hidden",
               }}
             >
