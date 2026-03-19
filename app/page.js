@@ -26,7 +26,7 @@ export default function HomePage() {
   const [posts, setPosts]       = useState([]);
   const [loading, setLoading]   = useState(true);
   const [search, setSearch]     = useState("");
-  const [activeTopic, setTopic] = useState(null);
+  const activeTopic             = null;
 
   useEffect(() => {
     getPosts().then(setPosts).catch(console.error).finally(() => setLoading(false));
@@ -229,13 +229,13 @@ export default function HomePage() {
             {TOPIC_META.map(topic => (
               <button
                 key={topic.key}
-                onClick={() => setTopic(topic.key === activeTopic ? null : topic.key)}
+                onClick={() => { window.location.href = `/blog?category=${topic.key}`; }}
                 style={{
                   position: "relative", overflow: "hidden",
                   height: 140, border: "none", cursor: "pointer",
                   textAlign: "left", padding: 0,
                   background: "#010057",
-                  outline: activeTopic === topic.key ? `3px solid #fff` : "none",
+                  outline: "none",
                   outlineOffset: -3,
                 }}
               >
@@ -254,7 +254,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Topic filter tabs ─────────────────────── */}
-      <TopicsBar topics={TOPICS} activeTopic={activeTopic} setTopic={setTopic} />
+      <TopicsBar topics={TOPICS} activeTopic={activeTopic} />
 
       {/* ── Main content ──────────────────────────── */}
       <section id="posts" style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px 80px" }}>
@@ -281,7 +281,7 @@ export default function HomePage() {
         </div>
 
         {loading ? <LoadingGrid /> : filtered.length === 0 ? (
-          <EmptyState search={search} onClear={() => { setSearch(""); setTopic(null); }} />
+          <EmptyState search={search} onClear={() => { setSearch(""); }} />
         ) : (
           <div>
             {filtered.length > 0 && !isFiltered && (
@@ -595,7 +595,7 @@ function SearchBar({ value, onChange }) {
   );
 }
 
-function TopicsBar({ topics, activeTopic, setTopic }) {
+function TopicsBar({ topics, activeTopic }) {
   const scrollRef = useRef(null);
   const drag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
 
@@ -635,7 +635,7 @@ function TopicsBar({ topics, activeTopic, setTopic }) {
           {topics.map(({ label, key }) => (
             <button
               key={label}
-              onClick={() => { if (!drag.current.moved) setTopic(key); }}
+              onClick={() => { if (!drag.current.moved) { if (key === null) window.location.href = "/blog"; else window.location.href = `/blog?category=${key}`; } }}
               style={{
                 padding: "11px 15px",
                 background: "transparent",
