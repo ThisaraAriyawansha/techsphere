@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { getPost, getPosts } from "../../../lib/firebase";
 
 const TOPIC_TAGS = ["AI & ML", "Web Dev", "Mobile", "Cloud", "Security", "DevOps", "Open Source", "Data Science", "Programming"];
+const TAG_KEYS = { "AI & ML": "ai", "Web Dev": "web", "Mobile": "mobile", "Cloud": "cloud", "Security": "security", "DevOps": "devops", "Open Source": "open source", "Data Science": "data", "Programming": "programming" };
 
 export default function BlogPostPage() {
   const { id }   = useParams();
@@ -256,7 +257,7 @@ export default function BlogPostPage() {
             </h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
               {TOPIC_TAGS.map(tag => (
-                <a key={tag} href={`/?search=${encodeURIComponent(tag.split(" ")[0])}`} style={{
+                <a key={tag} href={`/blog?category=${encodeURIComponent(TAG_KEYS[tag])}`} style={{
                   display: "inline-block",
                   padding: "4px 10px",
                   border: "1px solid #DDE0F5",
