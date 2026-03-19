@@ -51,31 +51,30 @@ export default function BlogPage() {
     <div style={{ background: "#FFFFFF", minHeight: "100vh" }}>
 
       {/* ── Page Header ──────────────────────────── */}
-      <div style={{ background: "#010057", padding: "48px 24px 40px", borderBottom: "4px solid #010057" }}>
+      <div style={{ background: "#F5F5F7", padding: "48px 24px 40px", borderBottom: "1px solid #E8E8ED" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-            <span style={{ display: "inline-block", width: 20, height: 2, background: "#010057" }}/>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "#A1A1A6", letterSpacing: "0.5px", textTransform: "uppercase" }}>
               TechSphere
             </span>
           </div>
           <h1 style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(28px, 4vw, 48px)",
-            fontWeight: 900, color: "#FFFFFF",
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(22px, 3vw, 36px)",
+            fontWeight: 700, color: "#1D1D1F",
             lineHeight: 1.1, letterSpacing: "-0.8px",
             marginBottom: 12,
           }}>
             All Articles
           </h1>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(255,255,255,0.55)", lineHeight: 1.6, maxWidth: 500 }}>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "#6E6E73", lineHeight: 1.6, maxWidth: 500 }}>
             {loading ? "Loading articles…" : `${posts.length} articles from the tech community — free to read, always.`}
           </p>
         </div>
       </div>
 
       {/* ── Filters bar ──────────────────────────── */}
-      <div style={{ background: "#F0F0FA", borderBottom: "1px solid #DDE0F5", position: "sticky", top: 66, zIndex: 10 }}>
+      <div style={{ background: "#fff", borderBottom: "1px solid #E8E8ED", position: "sticky", top: 60, zIndex: 10 }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
 
@@ -86,7 +85,7 @@ export default function BlogPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 2 }}>
               {/* Search */}
               <div style={{ position: "relative" }}>
-                <svg style={{ position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", color: "#8888A8", pointerEvents: "none" }}
+                <svg style={{ position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", color: "#A1A1A6", pointerEvents: "none" }}
                   width="12" height="12" fill="none" viewBox="0 0 24 24">
                   <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
                   <path d="m16.5 16.5 4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -98,15 +97,15 @@ export default function BlogPage() {
                   onChange={e => setSearch(e.target.value)}
                   style={{
                     padding: "8px 12px 8px 28px",
-                    border: "1px solid #DDE0F5",
+                    border: "1px solid #D2D2D7",
                     background: "#fff",
                     fontFamily: "var(--font-sans)",
-                    fontSize: 12, color: "#010057",
+                    fontSize: 12, color: "#1D1D1F",
                     width: 170, outline: "none",
                     transition: "border-color 0.15s",
                   }}
-                  onFocus={e => e.currentTarget.style.borderColor = "#010057"}
-                  onBlur={e => e.currentTarget.style.borderColor = "#DDE0F5"}
+                  onFocus={e => e.currentTarget.style.borderColor = "#010048"}
+                  onBlur={e => e.currentTarget.style.borderColor = "#D2D2D7"}
                 />
               </div>
 
@@ -116,10 +115,10 @@ export default function BlogPage() {
                 onChange={e => setSort(e.target.value)}
                 style={{
                   padding: "8px 10px",
-                  border: "1px solid #DDE0F5",
+                  border: "1px solid #D2D2D7",
                   background: "#fff",
                   fontFamily: "var(--font-sans)",
-                  fontSize: 11, color: "#010057",
+                  fontSize: 12, color: "#1D1D1F",
                   cursor: "pointer", outline: "none",
                 }}>
                 {SORT_OPTIONS.map(o => (
@@ -128,7 +127,7 @@ export default function BlogPage() {
               </select>
 
               {/* View toggle */}
-              <div style={{ display: "flex", border: "1px solid #DDE0F5", overflow: "hidden" }}>
+              <div style={{ display: "flex", border: "1px solid #D2D2D7", overflow: "hidden" }}>
                 {[
                   { v: "grid", icon: "⊞" },
                   { v: "list", icon: "☰" },
@@ -138,8 +137,8 @@ export default function BlogPage() {
                     onClick={() => setView(v)}
                     style={{
                       width: 34, height: 34, border: "none",
-                      background: view === v ? "#010057" : "#fff",
-                      color: view === v ? "#fff" : "#55557A",
+                      background: view === v ? "#010048" : "#fff",
+                      color: view === v ? "#fff" : "#6E6E73",
                       cursor: "pointer", fontSize: 14,
                       transition: "background 0.15s, color 0.15s",
                     }}>
@@ -158,24 +157,23 @@ export default function BlogPage() {
         {/* Result count */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          paddingBottom: 10, marginBottom: 0,
-          borderTop: "3px solid #010057",
-          borderBottom: "1px solid #DDE0F5",
-          paddingTop: 10,
+          paddingBottom: 16, marginBottom: 0,
+          borderBottom: "1px solid #E8E8ED",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#010057" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600, color: "#1D1D1F" }}>
               {category ? CATEGORIES.find(c => c.key === category)?.label : search ? `Search: "${search}"` : "All Articles"}
             </span>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#8888A8" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#A1A1A6" }}>
               {loading ? "loading…" : `${filtered.length} ${filtered.length === 1 ? "article" : "articles"}`}
             </span>
           </div>
           {(search || category) && (
             <button onClick={() => { setSearch(""); setCategory(null); }} style={{
-              background: "none", border: "1px solid #DDE0F5", padding: "5px 12px",
-              fontFamily: "var(--font-sans)", fontSize: 11, color: "#55557A",
-              cursor: "pointer", letterSpacing: "0.5px",
+              background: "none", border: "1px solid #D2D2D7", padding: "5px 12px",
+              fontFamily: "var(--font-sans)", fontSize: 12, color: "#6E6E73",
+              cursor: "pointer",
+              transition: "border-color 0.15s, color 0.15s",
             }}>
               Clear filters ×
             </button>
@@ -249,12 +247,11 @@ function BlogCategoryTabs({ categories, category, setCategory }) {
           style={{
             padding: "12px 14px",
             background: "transparent",
-            color: category === key ? "#010057" : "#55557A",
-            borderBottom: category === key ? "2px solid #010057" : "2px solid transparent",
+            color: category === key ? "#010048" : "#6E6E73",
+            borderBottom: category === key ? "2px solid #010048" : "2px solid transparent",
             borderTop: "none", borderLeft: "none", borderRight: "none",
             fontFamily: "var(--font-sans)",
-            fontSize: 11, fontWeight: 700,
-            letterSpacing: "1.2px", textTransform: "uppercase",
+            fontSize: 12, fontWeight: 500,
             cursor: "inherit",
             transition: "color 0.15s, border-color 0.15s",
             whiteSpace: "nowrap",
@@ -278,13 +275,12 @@ function BlogCard({ post }) {
       onMouseLeave={() => setHov(false)}
       style={{
         display: "flex", flexDirection: "column",
-        background: hov ? "#F0F0FA" : "#fff",
+        background: "#fff",
         textDecoration: "none",
-        transition: "background 0.15s",
         height: "100%",
       }}>
       {post.imageUrl ? (
-        <div style={{ height: 190, overflow: "hidden", background: "#F0F0FA" }}>
+        <div style={{ height: 190, overflow: "hidden", background: "#F5F5F7" }}>
           <img src={post.imageUrl} alt={post.title} style={{
             width: "100%", height: "100%", objectFit: "cover",
             transform: hov ? "scale(1.04)" : "scale(1)",
@@ -294,40 +290,39 @@ function BlogCard({ post }) {
       ) : (
         <div style={{
           height: 190,
-          background: `linear-gradient(135deg, #010057 0%, ${["#0A0099","#1500CC","#2200DD","#0066CC"][post.id?.charCodeAt?.(0) % 4 ?? 0]} 100%)`,
+          background: `linear-gradient(135deg, #010048 0%, ${["#3730a3","#1e40af","#1d4ed8","#2563eb"][post.id?.charCodeAt?.(0) % 4 ?? 0]} 100%)`,
           display: "flex", alignItems: "center", justifyContent: "center",
           position: "relative", overflow: "hidden",
         }}>
-          <span style={{ fontFamily: "var(--font-serif)", fontSize: 64, color: "rgba(255,255,255,0.06)", fontWeight: 900, position: "absolute" }}>TS</span>
-          <span style={{ fontFamily: "var(--font-serif)", fontSize: 32, color: "rgba(255,255,255,0.18)", fontWeight: 700, position: "relative", zIndex: 1 }}>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 64, color: "rgba(255,255,255,0.06)", fontWeight: 900, position: "absolute" }}>TS</span>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 32, color: "rgba(255,255,255,0.25)", fontWeight: 700, position: "relative", zIndex: 1 }}>
             {post.title?.charAt(0) || "T"}
           </span>
         </div>
       )}
       <div style={{ padding: "18px 20px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", gap: 8, marginBottom: 10, alignItems: "center" }}>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8" }}>{date}</span>
-          <span style={{ width: 2, height: 2, background: "#DDE0F5", borderRadius: "50%" }}/>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8" }}>{readTime} min</span>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6" }}>{date}</span>
+          <span style={{ width: 2, height: 2, background: "#D2D2D7", borderRadius: "50%" }}/>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6" }}>{readTime} min</span>
         </div>
         <h3 style={{
-          fontFamily: "var(--font-serif)",
-          fontSize: 16, fontWeight: 700,
-          color: hov ? "#010057" : "#010057",
+          fontFamily: "var(--font-sans)",
+          fontSize: 15, fontWeight: 600,
+          color: hov ? "#010048" : "#1D1D1F",
           lineHeight: 1.35, marginBottom: 10, flex: 1,
           transition: "color 0.15s",
           display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
         }}>{post.title}</h3>
         <p style={{
           fontFamily: "var(--font-sans)",
-          fontSize: 13, color: "#55557A", lineHeight: 1.6,
+          fontSize: 13, color: "#6E6E73", lineHeight: 1.6,
           display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
           marginBottom: 14,
         }}>{post.description}</p>
         <span style={{
-          fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700,
-          color: hov ? "#010057" : "#8888A8",
-          letterSpacing: "1px", textTransform: "uppercase",
+          fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 500,
+          color: hov ? "#010048" : "#A1A1A6",
           transition: "color 0.15s",
         }}>
           Read →
@@ -351,13 +346,13 @@ function BlogListItem({ post }) {
       style={{
         display: "flex", gap: 20, alignItems: "flex-start",
         padding: "20px 24px",
-        border: "1px solid #DDE0F5",
+        border: "1px solid #E8E8ED",
         textDecoration: "none",
-        background: hov ? "#F0F0FA" : "#fff",
+        background: hov ? "#F5F5F7" : "#fff",
         transition: "background 0.15s",
       }}>
       {/* Image */}
-      <div style={{ width: 120, height: 90, flexShrink: 0, overflow: "hidden", background: "#F0F0FA" }}>
+      <div style={{ width: 120, height: 90, flexShrink: 0, overflow: "hidden", background: "#F5F5F7" }}>
         {post.imageUrl ? (
           <img src={post.imageUrl} alt={post.title} style={{
             width: "100%", height: "100%", objectFit: "cover",
@@ -367,10 +362,10 @@ function BlogListItem({ post }) {
         ) : (
           <div style={{
             width: "100%", height: "100%",
-            background: "linear-gradient(135deg, #010057, #0A0099)",
+            background: "linear-gradient(135deg, #010048, #3730a3)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <span style={{ fontFamily: "var(--font-serif)", fontSize: 24, color: "rgba(255,255,255,0.18)", fontWeight: 700 }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 24, color: "rgba(255,255,255,0.25)", fontWeight: 700 }}>
               {post.title?.charAt(0) || "T"}
             </span>
           </div>
@@ -380,27 +375,27 @@ function BlogListItem({ post }) {
       {/* Content */}
       <div style={{ flex: 1 }}>
         <div style={{ display: "flex", gap: 10, marginBottom: 8, alignItems: "center" }}>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8", letterSpacing: "0.5px" }}>{date}</span>
-          <span style={{ width: 2, height: 2, background: "#DDE0F5", borderRadius: "50%", flexShrink: 0 }}/>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8" }}>{readTime} min read</span>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6" }}>{date}</span>
+          <span style={{ width: 2, height: 2, background: "#D2D2D7", borderRadius: "50%", flexShrink: 0 }}/>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6" }}>{readTime} min read</span>
         </div>
         <h3 style={{
-          fontFamily: "var(--font-serif)",
-          fontSize: 18, fontWeight: 700,
-          color: hov ? "#010057" : "#010057",
+          fontFamily: "var(--font-sans)",
+          fontSize: 17, fontWeight: 600,
+          color: hov ? "#010048" : "#1D1D1F",
           lineHeight: 1.3, marginBottom: 8,
           transition: "color 0.15s",
         }}>{post.title}</h3>
         <p style={{
           fontFamily: "var(--font-sans)",
-          fontSize: 13, color: "#55557A", lineHeight: 1.65,
+          fontSize: 13, color: "#6E6E73", lineHeight: 1.65,
           display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
         }}>{post.description}</p>
       </div>
 
       {/* Arrow */}
       <div style={{
-        flexShrink: 0, color: hov ? "#010057" : "#DDE0F5",
+        flexShrink: 0, color: hov ? "#010048" : "#D2D2D7",
         transition: "color 0.15s, transform 0.2s",
         transform: hov ? "translateX(4px)" : "none",
         alignSelf: "center",
@@ -419,12 +414,12 @@ function LoadingState({ view }) {
     return (
       <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
         {[1,2,3,4,5].map(i => (
-          <div key={i} style={{ display: "flex", gap: 20, padding: "20px 24px", border: "1px solid #DDE0F5" }}>
-            <div style={{ width: 120, height: 90, background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", flexShrink: 0 }}/>
+          <div key={i} style={{ display: "flex", gap: 20, padding: "20px 24px", border: "1px solid #E8E8ED" }}>
+            <div style={{ width: 120, height: 90, background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", flexShrink: 0 }}/>
             <div style={{ flex: 1 }}>
-              <div style={{ height: 10, width: "20%", background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 12 }}/>
-              <div style={{ height: 20, width: "70%", background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 8 }}/>
-              <div style={{ height: 13, width: "85%", background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite" }}/>
+              <div style={{ height: 10, width: "20%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 12, borderRadius: 4 }}/>
+              <div style={{ height: 20, width: "70%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 8, borderRadius: 4 }}/>
+              <div style={{ height: 13, width: "85%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", borderRadius: 4 }}/>
             </div>
           </div>
         ))}
@@ -435,10 +430,10 @@ function LoadingState({ view }) {
     <div className="blog-list-grid">
       {[1,2,3,4,5,6].map(i => (
         <div key={i} className="post-card-wrap" style={{ padding: 20 }}>
-          <div style={{ height: 190, background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 16 }}/>
-          <div style={{ height: 12, width: "30%", background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 10 }}/>
-          <div style={{ height: 18, width: "85%", background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 8 }}/>
-          <div style={{ height: 13, width: "65%", background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite" }}/>
+          <div style={{ height: 190, background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 16 }}/>
+          <div style={{ height: 12, width: "30%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 10, borderRadius: 4 }}/>
+          <div style={{ height: 18, width: "85%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 8, borderRadius: 4 }}/>
+          <div style={{ height: 13, width: "65%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", borderRadius: 4 }}/>
         </div>
       ))}
     </div>
@@ -448,30 +443,28 @@ function LoadingState({ view }) {
 /* ── Empty state ──────────────────────────────── */
 function EmptyState({ onClear }) {
   return (
-    <div style={{ textAlign: "center", padding: "80px 24px", border: "1px solid #DDE0F5", background: "#fff" }}>
-      <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8", textTransform: "uppercase", letterSpacing: "2px", marginBottom: 12 }}>
+    <div style={{ textAlign: "center", padding: "80px 24px", border: "1px solid #E8E8ED", background: "#fff", marginTop: 24 }}>
+      <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>
         No results
       </p>
-      <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 700, color: "#010057", marginBottom: 10 }}>
+      <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: 700, color: "#1D1D1F", marginBottom: 10 }}>
         Nothing found
       </h3>
-      <p style={{ fontFamily: "var(--font-sans)", color: "#8888A8", fontSize: 14, marginBottom: 28 }}>
+      <p style={{ fontFamily: "var(--font-sans)", color: "#A1A1A6", fontSize: 14, marginBottom: 28 }}>
         Try a different keyword or category.
       </p>
       <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
         <button onClick={onClear} style={{
-          padding: "10px 22px", border: "1px solid #DDE0F5",
-          background: "#fff", color: "#55557A",
-          fontFamily: "var(--font-sans)", fontWeight: 700,
-          fontSize: 12, cursor: "pointer",
-          letterSpacing: "0.8px", textTransform: "uppercase",
+          padding: "10px 22px", border: "1px solid #D2D2D7",
+          background: "#fff", color: "#6E6E73",
+          fontFamily: "var(--font-sans)", fontWeight: 600,
+          fontSize: 13, cursor: "pointer",
         }}>Clear Filters</button>
         <a href="/new" style={{
           display: "inline-block", padding: "10px 22px",
-          background: "#010057", color: "white",
-          fontFamily: "var(--font-sans)", fontWeight: 700,
-          fontSize: 12, textDecoration: "none",
-          letterSpacing: "0.8px", textTransform: "uppercase",
+          background: "#010048", color: "white",
+          fontFamily: "var(--font-sans)", fontWeight: 600,
+          fontSize: 13, textDecoration: "none",
         }}>Write a Post</a>
       </div>
     </div>

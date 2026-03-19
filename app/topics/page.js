@@ -1,4 +1,6 @@
-export const metadata = {
+"use client";
+
+const metadata = {
   title: "Topics — TechSphere",
   description: "Browse tech articles by topic — AI, Web Development, Mobile, Cloud, Security, and more.",
 };
@@ -31,24 +33,24 @@ export default function TopicsPage() {
         />
         <div style={{
           position: "absolute", inset: 0,
-          background: "linear-gradient(110deg, rgba(1,0,87,0.96) 0%, rgba(1,0,87,0.80) 60%, rgba(1,0,87,0.55) 100%)",
+          background: "linear-gradient(110deg, rgba(1,0,72,0.94) 0%, rgba(1,0,72,0.75) 60%, rgba(1,0,72,0.50) 100%)",
         }}/>
         <div style={{ position: "relative", zIndex: 1, maxWidth: 760, margin: "0 auto", padding: "88px 24px 72px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
-            <span style={{ display: "inline-block", width: 24, height: 2, background: "#fff" }}/>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
+            <span style={{ display: "inline-block", width: 24, height: 2, background: "rgba(255,255,255,0.5)" }}/>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.7)" }}>
               Browse by Topic
             </span>
           </div>
           <h1 style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(30px, 4.5vw, 52px)",
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(22px, 3vw, 36px)",
             fontWeight: 700, color: "#fff",
             lineHeight: 1.1, letterSpacing: "-0.8px", marginBottom: 18,
           }}>
             Find what interests you
           </h1>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 16, color: "rgba(255,255,255,0.55)", lineHeight: 1.75, fontWeight: 300, maxWidth: 480 }}>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 16, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, fontWeight: 300, maxWidth: 480 }}>
             Explore {TOPICS.length} technology topics and discover articles from the TechSphere community.
           </p>
         </div>
@@ -56,16 +58,16 @@ export default function TopicsPage() {
 
       {/* ── Section header ─────────────────────── */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px 0" }}>
-        <div style={{ borderTop: "3px solid #010057", borderBottom: "1px solid #DDE0F5", padding: "10px 0", marginBottom: 0, display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#010057" }}>
+        <div style={{ borderBottom: "1px solid #E8E8ED", padding: "0 0 16px", marginBottom: 0, display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600, color: "#1D1D1F" }}>
             All Sections
           </span>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#8888A8" }}>{TOPICS.length} topics</span>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#A1A1A6" }}>{TOPICS.length} topics</span>
         </div>
       </div>
 
       {/* ── Topics Grid with images ────────────── */}
-      <section style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px 72px" }}>
+      <section style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 24px 80px" }}>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
@@ -76,14 +78,16 @@ export default function TopicsPage() {
               key={topic.id}
               href={`/blog?category=${encodeURIComponent(topic.id)}`}
               id={topic.id}
-              className="h-bg"
               style={{
                 display: "block",
                 textDecoration: "none",
                 background: "#fff",
-                border: "1px solid #DDE0F5",
+                border: "1px solid #E8E8ED",
                 overflow: "hidden",
+                transition: "border-color 0.2s",
               }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#D2D2D7"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8ED"; }}
             >
               {/* Topic image thumbnail */}
               <div style={{ height: 120, overflow: "hidden", position: "relative" }}>
@@ -94,7 +98,7 @@ export default function TopicsPage() {
                 />
                 <div style={{
                   position: "absolute", inset: 0,
-                  background: "linear-gradient(180deg, transparent 30%, rgba(1,0,87,0.75) 100%)",
+                  background: "linear-gradient(180deg, transparent 30%, rgba(1,0,72,0.65) 100%)",
                 }}/>
                 <div style={{ position: "absolute", bottom: 10, left: 14, display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: 18 }}>{topic.icon}</span>
@@ -104,17 +108,15 @@ export default function TopicsPage() {
               {/* Content */}
               <div style={{ padding: "18px 20px 20px" }}>
                 <h3 style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: 16, fontWeight: 700,
-                  color: "#010057", letterSpacing: "-0.2px",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 15, fontWeight: 600,
+                  color: "#1D1D1F", letterSpacing: "-0.2px",
                   lineHeight: 1.3, marginBottom: 8,
                 }}>{topic.title}</h3>
 
-                <div style={{ width: 20, height: 2, background: "#010057", marginBottom: 10 }}/>
-
                 <p style={{
                   fontFamily: "var(--font-sans)",
-                  fontSize: 12, color: "#55557A",
+                  fontSize: 13, color: "#6E6E73",
                   lineHeight: 1.6, marginBottom: 12,
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -125,13 +127,12 @@ export default function TopicsPage() {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                   {topic.tags.slice(0, 3).map(tag => (
                     <span key={tag} style={{
-                      padding: "2px 8px",
-                      border: "1px solid #DDE0F5",
-                      background: "#F0F0FA",
+                      padding: "3px 10px",
+                      border: "1px solid #E8E8ED",
+                      background: "#F5F5F7",
                       fontFamily: "var(--font-sans)",
-                      fontSize: 9, fontWeight: 600,
-                      color: "#55557A",
-                      letterSpacing: "0.3px",
+                      fontSize: 11, fontWeight: 500,
+                      color: "#6E6E73",
                     }}>{tag}</span>
                   ))}
                 </div>
@@ -141,35 +142,30 @@ export default function TopicsPage() {
         </div>
       </section>
 
-      {/* ── CTA Banner with image ──────────────── */}
-      <section style={{ position: "relative", overflow: "hidden" }}>
-        <img
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80"
-          alt="Team collaborating"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-        />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(1,0,87,0.88)" }}/>
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 560, margin: "0 auto", padding: "64px 24px", textAlign: "center" }}>
+      {/* ── CTA Banner ──────────────────────────── */}
+      <section style={{ background: "#010048", padding: "72px 24px" }}>
+        <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center", marginBottom: 12 }}>
-            <span style={{ display: "inline-block", width: 16, height: 2, background: "rgba(255,255,255,0.4)" }}/>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.6)" }}>
               Don&apos;t see your topic?
             </span>
-            <span style={{ display: "inline-block", width: 16, height: 2, background: "rgba(255,255,255,0.4)" }}/>
           </div>
-          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(20px, 3vw, 32px)", fontWeight: 700, color: "#fff", letterSpacing: "-0.3px", marginBottom: 14 }}>
+          <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(16px, 2vw, 24px)", fontWeight: 700, color: "#fff", letterSpacing: "-0.3px", marginBottom: 14 }}>
             TechSphere is open for any tech topic
           </h2>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(255,255,255,0.5)", marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(255,255,255,0.6)", marginBottom: 28, lineHeight: 1.7 }}>
             Write about what you know. No gatekeeping, no barriers.
           </p>
-          <a href="/new" className="h-opacity" style={{
+          <a href="/new" style={{
             display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "12px 28px",
-            background: "#fff", color: "#010057",
-            fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 11,
-            textDecoration: "none", letterSpacing: "1px", textTransform: "uppercase",
-          }}>
+            padding: "13px 28px",
+            background: "#fff", color: "#010048",
+            fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14,
+            textDecoration: "none",
+            transition: "opacity 0.15s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.9"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
             Write About It →
           </a>
         </div>
