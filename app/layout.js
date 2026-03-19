@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import ScrollToTop from "./ScrollToTop";
 
 export const metadata = {
   title: "TechSphere — Open Tech Blog",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main style={{ minHeight: "calc(100vh - 64px - 200px)" }}>{children}</main>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

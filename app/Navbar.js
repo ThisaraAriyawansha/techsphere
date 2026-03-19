@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -147,17 +148,7 @@ export default function Navbar() {
         </div>
 
         {/* Section nav tabs */}
-        <nav className="desktop-nav" style={{ display: "flex", gap: 0, alignItems: "center" }}>
-          {[
-            { label: "Home", href: "/" },
-            { label: "Blog", href: "/blog" },
-            { label: "Topics", href: "/topics" },
-            { label: "About", href: "/about" },
-            { label: "Newsletter", href: "/newsletter" },
-          ].map(({ label, href }) => (
-            <SectionTab key={label} href={href}>{label}</SectionTab>
-          ))}
-        </nav>
+        <NavTabs />
       </div>
 
       {/* Mobile dropdown */}
@@ -198,24 +189,39 @@ export default function Navbar() {
   );
 }
 
-function SectionTab({ href, children }) {
+function NavTabs() {
+  const pathname = usePathname();
+  const tabs = [
+    { label: "Home",       href: "/" },
+    { label: "Blog",       href: "/blog" },
+    { label: "Topics",     href: "/topics" },
+    { label: "About",      href: "/about" },
+    { label: "Newsletter", href: "/newsletter" },
+  ];
+
   return (
-    <a href={href} style={{
-      padding: "10px 14px",
-      fontFamily: "var(--font-sans)",
-      fontSize: 11,
-      fontWeight: 700,
-      color: "#55557A",
-      textDecoration: "none",
-      letterSpacing: "1.2px",
-      textTransform: "uppercase",
-      borderBottom: "2px solid transparent",
-      transition: "color 0.15s, border-color 0.15s",
-      display: "inline-block",
-    }}
-    onMouseEnter={e => { e.currentTarget.style.color = "#010057"; e.currentTarget.style.borderBottomColor = "#010057"; }}
-    onMouseLeave={e => { e.currentTarget.style.color = "#55557A"; e.currentTarget.style.borderBottomColor = "transparent"; }}>
-      {children}
-    </a>
+    <nav className="desktop-nav" style={{ display: "flex", gap: 0, alignItems: "center" }}>
+      {tabs.map(({ label, href }) => {
+        const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+        return (
+          <a key={label} href={href} style={{
+            padding: "10px 14px",
+            fontFamily: "var(--font-sans)",
+            fontSize: 11, fontWeight: 700,
+            color: isActive ? "#010057" : "#55557A",
+            textDecoration: "none",
+            letterSpacing: "1.2px",
+            textTransform: "uppercase",
+            borderBottom: isActive ? "2px solid #010057" : "2px solid transparent",
+            transition: "color 0.15s, border-color 0.15s",
+            display: "inline-block",
+          }}
+          onMouseEnter={e => { if (!isActive) { e.currentTarget.style.color = "#010057"; e.currentTarget.style.borderBottomColor = "#010057"; } }}
+          onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = "#55557A"; e.currentTarget.style.borderBottomColor = "transparent"; } }}>
+            {label}
+          </a>
+        );
+      })}
+    </nav>
   );
 }
