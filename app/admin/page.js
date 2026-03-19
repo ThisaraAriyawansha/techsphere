@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
             fontSize: 22, fontWeight: 900, color: "#1A1A1A",
             letterSpacing: "-0.3px", marginBottom: 4,
           }}>TechSphere</div>
-          <div style={{ width: 24, height: 2, background: "#C41E3A", margin: "0 auto 10px" }}/>
+          <div style={{ width: 24, height: 2, background: "#010057", margin: "0 auto 10px" }}/>
           <p style={{
             fontFamily: "var(--font-sans)",
             fontSize: 10, color: "#999",
@@ -139,10 +139,10 @@ export default function AdminLoginPage() {
               border: "1px solid #fcd0d0",
             }}>
               <svg width="15" height="15" fill="none" viewBox="0 0 24 24" style={{ flexShrink: 0, marginTop: 1 }}>
-                <circle cx="12" cy="12" r="9" stroke="#C41E3A" strokeWidth="2"/>
-                <path d="M12 8v4M12 16h.01" stroke="#C41E3A" strokeWidth="2" strokeLinecap="round"/>
+                <circle cx="12" cy="12" r="9" stroke="#010057" strokeWidth="2"/>
+                <path d="M12 8v4M12 16h.01" stroke="#010057" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#C41E3A", fontWeight: 500 }}>{error}</span>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#010057", fontWeight: 500 }}>{error}</span>
             </div>
           )}
 
