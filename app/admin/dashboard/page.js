@@ -58,7 +58,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div style={{
         background: "#1A1A1A",
-        borderBottom: "3px solid #C41E3A",
+        borderBottom: "3px solid #010057",
         padding: "0 24px",
         display: "flex", alignItems: "center",
         justifyContent: "space-between", height: 56,
@@ -308,7 +308,7 @@ export default function AdminDashboard() {
           letterSpacing: "0.5px",
           boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
           zIndex: 9999, whiteSpace: "nowrap",
-          borderTop: "2px solid #C41E3A",
+          borderTop: "2px solid #010057",
         }}>
           {toast}
         </div>

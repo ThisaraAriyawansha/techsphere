@@ -59,21 +59,20 @@ export default function NewPostPage() {
   }
 
   return (
-    <div style={{ background: "#FAF8F5", minHeight: "100vh" }}>
-
+    <div style={{ background: "#F0F0FA", minHeight: "100vh" }}>
       <div style={{ maxWidth: 740, margin: "0 auto", padding: "48px 24px 80px" }}>
 
         {/* Back */}
         <a href="/" style={{
           display: "inline-flex", alignItems: "center", gap: 6,
           fontFamily: "var(--font-sans)",
-          color: "#999", fontSize: 11, fontWeight: 700,
+          color: "#8888A8", fontSize: 11, fontWeight: 700,
           textDecoration: "none", marginBottom: 32,
           letterSpacing: "1px", textTransform: "uppercase",
           transition: "color 0.15s",
         }}
-        onMouseEnter={e => e.currentTarget.style.color = "#C41E3A"}
-        onMouseLeave={e => e.currentTarget.style.color = "#999"}>
+        onMouseEnter={e => e.currentTarget.style.color = "#010057"}
+        onMouseLeave={e => e.currentTarget.style.color = "#8888A8"}>
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
             <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -83,21 +82,21 @@ export default function NewPostPage() {
         {/* Header */}
         <div style={{
           marginBottom: 32,
-          borderTop: "3px solid #1A1A1A",
-          borderBottom: "1px solid #D4CFC8",
+          borderTop: "3px solid #010057",
+          borderBottom: "1px solid #DDE0F5",
           padding: "16px 0 14px",
         }}>
           <p style={{
             fontFamily: "var(--font-sans)",
             fontSize: 10, fontWeight: 700, letterSpacing: "2.5px",
-            color: "#C41E3A", textTransform: "uppercase", marginBottom: 10,
+            color: "#010057", textTransform: "uppercase", marginBottom: 10,
           }}>
             Open Publishing · No Account Needed
           </p>
           <h1 style={{
             fontFamily: "var(--font-serif)",
             fontSize: 34, fontWeight: 700,
-            color: "#1A1A1A", letterSpacing: "-0.5px",
+            color: "#010057", letterSpacing: "-0.5px",
             lineHeight: 1.1,
           }}>
             Share Your Insight
@@ -107,8 +106,8 @@ export default function NewPostPage() {
         {/* Form card */}
         <div style={{
           background: "#fff",
-          border: "1px solid #D4CFC8",
-          borderTop: "3px solid #1A1A1A",
+          border: "1px solid #DDE0F5",
+          borderTop: "3px solid #010057",
           padding: "36px",
         }}>
           <Field label="Post Title" error={errors.title} hint="Give your post a clear, compelling title">
@@ -118,8 +117,8 @@ export default function NewPostPage() {
               value={form.title}
               onChange={(e) => set("title", e.target.value)}
               style={inputStyle(!!errors.title)}
-              onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
-              onBlur={e => e.currentTarget.style.borderColor = errors.title ? "#C41E3A" : "#D4CFC8"}
+              onFocus={e => e.currentTarget.style.borderColor = "#010057"}
+              onBlur={e => e.currentTarget.style.borderColor = errors.title ? "#DC2626" : "#DDE0F5"}
             />
           </Field>
 
@@ -129,8 +128,8 @@ export default function NewPostPage() {
               value={form.date}
               onChange={(e) => set("date", e.target.value)}
               style={inputStyle(!!errors.date)}
-              onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
-              onBlur={e => e.currentTarget.style.borderColor = errors.date ? "#C41E3A" : "#D4CFC8"}
+              onFocus={e => e.currentTarget.style.borderColor = "#010057"}
+              onBlur={e => e.currentTarget.style.borderColor = errors.date ? "#DC2626" : "#DDE0F5"}
             />
           </Field>
 
@@ -138,34 +137,28 @@ export default function NewPostPage() {
             <label style={{
               display: "flex", alignItems: "center", gap: 12,
               padding: "11px 14px",
-              border: "1px dashed #D4CFC8",
-              background: "#FAF8F5",
+              border: "1px dashed #DDE0F5",
+              background: "#F0F0FA",
               cursor: "pointer",
               transition: "border-color 0.15s",
             }}
-            onMouseEnter={e => e.currentTarget.style.borderColor = "#1A1A1A"}
-            onMouseLeave={e => e.currentTarget.style.borderColor = "#D4CFC8"}>
+            onMouseEnter={e => e.currentTarget.style.borderColor = "#010057"}
+            onMouseLeave={e => e.currentTarget.style.borderColor = "#DDE0F5"}>
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
-                  stroke="#C41E3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  stroke="#010057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: imageFile ? "#1A1A1A" : "#999", fontWeight: 500 }}>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: imageFile ? "#010057" : "#8888A8", fontWeight: 500 }}>
                 {imageFile ? imageFile.name : "Click to browse image"}
               </span>
               <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
             </label>
             {imagePreview && (
-              <div style={{
-                marginTop: 10, overflow: "hidden",
-                border: "1px solid #D4CFC8", height: 160, position: "relative",
-              }}>
+              <div style={{ marginTop: 10, overflow: "hidden", border: "1px solid #DDE0F5", height: 160, position: "relative" }}>
                 <img src={imagePreview} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 {uploadProgress !== null && (
-                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: "#EAE7E0" }}>
-                    <div style={{
-                      height: "100%", background: "#C41E3A",
-                      width: `${uploadProgress}%`, transition: "width 0.3s",
-                    }}/>
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: "#EEEEF8" }}>
+                    <div style={{ height: "100%", background: "#010057", width: `${uploadProgress}%`, transition: "width 0.3s" }}/>
                   </div>
                 )}
               </div>
@@ -176,7 +169,7 @@ export default function NewPostPage() {
             label="Content"
             error={errors.description}
             hint="Write your full post content here"
-            extra={<span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#999" }}>{charCount} chars</span>}
+            extra={<span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#8888A8" }}>{charCount} chars</span>}
           >
             <textarea
               placeholder="Share your tech insight, experience, or opinion..."
@@ -190,32 +183,31 @@ export default function NewPostPage() {
                 lineHeight: 1.8, minHeight: 200,
                 fontSize: 15,
               }}
-              onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
-              onBlur={e => e.currentTarget.style.borderColor = errors.description ? "#C41E3A" : "#D4CFC8"}
+              onFocus={e => e.currentTarget.style.borderColor = "#010057"}
+              onBlur={e => e.currentTarget.style.borderColor = errors.description ? "#DC2626" : "#DDE0F5"}
             />
           </Field>
 
           {errors.submit && (
             <div style={{
               padding: "12px 16px",
-              border: "1px solid #fca5a5",
-              background: "#fff5f5",
+              border: "1px solid #FECACA",
+              background: "#FEF2F2",
               fontFamily: "var(--font-sans)",
-              color: "#C41E3A", fontSize: 13, marginBottom: 24,
+              color: "#DC2626", fontSize: 13, marginBottom: 24,
             }}>
               {errors.submit}
             </div>
           )}
 
-          {/* Divider */}
-          <div style={{ borderTop: "1px solid #EAE7E0", marginBottom: 20 }}/>
+          <div style={{ borderTop: "1px solid #EEEEF8", marginBottom: 20 }}/>
 
           <button
             onClick={handleSubmit}
             disabled={loading}
             style={{
               width: "100%", padding: "14px",
-              background: loading ? "#888" : "#1A1A1A",
+              background: loading ? "#8888A8" : "#010057",
               color: "white",
               fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 700,
               border: "none", cursor: loading ? "not-allowed" : "pointer",
@@ -229,7 +221,7 @@ export default function NewPostPage() {
             {loading ? <><Spinner /> Publishing...</> : "Publish Post"}
           </button>
 
-          <p style={{ fontFamily: "var(--font-sans)", textAlign: "center", fontSize: 11, color: "#bbb", marginTop: 14, letterSpacing: "0.3px" }}>
+          <p style={{ fontFamily: "var(--font-sans)", textAlign: "center", fontSize: 11, color: "#8888A8", marginTop: 14, letterSpacing: "0.3px" }}>
             By publishing, you agree to share this content openly on TechSphere.
           </p>
         </div>
@@ -241,10 +233,10 @@ export default function NewPostPage() {
 function inputStyle(hasError) {
   return {
     width: "100%", padding: "11px 13px",
-    border: `1px solid ${hasError ? "#C41E3A" : "#D4CFC8"}`,
+    border: `1px solid ${hasError ? "#DC2626" : "#DDE0F5"}`,
     background: "#fff",
     fontFamily: "var(--font-sans)",
-    fontSize: 14, color: "#1A1A1A",
+    fontSize: 14, color: "#010057",
     outline: "none",
     transition: "border-color 0.15s",
   };
@@ -256,7 +248,7 @@ function Field({ label, error, hint, extra, children }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 7 }}>
         <label style={{
           fontFamily: "var(--font-sans)",
-          fontSize: 10, fontWeight: 700, color: "#1A1A1A",
+          fontSize: 10, fontWeight: 700, color: "#010057",
           letterSpacing: "1px", textTransform: "uppercase",
         }}>
           {label}
@@ -265,9 +257,9 @@ function Field({ label, error, hint, extra, children }) {
       </div>
       {children}
       {error ? (
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#C41E3A", marginTop: 5 }}>⚠ {error}</p>
+        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#DC2626", marginTop: 5 }}>⚠ {error}</p>
       ) : hint ? (
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#bbb", marginTop: 5 }}>{hint}</p>
+        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#8888A8", marginTop: 5 }}>{hint}</p>
       ) : null}
     </div>
   );
@@ -281,8 +273,6 @@ function Spinner() {
       borderTopColor: "white",
       borderRadius: "50%",
       animation: "spin 0.7s linear infinite",
-    }}>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-    </div>
+    }}/>
   );
 }

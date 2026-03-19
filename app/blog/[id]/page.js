@@ -58,33 +58,33 @@ export default function BlogPostPage() {
   if (notFound) return <NotFoundState />;
 
   return (
-    <div style={{ background: "#FAF8F5" }}>
+    <div style={{ background: "#F0F0FA" }}>
 
       {/* ── Breadcrumb bar ─────────────────────── */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #D4CFC8" }}>
+      <div style={{ background: "#fff", borderBottom: "1px solid #DDE0F5" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px", height: 44, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <a href="/" style={{
             display: "inline-flex", alignItems: "center", gap: 6,
             fontFamily: "var(--font-sans)",
-            color: "#888", fontSize: 11, fontWeight: 700,
+            color: "#8888A8", fontSize: 11, fontWeight: 700,
             textDecoration: "none", letterSpacing: "1px",
             textTransform: "uppercase",
             transition: "color 0.15s",
           }}
-          onMouseEnter={e => e.currentTarget.style.color = "#C41E3A"}
-          onMouseLeave={e => e.currentTarget.style.color = "#888"}>
+          onMouseEnter={e => e.currentTarget.style.color = "#010057"}
+          onMouseLeave={e => e.currentTarget.style.color = "#8888A8"}>
             <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
               <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             All Articles
           </a>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#999", letterSpacing: "0.3px" }}>{readTime} min read</span>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#8888A8", letterSpacing: "0.3px" }}>{readTime} min read</span>
             {isAdmin && (
               <button onClick={handleDelete} disabled={deleting} style={{
                 background: "transparent",
-                border: "1px solid #fca5a5",
-                color: deleting ? "#999" : "#C41E3A",
+                border: "1px solid #FECACA",
+                color: deleting ? "#8888A8" : "#DC2626",
                 padding: "4px 14px", fontSize: 11,
                 cursor: deleting ? "not-allowed" : "pointer",
                 fontFamily: "var(--font-sans)", fontWeight: 700,
@@ -105,44 +105,43 @@ export default function BlogPostPage() {
         <main>
           {/* Cover image */}
           {post.imageUrl && (
-            <div style={{ height: 420, overflow: "hidden", background: "#D4CFC8" }}>
+            <div style={{ height: 420, overflow: "hidden", background: "#DDE0F5" }}>
               <img src={post.imageUrl} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
             </div>
           )}
 
           {/* Article */}
-          <article style={{ background: "#fff", border: "1px solid #D4CFC8", borderTop: "3px solid #1A1A1A" }}>
+          <article style={{ background: "#fff", border: "1px solid #DDE0F5", borderTop: "3px solid #010057" }}>
 
             {/* Article header */}
-            <div style={{ padding: "36px 44px 28px", borderBottom: "1px solid #EAE7E0" }}>
+            <div style={{ padding: "36px 44px 28px", borderBottom: "1px solid #EEEEF8" }}>
               <p style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: 10, color: "#999", fontWeight: 700,
+                fontSize: 10, color: "#8888A8", fontWeight: 700,
                 letterSpacing: "1.5px", textTransform: "uppercase",
                 marginBottom: 16,
               }}>
-                <span style={{ color: "#C41E3A" }}>TechSphere</span>
+                <span style={{ color: "#010057" }}>TechSphere</span>
                 {" · "}{displayDate}{" · "}{readTime} min read
               </p>
 
               <h1 style={{
                 fontFamily: "var(--font-serif)",
                 fontSize: "clamp(24px, 3.5vw, 40px)",
-                fontWeight: 700, color: "#1A1A1A",
+                fontWeight: 700, color: "#010057",
                 lineHeight: 1.18, letterSpacing: "-0.3px",
               }}>
                 {post.title}
               </h1>
             </div>
 
-            {/* Decorative rule */}
-            <div style={{ height: 1, background: "#EAE7E0", margin: "0 44px" }}/>
+            <div style={{ height: 1, background: "#EEEEF8", margin: "0 44px" }}/>
 
             {/* Article body */}
             <div className="article-body" style={{ padding: "32px 44px 44px" }}>
               <p style={{
                 fontFamily: "var(--font-serif)",
-                fontSize: 17, color: "#2a2a2a",
+                fontSize: 17, color: "#1A1A3E",
                 lineHeight: 2.0, whiteSpace: "pre-wrap",
                 fontWeight: 400,
               }}>
@@ -152,22 +151,22 @@ export default function BlogPostPage() {
 
             {/* Article footer */}
             <div style={{
-              borderTop: "1px solid #EAE7E0",
+              borderTop: "1px solid #EEEEF8",
               padding: "16px 44px",
               display: "flex", alignItems: "center", gap: 10,
-              background: "#FAF8F5",
+              background: "#F0F0FA",
             }}>
               <div style={{
                 width: 28, height: 28,
-                background: "#1A1A1A",
+                background: "#010057",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 flexShrink: 0,
               }}>
                 <img src="/logo/logo.png" alt="TechSphere" style={{ width: 16, height: 16, objectFit: "contain" }} />
               </div>
               <div>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, color: "#1A1A1A", display: "block", letterSpacing: "0.5px" }}>TechSphere</span>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#999" }}>Open Tech Publication</span>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, color: "#010057", display: "block", letterSpacing: "0.5px" }}>TechSphere</span>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8" }}>Open Tech Publication</span>
               </div>
             </div>
           </article>
@@ -175,8 +174,8 @@ export default function BlogPostPage() {
           {/* Write CTA */}
           <div style={{
             marginTop: 2,
-            background: "#1A1A1A",
-            borderTop: "4px solid #C41E3A",
+            background: "#010057",
+            borderTop: "4px solid #0A0099",
             padding: "32px 44px",
             display: "flex", alignItems: "center",
             justifyContent: "space-between", flexWrap: "wrap", gap: 16,
@@ -189,17 +188,14 @@ export default function BlogPostPage() {
                 Publish your own post in seconds — no account needed.
               </p>
             </div>
-            <a href="/new" style={{
+            <a href="/new" className="h-opacity" style={{
               padding: "11px 24px",
-              background: "#C41E3A", color: "#ffffff",
+              background: "#fff", color: "#010057",
               fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 11,
               textDecoration: "none",
               letterSpacing: "1px", textTransform: "uppercase",
-              transition: "opacity 0.15s",
               whiteSpace: "nowrap",
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            }}>
               Write a Post →
             </a>
           </div>
@@ -209,8 +205,8 @@ export default function BlogPostPage() {
         <aside className="blog-sidebar" style={{ position: "sticky", top: 80 }}>
 
           {/* Search */}
-          <div style={{ background: "#fff", border: "1px solid #D4CFC8", borderTop: "3px solid #1A1A1A", padding: "18px 20px", marginBottom: 2 }}>
-            <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#1A1A1A", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 12 }}>
+          <div style={{ background: "#fff", border: "1px solid #DDE0F5", borderTop: "3px solid #010057", padding: "18px 20px", marginBottom: 2 }}>
+            <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#010057", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 12 }}>
               Search
             </h3>
             <form onSubmit={handleSearch} className="sidebar-search-form">
@@ -220,8 +216,8 @@ export default function BlogPostPage() {
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search articles..."
                 className="sidebar-search-input"
-                onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
-                onBlur={e => e.currentTarget.style.borderColor = "#D4CFC8"}
+                onFocus={e => e.currentTarget.style.borderColor = "#010057"}
+                onBlur={e => e.currentTarget.style.borderColor = "#DDE0F5"}
               />
               <button type="submit" className="sidebar-search-btn">Go</button>
             </form>
@@ -229,8 +225,8 @@ export default function BlogPostPage() {
 
           {/* Recent Posts */}
           {recent.length > 0 && (
-            <div style={{ background: "#fff", border: "1px solid #D4CFC8", borderTop: "none", padding: "18px 20px", marginBottom: 2 }}>
-              <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#1A1A1A", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 14, paddingBottom: 10, borderBottom: "1px solid #EAE7E0" }}>
+            <div style={{ background: "#fff", border: "1px solid #DDE0F5", borderTop: "none", padding: "18px 20px", marginBottom: 2 }}>
+              <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#010057", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 14, paddingBottom: 10, borderBottom: "1px solid #EEEEF8" }}>
                 More Articles
               </h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -241,12 +237,12 @@ export default function BlogPostPage() {
               <a href="/" style={{
                 display: "block", marginTop: 14,
                 fontFamily: "var(--font-sans)",
-                fontSize: 10, fontWeight: 700, color: "#C41E3A",
+                fontSize: 10, fontWeight: 700, color: "#010057",
                 textDecoration: "none", letterSpacing: "1px",
                 textTransform: "uppercase",
                 transition: "opacity 0.15s",
               }}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.7"}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.65"}
               onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
                 View all articles →
               </a>
@@ -254,8 +250,8 @@ export default function BlogPostPage() {
           )}
 
           {/* Browse Topics */}
-          <div style={{ background: "#fff", border: "1px solid #D4CFC8", borderTop: "none", padding: "18px 20px", marginBottom: 2 }}>
-            <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#1A1A1A", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #EAE7E0" }}>
+          <div style={{ background: "#fff", border: "1px solid #DDE0F5", borderTop: "none", padding: "18px 20px", marginBottom: 2 }}>
+            <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#010057", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #EEEEF8" }}>
               Sections
             </h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -263,17 +259,17 @@ export default function BlogPostPage() {
                 <a key={tag} href={`/?search=${encodeURIComponent(tag.split(" ")[0])}`} style={{
                   display: "inline-block",
                   padding: "4px 10px",
-                  border: "1px solid #D4CFC8",
-                  background: "#FAF8F5",
+                  border: "1px solid #DDE0F5",
+                  background: "#F0F0FA",
                   fontFamily: "var(--font-sans)",
                   fontSize: 10, fontWeight: 700,
-                  color: "#666",
+                  color: "#55557A",
                   textDecoration: "none",
                   letterSpacing: "0.5px",
                   transition: "border-color 0.15s, color 0.15s, background 0.15s",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "#C41E3A"; e.currentTarget.style.color = "#C41E3A"; e.currentTarget.style.background = "#fff"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "#D4CFC8"; e.currentTarget.style.color = "#666"; e.currentTarget.style.background = "#FAF8F5"; }}>
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "#010057"; e.currentTarget.style.color = "#010057"; e.currentTarget.style.background = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "#DDE0F5"; e.currentTarget.style.color = "#55557A"; e.currentTarget.style.background = "#F0F0FA"; }}>
                   {tag}
                 </a>
               ))}
@@ -281,20 +277,17 @@ export default function BlogPostPage() {
           </div>
 
           {/* Newsletter */}
-          <div style={{ background: "#1A1A1A", borderTop: "3px solid #C41E3A", padding: "20px" }}>
+          <div style={{ background: "#010057", borderTop: "3px solid #0A0099", padding: "20px" }}>
             <p style={{ fontFamily: "var(--font-serif)", fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 6 }}>Get the Newsletter</p>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.6, marginBottom: 14 }}>Weekly tech articles, curated and free.</p>
-            <a href="/newsletter" style={{
+            <a href="/newsletter" className="h-opacity" style={{
               display: "block", textAlign: "center",
               padding: "9px 16px",
-              background: "#C41E3A", color: "#fff",
+              background: "#fff", color: "#010057",
               fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700,
               textDecoration: "none",
               letterSpacing: "1px", textTransform: "uppercase",
-              transition: "opacity 0.15s",
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            }}>
               Subscribe Free →
             </a>
           </div>
@@ -317,33 +310,33 @@ function RecentPostItem({ post, isLast }) {
       style={{
         display: "block",
         padding: "11px 0",
-        borderBottom: isLast ? "none" : "1px solid #EAE7E0",
+        borderBottom: isLast ? "none" : "1px solid #EEEEF8",
         textDecoration: "none",
       }}>
       <p style={{
         fontFamily: "var(--font-serif)",
         fontSize: 13, fontWeight: 600,
-        color: hov ? "#C41E3A" : "#1A1A1A",
+        color: hov ? "#0A0099" : "#010057",
         lineHeight: 1.4, marginBottom: 4,
         display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
         transition: "color 0.15s",
       }}>{post.title}</p>
-      <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#999" }}>{date}</span>
+      <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8" }}>{date}</span>
     </a>
   );
 }
 
 function LoadingState() {
   return (
-    <div style={{ background: "#FAF8F5" }}>
+    <div style={{ background: "#F0F0FA" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px" }}>
-        <div style={{ background: "white", border: "1px solid #D4CFC8", borderTop: "3px solid #1A1A1A" }}>
-          <div style={{ background: "linear-gradient(90deg,#F5F3EF 25%,#EAE7E0 50%,#F5F3EF 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", height: 280 }}/>
+        <div style={{ background: "white", border: "1px solid #DDE0F5", borderTop: "3px solid #010057" }}>
+          <div style={{ background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", height: 280 }}/>
           <div style={{ padding: "40px 44px" }}>
             {[60,90,80,100,75,65].map((w, i) => (
               <div key={i} style={{
                 height: i===1 ? 24 : 13, width: `${w}%`,
-                background: "linear-gradient(90deg,#F5F3EF 25%,#EAE7E0 50%,#F5F3EF 75%)",
+                background: "linear-gradient(90deg,#F0F0FA 25%,#DDE0F5 50%,#F0F0FA 75%)",
                 backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 16,
               }}/>
             ))}
@@ -356,19 +349,19 @@ function LoadingState() {
 
 function NotFoundState() {
   return (
-    <div style={{ textAlign: "center", padding: "120px 24px", background: "#FAF8F5", minHeight: "100vh" }}>
-      <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#C41E3A", letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 16 }}>
+    <div style={{ textAlign: "center", padding: "120px 24px", background: "#F0F0FA", minHeight: "100vh" }}>
+      <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#010057", letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 16 }}>
         404 — Not Found
       </p>
-      <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 700, color: "#1A1A1A", marginBottom: 12, letterSpacing: "-0.3px" }}>
+      <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 700, color: "#010057", marginBottom: 12, letterSpacing: "-0.3px" }}>
         Post Not Found
       </h2>
-      <p style={{ fontFamily: "var(--font-sans)", color: "#666", fontSize: 15, marginBottom: 36, lineHeight: 1.6 }}>
+      <p style={{ fontFamily: "var(--font-sans)", color: "#55557A", fontSize: 15, marginBottom: 36, lineHeight: 1.6 }}>
         This post may have been removed or the link is incorrect.
       </p>
       <a href="/" style={{
         display: "inline-block", padding: "12px 28px",
-        background: "#1A1A1A", color: "white",
+        background: "#010057", color: "white",
         fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 11,
         textDecoration: "none", letterSpacing: "1px", textTransform: "uppercase",
       }}>← Back to Home</a>
