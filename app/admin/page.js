@@ -34,14 +34,14 @@ export default function AdminLoginPage() {
       alignItems: "center",
       justifyContent: "center",
       padding: "24px",
-      background: "#FAF8F5",
+      background: "#F0F0FA",
     }}>
       <div style={{
         width: "100%",
         maxWidth: 400,
         background: "#ffffff",
         border: "1px solid #D4CFC8",
-        borderTop: "3px solid #1A1A1A",
+        borderTop: "3px solid #010057",
         padding: "40px 36px",
       }}>
 
@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div style={{
             fontFamily: "var(--font-serif)",
-            fontSize: 22, fontWeight: 900, color: "#1A1A1A",
+            fontSize: 22, fontWeight: 900, color: "#010057",
             letterSpacing: "-0.3px", marginBottom: 4,
           }}>TechSphere</div>
           <div style={{ width: 24, height: 2, background: "#010057", margin: "0 auto 10px" }}/>
@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
               display: "block",
               fontFamily: "var(--font-sans)",
               fontSize: 10, fontWeight: 700,
-              color: "#1A1A1A", marginBottom: 7,
+              color: "#010057", marginBottom: 7,
               letterSpacing: "1px", textTransform: "uppercase",
             }}>
               Email
@@ -88,11 +88,11 @@ export default function AdminLoginPage() {
                 outline: "none",
                 fontFamily: "var(--font-sans)",
                 fontSize: 14,
-                color: "#1A1A1A",
+                color: "#010057",
                 background: "#fff",
                 transition: "border-color 0.15s",
               }}
-              onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
+              onFocus={e => e.currentTarget.style.borderColor = "#010057"}
               onBlur={e => e.currentTarget.style.borderColor = "#D4CFC8"}
             />
           </div>
@@ -103,7 +103,7 @@ export default function AdminLoginPage() {
               display: "block",
               fontFamily: "var(--font-sans)",
               fontSize: 10, fontWeight: 700,
-              color: "#1A1A1A", marginBottom: 7,
+              color: "#010057", marginBottom: 7,
               letterSpacing: "1px", textTransform: "uppercase",
             }}>
               Password
@@ -122,11 +122,11 @@ export default function AdminLoginPage() {
                 outline: "none",
                 fontFamily: "var(--font-sans)",
                 fontSize: 14,
-                color: "#1A1A1A",
+                color: "#010057",
                 background: "#fff",
                 transition: "border-color 0.15s",
               }}
-              onFocus={e => e.currentTarget.style.borderColor = "#1A1A1A"}
+              onFocus={e => e.currentTarget.style.borderColor = "#010057"}
               onBlur={e => e.currentTarget.style.borderColor = "#D4CFC8"}
             />
           </div>
@@ -152,7 +152,7 @@ export default function AdminLoginPage() {
             style={{
               width: "100%",
               padding: "11px",
-              background: loading ? "#888" : "#1A1A1A",
+              background: loading ? "#8888A8" : "#010057",
               color: "white",
               fontFamily: "var(--font-sans)", fontWeight: 700,
               fontSize: 11,
@@ -176,7 +176,7 @@ export default function AdminLoginPage() {
             letterSpacing: "0.5px",
             transition: "color 0.15s",
           }}
-          onMouseEnter={e => e.currentTarget.style.color = "#1A1A1A"}
+          onMouseEnter={e => e.currentTarget.style.color = "#010057"}
           onMouseLeave={e => e.currentTarget.style.color = "#999"}>
             ← Back to site
           </a>
