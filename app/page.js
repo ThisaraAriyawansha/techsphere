@@ -45,107 +45,167 @@ export default function HomePage() {
     <div style={{ background: "#FFFFFF" }}>
 
       {/* ── Hero ─────────────────────────────────── */}
-      <section style={{ background: "#010057" }}>
+      <section style={{ background: "#fff", borderBottom: "1px solid #DDE0F5", overflow: "hidden" }}>
 
-        {/* Top edition bar */}
-        <div style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "11px 32px" }}>
+        {/* Edition bar */}
+        <div style={{ background: "#F0F0FA", borderBottom: "1px solid #DDE0F5", padding: "9px 24px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: "2px", textTransform: "uppercase" }}>
-              Technology & Innovation
-            </span>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "rgba(255,255,255,0.18)", letterSpacing: "1px" }}>
-              Open · Free · Community
-            </span>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8", letterSpacing: "2px", textTransform: "uppercase" }}>Technology & Innovation</span>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#8888A8", letterSpacing: "1px" }}>Open · Free · Community</span>
           </div>
         </div>
 
-        {/* Main centered content */}
-        <div style={{ maxWidth: 720, margin: "0 auto", padding: "80px 24px 72px", textAlign: "center" }}>
+        {/* Two-column content */}
+        <div className="hero-two-col">
 
-          {/* Category pill */}
-          <div style={{
-            display: "inline-block", marginBottom: 32,
-            padding: "5px 18px",
-            border: "1px solid rgba(255,255,255,0.12)",
-            fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700,
-            letterSpacing: "3px", textTransform: "uppercase",
-            color: "rgba(255,255,255,0.38)",
-          }}>
-            Open Tech Publication
-          </div>
+          {/* ── LEFT: Text ── */}
+          <div>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              marginBottom: 24, padding: "5px 14px",
+              border: "1px solid #DDE0F5", background: "#F0F0FA",
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#010057", display: "inline-block" }}/>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#010057" }}>
+                Open Tech Publication
+              </span>
+            </div>
 
-          {/* Brand headline */}
-          <h1 style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(52px, 8vw, 96px)",
-            fontWeight: 900, color: "#FFFFFF",
-            lineHeight: 0.95, letterSpacing: "-3px",
-            marginBottom: 20,
-          }}>
-            TechSphere
-          </h1>
+            <h1 style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(36px, 5vw, 64px)",
+              fontWeight: 900, color: "#010057",
+              lineHeight: 1.05, letterSpacing: "-1.5px",
+              marginBottom: 20,
+            }}>
+              Where Tech<br/>Minds Meet
+            </h1>
 
-          {/* Thin divider */}
-          <div style={{ width: 40, height: 1, background: "rgba(255,255,255,0.18)", margin: "0 auto 24px" }}/>
+            <p style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 15, color: "#55557A",
+              lineHeight: 1.8, maxWidth: 420, marginBottom: 36, fontWeight: 400,
+            }}>
+              Discover tutorials, insights, and breakthroughs from developers and engineers worldwide. No login. Always free.
+            </p>
 
-          {/* Subtitle */}
-          <p style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: 15, color: "rgba(255,255,255,0.5)",
-            lineHeight: 1.8, maxWidth: 460, margin: "0 auto 40px",
-            fontWeight: 300,
-          }}>
-            Discover tutorials, insights, and breakthroughs from developers and engineers worldwide. No login. Always free.
-          </p>
-
-          {/* CTAs */}
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#posts"
-              style={{
-                padding: "12px 32px", background: "#fff", color: "#010057",
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 44 }}>
+              <a href="#posts" style={{
+                padding: "13px 32px", background: "#010057", color: "#fff",
                 fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 11,
                 textDecoration: "none", letterSpacing: "1.5px", textTransform: "uppercase",
                 transition: "opacity 0.15s",
               }}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
               onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-              Explore Articles
-            </a>
-            <a href="/new"
-              style={{
-                padding: "12px 32px",
-                border: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.65)",
+                Explore Articles
+              </a>
+              <a href="/new" style={{
+                padding: "13px 32px",
+                border: "1px solid #010057", color: "#010057",
                 fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 11,
                 textDecoration: "none", letterSpacing: "1.5px", textTransform: "uppercase",
-                transition: "border-color 0.15s, color 0.15s",
+                transition: "background 0.15s, color 0.15s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.45)"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)"; e.currentTarget.style.color = "rgba(255,255,255,0.65)"; }}>
-              Write a Post
-            </a>
-          </div>
-        </div>
-
-        {/* Stats strip */}
-        <div className="hero-stats-inline">
-          {[
-            { value: loading ? "—" : posts.length, label: "Articles Published" },
-            { value: "Always",  label: "Free to Read" },
-            { value: "Never",   label: "Login Required" },
-            { value: "Open",    label: "Community" },
-          ].map((s, i) => (
-            <div key={s.label} style={{
-              padding: "22px 16px", textAlign: "center",
-              borderRight: i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none",
-            }}>
-              <div style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 700, color: "rgba(255,255,255,0.85)", letterSpacing: "-0.5px" }}>
-                {s.value}
-              </div>
-              <div style={{ fontFamily: "var(--font-sans)", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 3 }}>
-                {s.label}
-              </div>
+              onMouseEnter={e => { e.currentTarget.style.background = "#010057"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#010057"; }}>
+                Write a Post
+              </a>
             </div>
-          ))}
+
+            <div style={{ display: "flex", gap: 32, flexWrap: "wrap", paddingTop: 24, borderTop: "1px solid #DDE0F5" }}>
+              {[
+                { value: loading ? "—" : posts.length, label: "Articles" },
+                { value: "Free",  label: "Always" },
+                { value: "Open",  label: "Community" },
+              ].map(s => (
+                <div key={s.label}>
+                  <div style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 700, color: "#010057", letterSpacing: "-0.5px" }}>{s.value}</div>
+                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 9, color: "#8888A8", letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 2 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── RIGHT: Robot illustration ── */}
+          <div className="hero-illus-wrap" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 400 }}>
+
+            {/* Orbit dots */}
+            <div style={{ position: "absolute", top: "50%", left: "50%", width: 0, height: 0 }}>
+              <div className="hero-orbit-1" style={{ position: "absolute", width: 10, height: 10, borderRadius: "50%", background: "#010057", opacity: 0.2, marginTop: -5, marginLeft: -5 }}/>
+            </div>
+            <div style={{ position: "absolute", top: "50%", left: "50%", width: 0, height: 0 }}>
+              <div className="hero-orbit-2" style={{ position: "absolute", width: 7, height: 7, borderRadius: "50%", background: "#4F8EF7", opacity: 0.5, marginTop: -3.5, marginLeft: -3.5 }}/>
+            </div>
+
+            {/* Floating code chips */}
+            <div className="hero-chip-1" style={{
+              position: "absolute", top: "8%", left: "2%",
+              background: "#F0F0FA", border: "1px solid #DDE0F5",
+              padding: "8px 14px", fontFamily: "monospace", fontSize: 12,
+              color: "#010057", whiteSpace: "nowrap",
+              boxShadow: "0 2px 12px rgba(1,0,87,0.06)",
+            }}>{"<TechSphere />"}</div>
+
+            <div className="hero-chip-2" style={{
+              position: "absolute", bottom: "14%", right: "0%",
+              background: "#F0F0FA", border: "1px solid #DDE0F5",
+              padding: "8px 14px", fontFamily: "monospace", fontSize: 11,
+              color: "#55557A", whiteSpace: "nowrap",
+              boxShadow: "0 2px 12px rgba(1,0,87,0.06)",
+            }}>{"// Learn. Build. Share."}</div>
+
+            {/* Glow under robot */}
+            <div className="hero-bot-glow" style={{
+              position: "absolute", bottom: "8%", left: "50%",
+              width: 180, height: 24, background: "rgba(1,0,87,0.07)",
+              filter: "blur(18px)", borderRadius: "50%", transform: "translateX(-50%)",
+            }}/>
+
+            {/* Robot SVG — navy on white */}
+            <svg className="hero-robot" width="300" height="360" viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="148" y="18" width="4" height="42" rx="2" fill="#DDE0F5"/>
+              <circle cx="150" cy="13" r="9" fill="#010057" opacity="0.1"/>
+              <circle className="hero-ant-pulse" cx="150" cy="13" r="6" fill="#010057"/>
+              <circle cx="150" cy="13" r="3" fill="#fff"/>
+              <rect x="85" y="58" width="130" height="108" rx="18" fill="#F0F0FA" stroke="#DDE0F5" strokeWidth="1.5"/>
+              <rect x="89" y="62" width="55" height="16" rx="8" fill="#fff" opacity="0.7"/>
+              <rect x="103" y="86" width="38" height="30" rx="7" fill="#010057"/>
+              <circle cx="122" cy="101" r="11" fill="#4F8EF7"/>
+              <circle cx="122" cy="101" r="5.5" fill="#fff" opacity="0.95"/>
+              <circle cx="125" cy="98"  r="2.2" fill="#fff"/>
+              <rect x="159" y="86" width="38" height="30" rx="7" fill="#010057"/>
+              <circle cx="178" cy="101" r="11" fill="#4F8EF7"/>
+              <circle cx="178" cy="101" r="5.5" fill="#fff" opacity="0.95"/>
+              <circle cx="181" cy="98"  r="2.2" fill="#fff"/>
+              <rect x="120" y="138" width="60" height="10" rx="5" fill="#DDE0F5"/>
+              <rect x="127" y="141" width="22" height="4" rx="2" fill="#010057" opacity="0.45"/>
+              <rect x="153" y="141" width="20" height="4" rx="2" fill="#4F8EF7" opacity="0.4"/>
+              <rect x="135" y="166" width="30" height="18" rx="4" fill="#DDE0F5"/>
+              <rect x="70" y="182" width="160" height="128" rx="18" fill="#F0F0FA" stroke="#DDE0F5" strokeWidth="1.5"/>
+              <rect x="96" y="200" width="108" height="84" rx="7" fill="#010057" stroke="#010057" strokeWidth="1"/>
+              <rect x="104" y="212" width="38" height="3" rx="1.5" fill="#4F8EF7" opacity="0.9"/>
+              <rect x="104" y="220" width="68" height="3" rx="1.5" fill="rgba(255,255,255,0.22)"/>
+              <rect x="104" y="228" width="52" height="3" rx="1.5" fill="rgba(255,255,255,0.14)"/>
+              <rect x="104" y="236" width="62" height="3" rx="1.5" fill="#4F8EF7" opacity="0.45"/>
+              <rect x="104" y="244" width="44" height="3" rx="1.5" fill="rgba(255,255,255,0.11)"/>
+              <rect x="104" y="252" width="72" height="3" rx="1.5" fill="rgba(255,255,255,0.16)"/>
+              <rect x="104" y="260" width="32" height="3" rx="1.5" fill="#4F8EF7" opacity="0.55"/>
+              <rect x="104" y="268" width="56" height="3" rx="1.5" fill="rgba(255,255,255,0.09)"/>
+              <circle cx="87"  cy="216" r="3" fill="#010057" opacity="0.3"/>
+              <circle cx="87"  cy="234" r="3" fill="#010057" opacity="0.18"/>
+              <circle cx="213" cy="216" r="3" fill="#010057" opacity="0.3"/>
+              <circle cx="213" cy="234" r="3" fill="#010057" opacity="0.18"/>
+              <rect x="18"  y="190" width="52" height="26" rx="13" fill="#F0F0FA" stroke="#DDE0F5" strokeWidth="1.5"/>
+              <circle cx="34" cy="203" r="6" fill="#010057" opacity="0.15"/>
+              <rect x="230" y="190" width="52" height="26" rx="13" fill="#F0F0FA" stroke="#DDE0F5" strokeWidth="1.5"/>
+              <circle cx="266" cy="203" r="6" fill="#010057" opacity="0.15"/>
+              <rect x="100" y="306" width="36" height="42" rx="10" fill="#F0F0FA" stroke="#DDE0F5" strokeWidth="1.5"/>
+              <rect x="94"  y="340" width="48" height="12" rx="6"  fill="#DDE0F5" stroke="#DDE0F5" strokeWidth="1"/>
+              <rect x="164" y="306" width="36" height="42" rx="10" fill="#F0F0FA" stroke="#DDE0F5" strokeWidth="1.5"/>
+              <rect x="158" y="340" width="48" height="12" rx="6"  fill="#DDE0F5" stroke="#DDE0F5" strokeWidth="1"/>
+            </svg>
+          </div>
         </div>
       </section>
 
@@ -238,6 +298,53 @@ export default function HomePage() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* ── Explore Topics Strip ─────────────────── */}
+      <section style={{ background: "#F0F0FA", borderTop: "1px solid #DDE0F5", borderBottom: "1px solid #DDE0F5", padding: "40px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ display: "inline-block", width: 20, height: 3, background: "#010057" }}/>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#010057" }}>
+                Explore Topics
+              </span>
+            </div>
+            <a href="/topics" style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, color: "#010057", textDecoration: "none", opacity: 0.6 }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "1"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "0.6"}>
+              View All →
+            </a>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {[
+              { label: "AI & Machine Learning", icon: "🤖", href: "/blog?category=ai" },
+              { label: "Web Development",        icon: "🌐", href: "/blog?category=web" },
+              { label: "Cloud & DevOps",         icon: "☁️", href: "/blog?category=cloud" },
+              { label: "Cybersecurity",          icon: "🔐", href: "/blog?category=security" },
+              { label: "Mobile Development",     icon: "📱", href: "/blog?category=mobile" },
+              { label: "Data Science",           icon: "📊", href: "/blog?category=data" },
+              { label: "Open Source",            icon: "🔓", href: "/blog?category=opensource" },
+              { label: "Programming",            icon: "💻", href: "/blog?category=programming" },
+              { label: "UI & UX Design",         icon: "🎨", href: "/blog?category=ux" },
+              { label: "Tech & Startups",        icon: "🚀", href: "/blog?category=startup" },
+            ].map(tag => (
+              <a key={tag.label} href={tag.href} style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                padding: "8px 16px",
+                background: "#fff",
+                border: "1px solid #DDE0F5",
+                fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600,
+                color: "#010057", textDecoration: "none",
+                transition: "border-color 0.15s, background 0.15s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#010057"; e.currentTarget.style.background = "#010057"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#DDE0F5"; e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#010057"; }}>
+                <span>{tag.icon}</span> {tag.label}
+              </a>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── Why TechSphere ───────────────────────── */}
@@ -392,6 +499,32 @@ function FeaturedRow({ post, secondaryPosts }) {
           {secondaryPosts.map((sp, i) => (
             <SecondaryStory key={sp.id} post={sp} isLast={i === secondaryPosts.length - 1} />
           ))}
+          {/* Fill remaining space */}
+          <div style={{
+            flex: 1, background: "#010057",
+            padding: "20px", display: "flex", flexDirection: "column",
+            justifyContent: "center", alignItems: "flex-start", gap: 10,
+            borderTop: "1px solid #EEEEF8",
+          }}>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>
+              Open Publishing
+            </p>
+            <p style={{ fontFamily: "var(--font-serif)", fontSize: 15, fontWeight: 700, color: "#fff", lineHeight: 1.4 }}>
+              Have an insight to share?
+            </p>
+            <a href="/new" style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              padding: "7px 16px",
+              border: "1px solid rgba(255,255,255,0.25)", color: "#fff",
+              fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700,
+              textDecoration: "none", letterSpacing: "1px", textTransform: "uppercase",
+              transition: "border-color 0.15s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)"}
+            onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"}>
+              Write a Post →
+            </a>
+          </div>
         </div>
       )}
     </div>
