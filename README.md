@@ -61,7 +61,7 @@ TechSphere is a modern, open-access tech blog platform built with Next.js. It al
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/techsphere.git
+   git clone https://github.com/ThisaraAriyawansha/techsphere.git
    cd techsphere
    ```
 
@@ -130,6 +130,4 @@ techsphere/
 
 Posts support a cover image upload (max 5MB, formats: jpg, jpeg, png, webp). Images are uploaded to ImgBB and the URL is stored in Firestore alongside the post data.
 
-## License
 
-This project is open source. See [LICENSE](LICENSE) for details.
