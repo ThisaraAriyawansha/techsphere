@@ -45,132 +45,175 @@ export default function HomePage() {
     <div style={{ background: "#FFFFFF" }}>
 
       {/* ── Hero / Masthead ───────────────────────── */}
-      <section style={{ background: "#ffffff", borderBottom: "1px solid #E8E8ED", overflow: "hidden" }}>
-        <div className="hero-two-col">
+      <section style={{
+        background: "linear-gradient(135deg, #010048 0%, #030870 45%, #010048 100%)",
+        overflow: "hidden",
+        position: "relative",
+        marginTop: -96,
+      }}>
+        {/* Ambient right-side glow */}
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "radial-gradient(ellipse 55% 75% at 72% 50%, rgba(59,130,246,0.14) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+
+        <div className="hero-two-col" style={{ paddingTop: 176, position: "relative" }}>
 
           {/* ── LEFT: Text ── */}
           <div>
-            {/* Editorial section label */}
+            {/* Trust badge */}
             <div style={{
-              display: "flex", alignItems: "center", gap: 10,
-              marginBottom: 24,
+              display: "inline-flex", alignItems: "center", gap: 8,
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.14)",
+              borderRadius: 100,
+              padding: "7px 16px 7px 10px",
+              marginBottom: 32,
             }}>
-              <span style={{ display: "inline-block", width: 28, height: 3, background: "#010048" }}/>
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+                <path d="M12 3L4 7v5c0 5.25 3.5 10.15 8 11.25C17.5 22.15 21 17.25 21 12V7L12 3Z"
+                  stroke="#93C5FD" strokeWidth="1.8" fill="rgba(59,130,246,0.25)"/>
+                <path d="M9 12l2 2 4-4" stroke="#93C5FD" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               <span style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 10, fontWeight: 700,
-                color: "#010048", letterSpacing: "2px",
-                textTransform: "uppercase",
-              }}>
-                Open Tech Publication
-              </span>
+                fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 500,
+                color: "rgba(255,255,255,0.75)", letterSpacing: "0.2px",
+              }}>Open Tech Publication — Always Free</span>
             </div>
 
             <h1 style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(32px, 5vw, 58px)",
-              fontWeight: 900, color: "#1D1D1F",
-              lineHeight: 1.0, letterSpacing: "-1px",
-              marginBottom: 22,
+              fontSize: "clamp(36px, 5.5vw, 64px)",
+              fontWeight: 900, color: "#ffffff",
+              lineHeight: 1.0, letterSpacing: "-2px",
+              marginBottom: 24,
             }}>
-              Where Tech<br/><em style={{ fontStyle: "italic", color: "#010048" }}>Minds</em> Meet
+              Where Tech<br/>
+              <em style={{ fontStyle: "italic", color: "#93C5FD" }}>Minds</em> Meet
             </h1>
 
             <p style={{
               fontFamily: "var(--font-sans)",
-              fontSize: 15, color: "#6E6E73",
-              lineHeight: 1.85, maxWidth: 420, marginBottom: 36, fontWeight: 400,
+              fontSize: 16, color: "rgba(255,255,255,0.6)",
+              lineHeight: 1.8, maxWidth: 420, marginBottom: 40, fontWeight: 400,
             }}>
               Discover tutorials, insights, and breakthroughs from developers and engineers worldwide. No login. Always free.
             </p>
 
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 48 }}>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 56 }}>
               <a href="#posts" style={{
-                padding: "13px 28px", background: "#010048", color: "#fff",
-                fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 12,
-                textDecoration: "none", letterSpacing: "0.8px", textTransform: "uppercase",
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "14px 28px", background: "#ffffff", color: "#010048",
+                fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 14,
+                textDecoration: "none", letterSpacing: "0.2px",
+                borderRadius: 8,
                 transition: "opacity 0.15s, transform 0.15s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "translateY(-2px)"; }}
               onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}>
                 Explore Articles
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </a>
               <a href="/new" style={{
-                padding: "13px 28px",
-                border: "2px solid #010048", color: "#010048",
-                fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 12,
-                textDecoration: "none", letterSpacing: "0.8px", textTransform: "uppercase",
-                transition: "background 0.15s, color 0.15s, transform 0.15s",
+                padding: "14px 28px",
+                border: "1.5px solid rgba(255,255,255,0.3)", color: "#ffffff",
+                fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14,
+                textDecoration: "none", letterSpacing: "0.2px",
+                borderRadius: 8,
+                transition: "background 0.15s, border-color 0.15s, transform 0.15s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#010048"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#010048"; e.currentTarget.style.transform = "translateY(0)"; }}>
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; e.currentTarget.style.transform = "translateY(0)"; }}>
                 Write a Post
               </a>
             </div>
 
             {/* Stats row */}
-            <div style={{ display: "flex", gap: 0, flexWrap: "wrap", paddingTop: 24, borderTop: "1px solid #E8E8ED" }}>
+            <div style={{ display: "flex", gap: 0, flexWrap: "wrap", paddingTop: 28, borderTop: "1px solid rgba(255,255,255,0.1)" }}>
               {[
-                { value: loading ? "—" : posts.length, label: "Articles" },
+                { value: loading ? "—" : `${posts.length}+`, label: "Articles" },
                 { value: "Free",  label: "Always" },
                 { value: "Open",  label: "Community" },
               ].map((s, i) => (
-                <div key={s.label} style={{ paddingRight: 32, paddingLeft: i > 0 ? 32 : 0, borderLeft: i > 0 ? "1px solid #E8E8ED" : "none" }}>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: "#010048", letterSpacing: "-1px", lineHeight: 1 }}>{s.value}</div>
-                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#A1A1A6", marginTop: 4, textTransform: "uppercase", letterSpacing: "1px" }}>{s.label}</div>
+                <div key={s.label} style={{
+                  paddingRight: 36, paddingLeft: i > 0 ? 36 : 0,
+                  borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.1)" : "none",
+                }}>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "#ffffff", letterSpacing: "-1px", lineHeight: 1 }}>{s.value}</div>
+                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 5, textTransform: "uppercase", letterSpacing: "1.5px" }}>{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ── RIGHT: Robot illustration ── */}
-          <div className="hero-illus-wrap" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 400 }}>
-            <div className="hero-bot-glow" style={{
-              position: "absolute", bottom: "8%", left: "50%",
-              width: 180, height: 24, background: "rgba(1,0,72,0.07)",
-              filter: "blur(18px)", borderRadius: "50%", transform: "translateX(-50%)",
-            }}/>
-            <svg className="hero-robot" width="300" height="360" viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="148" y="18" width="4" height="42" rx="2" fill="#E8E8ED"/>
-              <circle cx="150" cy="13" r="9" fill="#010048" opacity="0.1"/>
-              <circle className="hero-ant-pulse" cx="150" cy="13" r="6" fill="#010048"/>
-              <circle cx="150" cy="13" r="3" fill="#fff"/>
-              <rect x="85" y="58" width="130" height="108" rx="18" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="89" y="62" width="55" height="16" rx="8" fill="#fff" opacity="0.7"/>
-              <rect x="103" y="86" width="38" height="30" rx="7" fill="#010048"/>
-              <circle cx="122" cy="101" r="11" fill="#6E6E73"/>
-              <circle cx="122" cy="101" r="5.5" fill="#fff" opacity="0.95"/>
-              <circle cx="125" cy="98"  r="2.2" fill="#fff"/>
-              <rect x="159" y="86" width="38" height="30" rx="7" fill="#010048"/>
-              <circle cx="178" cy="101" r="11" fill="#6E6E73"/>
-              <circle cx="178" cy="101" r="5.5" fill="#fff" opacity="0.95"/>
-              <circle cx="181" cy="98"  r="2.2" fill="#fff"/>
-              <rect x="120" y="138" width="60" height="10" rx="5" fill="#E8E8ED"/>
-              <rect x="127" y="141" width="22" height="4" rx="2" fill="#010048" opacity="0.45"/>
-              <rect x="153" y="141" width="20" height="4" rx="2" fill="#A1A1A6" opacity="0.4"/>
-              <rect x="135" y="166" width="30" height="18" rx="4" fill="#E8E8ED"/>
-              <rect x="70" y="182" width="160" height="128" rx="18" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="96" y="200" width="108" height="84" rx="7" fill="#010048" stroke="#010048" strokeWidth="1"/>
-              <rect x="104" y="212" width="38" height="3" rx="1.5" fill="#A1A1A6" opacity="0.9"/>
-              <rect x="104" y="220" width="68" height="3" rx="1.5" fill="rgba(255,255,255,0.22)"/>
-              <rect x="104" y="228" width="52" height="3" rx="1.5" fill="rgba(255,255,255,0.14)"/>
-              <rect x="104" y="236" width="62" height="3" rx="1.5" fill="#A1A1A6" opacity="0.45"/>
-              <rect x="104" y="244" width="44" height="3" rx="1.5" fill="rgba(255,255,255,0.11)"/>
-              <rect x="104" y="252" width="72" height="3" rx="1.5" fill="rgba(255,255,255,0.16)"/>
-              <rect x="104" y="260" width="32" height="3" rx="1.5" fill="#A1A1A6" opacity="0.55"/>
-              <rect x="104" y="268" width="56" height="3" rx="1.5" fill="rgba(255,255,255,0.09)"/>
-              <circle cx="87"  cy="216" r="3" fill="#010048" opacity="0.3"/>
-              <circle cx="87"  cy="234" r="3" fill="#010048" opacity="0.18"/>
-              <circle cx="213" cy="216" r="3" fill="#010048" opacity="0.3"/>
-              <circle cx="213" cy="234" r="3" fill="#010048" opacity="0.18"/>
-              <rect x="18"  y="190" width="52" height="26" rx="13" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <circle cx="34" cy="203" r="6" fill="#010048" opacity="0.15"/>
-              <rect x="230" y="190" width="52" height="26" rx="13" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <circle cx="266" cy="203" r="6" fill="#010048" opacity="0.15"/>
-              <rect x="100" y="306" width="36" height="42" rx="10" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="94"  y="340" width="48" height="12" rx="6"  fill="#E8E8ED" stroke="#E8E8ED" strokeWidth="1"/>
-              <rect x="164" y="306" width="36" height="42" rx="10" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="158" y="340" width="48" height="12" rx="6"  fill="#E8E8ED" stroke="#E8E8ED" strokeWidth="1"/>
+          {/* ── RIGHT: Tech Globe visual ── */}
+          <div className="hero-illus-wrap" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 420 }}>
+            <svg
+              width="420" height="420" viewBox="0 0 420 420" fill="none"
+              style={{ filter: "drop-shadow(0 0 48px rgba(59,130,246,0.25))" }}
+              className="hero-robot"
+            >
+              <defs>
+                <radialGradient id="sG" cx="35%" cy="30%" r="65%">
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.45"/>
+                  <stop offset="55%" stopColor="#1D4ED8" stopOpacity="0.18"/>
+                  <stop offset="100%" stopColor="#010048" stopOpacity="0.05"/>
+                </radialGradient>
+                <radialGradient id="oG" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.1"/>
+                  <stop offset="100%" stopColor="#3B82F6" stopOpacity="0"/>
+                </radialGradient>
+              </defs>
+
+              {/* Outer ambient glow */}
+              <circle cx="210" cy="210" r="205" fill="url(#oG)"/>
+
+              {/* Sphere body */}
+              <circle cx="210" cy="210" r="155" fill="url(#sG)" stroke="rgba(59,130,246,0.3)" strokeWidth="1.2"/>
+
+              {/* Latitude rings */}
+              <ellipse cx="210" cy="210" rx="155" ry="52" stroke="rgba(147,197,253,0.18)" strokeWidth="0.8" fill="none"/>
+              <ellipse cx="210" cy="210" rx="155" ry="105" stroke="rgba(147,197,253,0.1)" strokeWidth="0.8" fill="none"/>
+              <ellipse cx="210" cy="175" rx="128" ry="38" stroke="rgba(147,197,253,0.12)" strokeWidth="0.8" fill="none"/>
+              <ellipse cx="210" cy="248" rx="120" ry="34" stroke="rgba(147,197,253,0.08)" strokeWidth="0.8" fill="none"/>
+
+              {/* Longitude meridians */}
+              <ellipse cx="210" cy="210" rx="78" ry="155" stroke="rgba(147,197,253,0.15)" strokeWidth="0.8" fill="none"/>
+              <ellipse cx="210" cy="210" rx="130" ry="155" stroke="rgba(147,197,253,0.08)" strokeWidth="0.8" fill="none"/>
+              <line x1="210" y1="55" x2="210" y2="365" stroke="rgba(147,197,253,0.15)" strokeWidth="0.8"/>
+
+              {/* Sphere highlight arc */}
+              <path d="M 158 132 Q 205 102 258 124" stroke="rgba(147,197,253,0.45)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+
+              {/* Data nodes with glow rings */}
+              <circle cx="210" cy="56"  r="11" fill="#60A5FA" opacity="0.15"/>
+              <circle cx="210" cy="56"  r="6"  fill="#60A5FA" opacity="0.95"/>
+
+              <circle cx="313" cy="152" r="9"   fill="#93C5FD" opacity="0.15"/>
+              <circle cx="313" cy="152" r="4.5" fill="#93C5FD" opacity="0.9"/>
+
+              <circle cx="282" cy="300" r="8"   fill="#60A5FA" opacity="0.12"/>
+              <circle cx="282" cy="300" r="4"   fill="#60A5FA" opacity="0.85"/>
+
+              <circle cx="128" cy="272" r="7"   fill="#93C5FD" opacity="0.1"/>
+              <circle cx="128" cy="272" r="3.5" fill="#93C5FD" opacity="0.75"/>
+
+              <circle cx="147" cy="142" r="9"   fill="#BFDBFE" opacity="0.12"/>
+              <circle cx="147" cy="142" r="5"   fill="#BFDBFE" opacity="0.85"/>
+
+              {/* Connector lines between nodes */}
+              <line x1="210"  y1="56"  x2="313" y2="152" stroke="rgba(147,197,253,0.3)"  strokeWidth="0.8"/>
+              <line x1="313"  y1="152" x2="282" y2="300" stroke="rgba(147,197,253,0.22)" strokeWidth="0.8"/>
+              <line x1="147"  y1="142" x2="313" y2="152" stroke="rgba(147,197,253,0.25)" strokeWidth="0.8"/>
+              <line x1="147"  y1="142" x2="128" y2="272" stroke="rgba(147,197,253,0.18)" strokeWidth="0.8"/>
+              <line x1="128"  y1="272" x2="282" y2="300" stroke="rgba(147,197,253,0.18)" strokeWidth="0.8"/>
+              <line x1="210"  y1="56"  x2="147" y2="142" stroke="rgba(147,197,253,0.2)"  strokeWidth="0.8"/>
+
+              {/* Outer dashed orbital ring */}
+              <ellipse cx="210" cy="210" rx="195" ry="50" stroke="rgba(59,130,246,0.18)" strokeWidth="1" strokeDasharray="5 9" fill="none" transform="rotate(-18 210 210)"/>
             </svg>
           </div>
         </div>
@@ -443,7 +486,7 @@ function FeaturedRow({ post, secondaryPosts }) {
             fontSize: "clamp(20px, 2.5vw, 28px)",
             fontWeight: 800, color: "#1D1D1F",
             lineHeight: 1.15, letterSpacing: "-0.3px", marginBottom: 12,
-            textDecoration: hovered ? "underline" : "none",
+            textDecorationLine: hovered ? "underline" : "none",
             textDecorationColor: "#1D1D1F",
           }}>
             {post.title}

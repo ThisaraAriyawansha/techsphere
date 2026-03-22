@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Navbar />
-        <main style={{ minHeight: "calc(100vh - 64px - 200px)" }}>{children}</main>
+        <main style={{ minHeight: "calc(100vh - 96px - 200px)", paddingTop: "96px" }}>{children}</main>
         <Footer />
         <ScrollToTop />
       </body>

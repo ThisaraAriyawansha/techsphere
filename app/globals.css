@@ -345,6 +345,7 @@ img { display: block; max-width: 100%; }
 @media (max-width: 780px) {
   .desktop-nav { display: none !important; }
   .mobile-nav  { display: flex !important; }
+  .nav-dateline { display: none !important; }
 }
 @media (max-width: 500px) {
   .nav-dateline-center { display: none !important; }
