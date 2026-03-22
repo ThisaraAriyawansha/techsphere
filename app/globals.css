@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -7,7 +7,7 @@
 }
 
 :root {
-  /* ── New Apple-style design tokens ─────────── */
+  /* ── Color Tokens ─────────────────────────── */
   --white:      #FFFFFF;
   --gray-50:    #F5F5F7;
   --gray-100:   #E8E8ED;
@@ -30,8 +30,9 @@
   --surface:    #F5F5F7;
 
   /* ── Typography ─────────────────────────────── */
-  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-serif:   'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-display: 'Playfair Display', Georgia, serif;
 
   /* ── Radius ─────────────────────────────────── */
   --radius-sm:   0px;
@@ -43,6 +44,7 @@
   --shadow-sm:  0 1px 4px rgba(0,0,0,0.05);
   --shadow:     0 2px 8px rgba(0,0,0,0.06);
   --shadow-lg:  0 8px 28px rgba(0,0,0,0.10);
+  --shadow-pop: 0 12px 36px rgba(1,0,72,0.14);
 }
 
 html {
@@ -100,6 +102,10 @@ img { display: block; max-width: 100%; }
   0%, 100% { opacity: 0.25; transform: translateX(-50%) scaleX(1); }
   50%       { opacity: 0.45; transform: translateX(-50%) scaleX(1.15); }
 }
+@keyframes cardPop {
+  0%   { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-4px) scale(1.005); }
+}
 
 .hero-robot      { animation: heroFloat  4s ease-in-out infinite; }
 .hero-ant-pulse  { animation: heroPulse  1.8s ease-in-out infinite; }
@@ -107,19 +113,64 @@ img { display: block; max-width: 100%; }
 .hero-orbit-2    { animation: heroOrbit2 10s linear infinite; }
 .hero-bot-glow   { animation: heroGlow  4s ease-in-out infinite; }
 
-/* ── Removed newspaper rules (kept neutral) ── */
+/* ── Newspaper rule dividers ─────────────────── */
+.rule-newspaper {
+  border: none;
+  border-top: 3px solid var(--accent);
+  position: relative;
+  margin-bottom: 0;
+}
+.rule-newspaper::after {
+  content: '';
+  display: block;
+  border-top: 1px solid var(--gray-200);
+  margin-top: 3px;
+}
+
 .rule-thick-thin {
   border: none;
-  border-top: 1px solid var(--border-lt);
-  padding-top: 0;
+  border-top: 2px solid var(--accent);
+  position: relative;
 }
+.rule-thick-thin::after {
+  content: '';
+  display: block;
+  border-top: 1px solid var(--gray-100);
+  margin-top: 2px;
+}
+
+/* ── Section labels (newspaper style) ────────── */
 .section-label {
   font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--gray-400);
+}
+
+.section-label-accent {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
+}
+
+/* ── Newspaper section header ─────────────────── */
+.section-header {
+  border-top: 3px solid var(--accent);
+  padding-top: 10px;
+  margin-bottom: 20px;
+}
+.section-header::after {
+  content: '';
+  display: block;
+  border-top: 1px solid var(--gray-200);
+  margin-top: 3px;
 }
 
 /* ── Footer responsive grid ─────────────────── */
@@ -167,7 +218,7 @@ img { display: block; max-width: 100%; }
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 20px;
   margin-top: 16px;
 }
 @media (max-width: 900px) {
@@ -177,14 +228,17 @@ img { display: block; max-width: 100%; }
   .posts-grid { grid-template-columns: 1fr; gap: 16px; }
 }
 
-/* ── Post card wrapper ───────────────────────── */
+/* ── Post card wrapper (newspaper pop effect) ── */
 .post-card-wrap {
   background: var(--white);
-  border: 1px solid var(--gray-50);
+  border: 1px solid var(--gray-100);
   overflow: hidden;
-  transition: border-color 0.2s ease;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  position: relative;
 }
 .post-card-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-pop);
   border-color: var(--gray-200);
 }
 
@@ -228,7 +282,10 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--border-lt);
   text-decoration: none;
   overflow: hidden;
-  transition: background 0.15s;
+  transition: box-shadow 0.22s ease;
+}
+.featured-card:hover {
+  box-shadow: var(--shadow-pop);
 }
 .featured-card-single { grid-template-columns: 1fr; }
 @media (max-width: 640px) {
@@ -312,17 +369,35 @@ img { display: block; max-width: 100%; }
 .h-inv-btn { transition: border-color 0.15s, color 0.15s; }
 .h-inv-btn:hover { border-color: rgba(255,255,255,0.5) !important; color: #fff !important; }
 
-/* ── Topic cards ─────────────────────────────── */
+/* ── Pop link: underline sweep effect ────────── */
+.h-pop-link {
+  text-decoration: none;
+  position: relative;
+}
+.h-pop-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 100%;
+  border-bottom: 1px solid var(--accent);
+  transition: right 0.22s ease;
+}
+.h-pop-link:hover::after { right: 0; }
+
+/* ── Topic cards (newspaper pop) ─────────────── */
 .topic-card {
   background: var(--white);
   display: block;
   padding: 28px 26px;
   text-decoration: none;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s, transform 0.22s, box-shadow 0.22s;
   border: 1px solid var(--gray-100);
 }
 .topic-card:hover {
-  background: var(--gray-50);
+  background: var(--white);
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-pop);
 }
 
 /* ── Footer links ────────────────────────────── */
@@ -337,12 +412,12 @@ img { display: block; max-width: 100%; }
 
 /* ── Article body drop cap ───────────────────── */
 .article-body p:first-of-type::first-letter {
-  font-family: var(--font-serif);
-  font-size: 4.2em;
+  font-family: var(--font-display);
+  font-size: 4.8em;
   font-weight: 700;
   float: left;
   line-height: 0.78;
-  margin-right: 8px;
+  margin-right: 10px;
   margin-top: 6px;
   color: var(--accent);
 }
@@ -478,4 +553,43 @@ img { display: block; max-width: 100%; }
 }
 @media (max-width: 540px) {
   .blog-list-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* ── Newspaper masthead rule ─────────────────── */
+.masthead-rule {
+  height: 4px;
+  background: var(--accent);
+  position: relative;
+}
+.masthead-rule::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--gray-200);
+  margin-top: 3px;
+}
+
+/* ── Editorial card ──────────────────────────── */
+.editorial-card {
+  border: 1px solid var(--gray-100);
+  background: var(--white);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.editorial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-pop);
+  border-color: var(--gray-200);
+}
+
+/* ── Pullquote ───────────────────────────────── */
+.pullquote {
+  border-left: 4px solid var(--accent);
+  padding: 12px 20px;
+  margin: 28px 0;
+  background: var(--gray-50);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--accent);
+  line-height: 1.6;
 }

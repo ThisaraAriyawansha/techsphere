@@ -24,7 +24,7 @@ export default function NewsletterPage() {
     <div style={{ background: "#FFFFFF", minHeight: "calc(100vh - 58px)" }}>
 
       {/* ── Hero with image overlay ────────────── */}
-      <section style={{ position: "relative", overflow: "hidden", minHeight: 400 }}>
+      <section style={{ position: "relative", overflow: "hidden", minHeight: 380 }}>
         <img
           src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?w=1400&q=80"
           alt="Reading newsletter"
@@ -32,24 +32,26 @@ export default function NewsletterPage() {
         />
         <div style={{
           position: "absolute", inset: 0,
-          background: "linear-gradient(110deg, rgba(1,0,72,0.96) 0%, rgba(1,0,72,0.78) 55%, rgba(1,0,72,0.50) 100%)",
+          background: "linear-gradient(110deg, rgba(1,0,72,0.97) 0%, rgba(1,0,72,0.80) 55%, rgba(1,0,72,0.52) 100%)",
         }}/>
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 760, margin: "0 auto", padding: "88px 24px 72px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
-            <span style={{ display: "inline-block", width: 24, height: 2, background: "rgba(255,255,255,0.5)" }}/>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.7)" }}>
+        {/* Newspaper top rule */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "rgba(255,255,255,0.2)" }} />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 760, margin: "0 auto", padding: "80px 24px 68px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+            <span style={{ display: "inline-block", width: 24, height: 3, background: "rgba(255,255,255,0.5)" }}/>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: "2px", textTransform: "uppercase" }}>
               Stay Updated
             </span>
           </div>
           <h1 style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "clamp(22px, 3vw, 36px)",
-            fontWeight: 700, color: "#fff",
-            lineHeight: 1.1, letterSpacing: "-0.8px", marginBottom: 18,
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(26px, 4vw, 48px)",
+            fontWeight: 900, color: "#fff",
+            lineHeight: 1.05, letterSpacing: "-1px", marginBottom: 18,
           }}>
-            The TechSphere Newsletter
+            The TechSphere<br/><em style={{ fontStyle: "italic" }}>Newsletter</em>
           </h1>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 16, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, fontWeight: 300, maxWidth: 460 }}>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 16, color: "rgba(255,255,255,0.65)", lineHeight: 1.85, fontWeight: 300, maxWidth: 460 }}>
             The best tech articles, curated and delivered to your inbox every week. Free, always.
           </p>
         </div>
@@ -59,8 +61,9 @@ export default function NewsletterPage() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "48px 24px 72px" }}>
 
         {/* Section header */}
-        <div style={{ borderBottom: "1px solid #E8E8ED", paddingBottom: 16, marginBottom: 32 }}>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600, color: "#1D1D1F" }}>
+        <div style={{ borderTop: "3px solid #010048", paddingTop: 10, marginBottom: 32 }}>
+          <div style={{ height: 1, background: "#D2D2D7", marginBottom: 14 }} />
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#010048", letterSpacing: "2px", textTransform: "uppercase" }}>
             Newsletter Subscription
           </span>
         </div>
@@ -70,6 +73,7 @@ export default function NewsletterPage() {
           gridTemplateColumns: "1fr 1fr",
           gap: 0,
           border: "1px solid #E8E8ED",
+          borderTop: "3px solid #010048",
           overflow: "hidden",
         }} className="newsletter-grid">
 
@@ -77,37 +81,37 @@ export default function NewsletterPage() {
           <div style={{ background: "#fff", padding: "40px", borderRight: "1px solid #E8E8ED" }}>
             {submitted ? (
               <div>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "#A1A1A6", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14 }}>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#010048", textTransform: "uppercase", letterSpacing: "2px", marginBottom: 16 }}>
                   Confirmed
                 </p>
-                <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 20, fontWeight: 700, color: "#1D1D1F", letterSpacing: "-0.3px", marginBottom: 12 }}>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 800, color: "#1D1D1F", letterSpacing: "-0.3px", marginBottom: 14 }}>
                   You&apos;re subscribed!
                 </h2>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#6E6E73", lineHeight: 1.7, marginBottom: 28 }}>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#6E6E73", lineHeight: 1.75, marginBottom: 28 }}>
                   Thanks for joining. Your first newsletter is coming soon. Check your inbox and mark us as safe.
                 </p>
                 <a href="/" style={{
                   display: "inline-flex", alignItems: "center", gap: 6,
                   padding: "11px 24px",
                   background: "#010048", color: "#fff",
-                  fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: 600,
-                  textDecoration: "none",
-                  transition: "opacity 0.15s",
+                  fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 700,
+                  textDecoration: "none", letterSpacing: "0.8px", textTransform: "uppercase",
+                  transition: "opacity 0.15s, transform 0.15s",
                 }}
-                onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}>
                   Explore Articles →
                 </a>
               </div>
             ) : (
               <>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "#A1A1A6", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14 }}>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#010048", textTransform: "uppercase", letterSpacing: "2px", marginBottom: 16 }}>
                   Subscribe Free
                 </p>
-                <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 20, fontWeight: 700, color: "#1D1D1F", letterSpacing: "-0.3px", marginBottom: 10 }}>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 800, color: "#1D1D1F", letterSpacing: "-0.3px", marginBottom: 12 }}>
                   Join the newsletter
                 </h2>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#6E6E73", marginBottom: 28, lineHeight: 1.6 }}>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#6E6E73", marginBottom: 28, lineHeight: 1.7 }}>
                   No spam. Unsubscribe anytime. Great tech content once a week.
                 </p>
 
@@ -116,8 +120,8 @@ export default function NewsletterPage() {
                     <label style={{
                       display: "block",
                       fontFamily: "var(--font-sans)",
-                      fontSize: 11, fontWeight: 600, color: "#6E6E73",
-                      marginBottom: 7, letterSpacing: "0.5px", textTransform: "uppercase",
+                      fontSize: 10, fontWeight: 700, color: "#6E6E73",
+                      marginBottom: 8, letterSpacing: "1.5px", textTransform: "uppercase",
                     }}>
                       Email Address
                     </label>
@@ -146,17 +150,17 @@ export default function NewsletterPage() {
                     type="submit"
                     disabled={loading}
                     style={{
-                      padding: "12px 24px",
+                      padding: "13px 24px",
                       background: loading ? "#A1A1A6" : "#010048",
                       color: "#fff",
-                      fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14,
-                      border: "none",
+                      fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 12,
+                      border: "none", letterSpacing: "0.8px", textTransform: "uppercase",
                       cursor: loading ? "not-allowed" : "pointer",
                       display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                      transition: "opacity 0.15s",
+                      transition: "opacity 0.15s, transform 0.15s",
                     }}
-                    onMouseEnter={e => { if (!loading) e.currentTarget.style.opacity = "0.85"; }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                    onMouseEnter={e => { if (!loading) { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "translateY(-1px)"; } }}
+                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}
                   >
                     {loading ? (
                       <>
@@ -177,7 +181,7 @@ export default function NewsletterPage() {
 
           {/* Benefits panel */}
           <div style={{ background: "#F5F5F7", padding: "40px 36px" }}>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, letterSpacing: "0.5px", textTransform: "uppercase", color: "#A1A1A6", marginBottom: 24 }}>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#010048", marginBottom: 24 }}>
               What You&apos;ll Get
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -194,8 +198,8 @@ export default function NewsletterPage() {
                 }}>
                   <span style={{ fontSize: 20, flexShrink: 0, marginTop: 2 }}>{icon}</span>
                   <div>
-                    <p style={{ fontFamily: "var(--font-sans)", fontWeight: 600, color: "#1D1D1F", fontSize: 14, marginBottom: 4 }}>{title}</p>
-                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#6E6E73", lineHeight: 1.6 }}>{desc}</p>
+                    <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, color: "#1D1D1F", fontSize: 14, marginBottom: 4 }}>{title}</p>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#6E6E73", lineHeight: 1.65 }}>{desc}</p>
                   </div>
                 </div>
               ))}
@@ -216,9 +220,13 @@ export default function NewsletterPage() {
               <div key={item.label} style={{
                 padding: "40px 28px", textAlign: "center",
                 background: "#fff", border: "1px solid #E8E8ED",
-              }}>
-                <div style={{ fontFamily: "var(--font-sans)", fontSize: 32, fontWeight: 700, color: "#010048", marginBottom: 8 }}>{item.value}</div>
-                <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 600, color: "#A1A1A6", letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>{item.label}</div>
+                borderTop: "3px solid #010048",
+                transition: "transform 0.22s ease, box-shadow 0.22s ease",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 12px 36px rgba(1,0,72,0.10)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
+                <div style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 900, color: "#010048", marginBottom: 10, letterSpacing: "-1px" }}>{item.value}</div>
+                <div style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#010048", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 6 }}>{item.label}</div>
                 <div style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#6E6E73" }}>{item.sub}</div>
               </div>
             ))}

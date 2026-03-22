@@ -17,20 +17,19 @@ export default function Navbar() {
   return (
     <header style={{
       position: "sticky", top: 0, zIndex: 100,
-      background: scrolled ? "rgba(255,255,255,0.92)" : "#FFFFFF",
+      background: scrolled ? "rgba(255,255,255,0.96)" : "#FFFFFF",
       backdropFilter: scrolled ? "blur(20px)" : "none",
       WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
       transition: "background 0.2s, box-shadow 0.2s",
-      borderBottom: "1px solid #E8E8ED",
-      boxShadow: scrolled ? "0 2px 8px rgba(0,0,0,0.06)" : "none",
+      boxShadow: scrolled ? "0 2px 12px rgba(1,0,72,0.08)" : "none",
     }}>
 
       {/* ── Top dateline strip ── */}
-      <div style={{ background: "#010048", padding: "5px 24px" }}>
+      <div style={{ background: "#010048", padding: "6px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.5px", fontFamily: "var(--font-sans)" }}>{dateStr}</span>
-          <span className="nav-dateline-center" style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", letterSpacing: "2px", textTransform: "uppercase", fontFamily: "var(--font-sans)" }}>Open Tech Publication</span>
-          <a href="/newsletter" style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.5px", textDecoration: "none", fontFamily: "var(--font-sans)", transition: "color 0.15s" }}
+          <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.8px", fontFamily: "var(--font-sans)", fontWeight: 500 }}>{dateStr}</span>
+          <span className="nav-dateline-center" style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", letterSpacing: "3px", textTransform: "uppercase", fontFamily: "var(--font-sans)", fontWeight: 600 }}>Open Tech Publication</span>
+          <a href="/newsletter" style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.5px", textDecoration: "none", fontFamily: "var(--font-sans)", fontWeight: 500, transition: "color 0.15s" }}
           onMouseEnter={e => e.currentTarget.style.color = "#fff"}
           onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.5)"}>
             Subscribe to Newsletter →
@@ -38,24 +37,34 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* ── Masthead rule: thick + thin ── */}
+      <div style={{ height: 4, background: "#010048" }} />
+      <div style={{ height: 1, background: "#D2D2D7" }} />
+
+      {/* ── Main masthead bar ── */}
       <div style={{
         maxWidth: 1100, margin: "0 auto",
-        padding: "0 24px", height: 60,
+        padding: "0 24px", height: 64,
         display: "flex", alignItems: "center",
         justifyContent: "space-between",
+        borderBottom: "1px solid #E8E8ED",
       }}>
-        
 
         {/* Wordmark */}
         <a href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-            <img src="/logo/logo.png" alt="TechSphere" style={{ width: 28, height: 28, objectFit: "contain" }} />
-            <span style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 17, fontWeight: 700,
-              color: "#010048", letterSpacing: "-0.3px",
-              lineHeight: 1,
-            }}>TechSphere</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <img src="/logo/logo.png" alt="TechSphere" style={{ width: 30, height: 30, objectFit: "contain" }} />
+            <div>
+              <div style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 22, fontWeight: 800,
+                color: "#010048", letterSpacing: "-0.5px",
+                lineHeight: 1,
+              }}>TechSphere</div>
+              <div style={{ fontFamily: "var(--font-sans)", fontSize: 8, color: "#A1A1A6", letterSpacing: "2px", textTransform: "uppercase", marginTop: 1 }}>
+                Tech & Innovation
+              </div>
+            </div>
           </div>
         </a>
 
@@ -68,26 +77,29 @@ export default function Navbar() {
             padding: "8px 18px",
             background: "#010048",
             color: "#ffffff",
-            fontSize: 13, fontWeight: 600,
+            fontSize: 12, fontWeight: 700,
             textDecoration: "none",
             fontFamily: "var(--font-sans)",
-            transition: "opacity 0.15s",
+            letterSpacing: "0.5px",
+            textTransform: "uppercase",
+            transition: "opacity 0.15s, transform 0.15s",
             whiteSpace: "nowrap",
           }}
-          onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+          onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}>
             Write Post
           </a>
           <a href="/admin" title="Admin" style={{
             display: "flex", alignItems: "center", justifyContent: "center",
             width: 34, height: 34,
+            border: "1px solid #E8E8ED",
             color: "#A1A1A6",
             textDecoration: "none",
-            transition: "background 0.15s, color 0.15s",
+            transition: "background 0.15s, color 0.15s, border-color 0.15s",
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = "#F5F5F7"; e.currentTarget.style.color = "#1D1D1F"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#A1A1A6"; }}>
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+          onMouseEnter={e => { e.currentTarget.style.background = "#010048"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#010048"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#A1A1A6"; e.currentTarget.style.borderColor = "#E8E8ED"; }}>
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24">
               <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8"/>
               <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
             </svg>
@@ -99,9 +111,11 @@ export default function Navbar() {
           <a href="/new" style={{
             padding: "7px 16px",
             background: "#010048", color: "#fff",
-            fontSize: 12, fontWeight: 600,
+            fontSize: 11, fontWeight: 700,
             textDecoration: "none",
             fontFamily: "var(--font-sans)",
+            letterSpacing: "0.5px",
+            textTransform: "uppercase",
           }}>Write</a>
           <button
             onClick={() => setMenuOpen(o => !o)}
@@ -111,23 +125,23 @@ export default function Navbar() {
               alignItems: "center", gap: 5,
               width: 36, height: 36,
               border: "1px solid #E8E8ED",
-              background: menuOpen ? "#F5F5F7" : "none",
+              background: menuOpen ? "#010048" : "none",
               cursor: "pointer", padding: 0,
-              transition: "background 0.15s",
+              transition: "background 0.15s, border-color 0.15s",
             }}>
-            <span style={{ display: "block", width: 15, height: 1.5, background: "#010048", transition: "transform 0.2s, opacity 0.2s", transform: menuOpen ? "translateY(6.5px) rotate(45deg)" : "none" }} />
-            <span style={{ display: "block", width: 15, height: 1.5, background: "#010048", opacity: menuOpen ? 0 : 1, transition: "opacity 0.2s" }} />
-            <span style={{ display: "block", width: 15, height: 1.5, background: "#010048", transition: "transform 0.2s, opacity 0.2s", transform: menuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none" }} />
+            <span style={{ display: "block", width: 15, height: 1.5, background: menuOpen ? "#fff" : "#010048", transition: "transform 0.2s, opacity 0.2s", transform: menuOpen ? "translateY(6.5px) rotate(45deg)" : "none" }} />
+            <span style={{ display: "block", width: 15, height: 1.5, background: menuOpen ? "#fff" : "#010048", opacity: menuOpen ? 0 : 1, transition: "opacity 0.2s" }} />
+            <span style={{ display: "block", width: 15, height: 1.5, background: menuOpen ? "#fff" : "#010048", transition: "transform 0.2s, opacity 0.2s", transform: menuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none" }} />
           </button>
         </div>
-      </div>{/* end main bar */}
+      </div>
 
       {/* Mobile dropdown */}
       {menuOpen && (
         <div style={{
           background: "#FFFFFF",
-          borderTop: "1px solid #E8E8ED",
-          padding: "8px 24px 16px",
+          borderTop: "3px solid #010048",
+          padding: "4px 24px 16px",
         }}>
           {[
             { label: "Home", href: "/" },
@@ -139,12 +153,13 @@ export default function Navbar() {
           ].map(({ label, href }) => (
             <a key={label} href={href} onClick={() => setMenuOpen(false)} style={{
               display: "flex", justifyContent: "space-between", alignItems: "center",
-              padding: "13px 0",
+              padding: "14px 0",
               fontFamily: "var(--font-sans)",
-              fontSize: 15, fontWeight: 500,
+              fontSize: 14, fontWeight: 600,
               color: "#1D1D1F",
               textDecoration: "none",
               borderBottom: "1px solid #E8E8ED",
+              letterSpacing: "0.3px",
             }}>
               {label}
               <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
@@ -169,22 +184,25 @@ function NavTabs() {
   ];
 
   return (
-    <nav className="desktop-nav" style={{ display: "flex", gap: 2, alignItems: "center" }}>
+    <nav className="desktop-nav" style={{ display: "flex", gap: 0, alignItems: "center" }}>
       {tabs.map(({ label, href }) => {
         const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
         return (
           <a key={label} href={href} style={{
-            padding: "8px 12px",
+            padding: "22px 14px",
             fontFamily: "var(--font-sans)",
-            fontSize: 13, fontWeight: 500,
+            fontSize: 12, fontWeight: isActive ? 700 : 500,
             color: isActive ? "#010048" : "#6E6E73",
             textDecoration: "none",
             background: "transparent",
-            transition: "background 0.15s, color 0.15s",
+            transition: "color 0.15s",
             display: "inline-block",
+            position: "relative",
+            letterSpacing: "0.3px",
+            borderBottom: isActive ? "3px solid #010048" : "3px solid transparent",
           }}
-          onMouseEnter={e => { if (!isActive) { e.currentTarget.style.background = "#F5F5F7"; e.currentTarget.style.color = "#1D1D1F"; } }}
-          onMouseLeave={e => { if (!isActive) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#6E6E73"; } }}>
+          onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#1D1D1F"; }}
+          onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#6E6E73"; }}>
             {label}
           </a>
         );

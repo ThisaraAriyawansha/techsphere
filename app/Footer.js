@@ -6,17 +6,24 @@ export default function Footer() {
   return (
     <footer style={{ background: "#F5F5F7", borderTop: "1px solid #E8E8ED" }}>
 
+      {/* ── Newspaper masthead top rule ── */}
+      <div style={{ height: 4, background: "#010048" }} />
+      <div style={{ height: 1, background: "#D2D2D7" }} />
+
       {/* Main grid */}
       <div className="footer-grid">
 
         {/* Brand */}
         <div>
-          <a href="/" style={{ display: "inline-block", textDecoration: "none", marginBottom: 16 }}>
+          <a href="/" style={{ display: "inline-block", textDecoration: "none", marginBottom: 14 }}>
             <div style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 20, fontWeight: 700,
-              color: "#010048", letterSpacing: "-0.3px", lineHeight: 1,
+              fontFamily: "var(--font-display)",
+              fontSize: 24, fontWeight: 800,
+              color: "#010048", letterSpacing: "-0.5px", lineHeight: 1,
             }}>TechSphere</div>
+            <div style={{ fontFamily: "var(--font-sans)", fontSize: 8, color: "#A1A1A6", letterSpacing: "2px", textTransform: "uppercase", marginTop: 4 }}>
+              Tech & Innovation
+            </div>
           </a>
           <p style={{ fontSize: 13, color: "#6E6E73", lineHeight: 1.75, maxWidth: 240, marginBottom: 20, fontFamily: "var(--font-sans)" }}>
             A free, open platform for the tech community to share ideas, tutorials, and insights. No login required.
@@ -26,24 +33,29 @@ export default function Footer() {
             padding: "9px 20px",
             background: "#010048",
             color: "#ffffff",
-            fontSize: 13, fontWeight: 600,
+            fontSize: 11, fontWeight: 700,
             textDecoration: "none",
             fontFamily: "var(--font-sans)",
-            transition: "opacity 0.15s",
+            letterSpacing: "0.8px",
+            textTransform: "uppercase",
+            transition: "opacity 0.15s, transform 0.15s",
           }}
-          onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+          onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}>
             Get Newsletter
           </a>
         </div>
 
         {/* Platform */}
         <div>
-          <h4 style={{
-            fontSize: 11, fontWeight: 600, color: "#A1A1A6",
-            letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 18,
-            fontFamily: "var(--font-sans)",
-          }}>Platform</h4>
+          <div style={{ borderTop: "2px solid #010048", paddingTop: 10, marginBottom: 16 }}>
+            <div style={{ height: 1, background: "#D2D2D7", marginTop: 3, marginBottom: 12 }} />
+            <h4 style={{
+              fontSize: 10, fontWeight: 700, color: "#010048",
+              letterSpacing: "1.5px", textTransform: "uppercase",
+              fontFamily: "var(--font-sans)",
+            }}>Platform</h4>
+          </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { label: "Explore Posts", href: "/" },
@@ -59,11 +71,14 @@ export default function Footer() {
 
         {/* Company */}
         <div>
-          <h4 style={{
-            fontSize: 11, fontWeight: 600, color: "#A1A1A6",
-            letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 18,
-            fontFamily: "var(--font-sans)",
-          }}>Company</h4>
+          <div style={{ borderTop: "2px solid #010048", paddingTop: 10, marginBottom: 16 }}>
+            <div style={{ height: 1, background: "#D2D2D7", marginTop: 3, marginBottom: 12 }} />
+            <h4 style={{
+              fontSize: 10, fontWeight: 700, color: "#010048",
+              letterSpacing: "1.5px", textTransform: "uppercase",
+              fontFamily: "var(--font-sans)",
+            }}>Company</h4>
+          </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { label: "About TechSphere", href: "/about" },
@@ -77,11 +92,14 @@ export default function Footer() {
 
         {/* Topics */}
         <div>
-          <h4 style={{
-            fontSize: 11, fontWeight: 600, color: "#A1A1A6",
-            letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 18,
-            fontFamily: "var(--font-sans)",
-          }}>Sections</h4>
+          <div style={{ borderTop: "2px solid #010048", paddingTop: 10, marginBottom: 16 }}>
+            <div style={{ height: 1, background: "#D2D2D7", marginTop: 3, marginBottom: 12 }} />
+            <h4 style={{
+              fontSize: 10, fontWeight: 700, color: "#010048",
+              letterSpacing: "1.5px", textTransform: "uppercase",
+              fontFamily: "var(--font-sans)",
+            }}>Sections</h4>
+          </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { label: "AI & Machine Learning", href: "/topics" },
@@ -97,7 +115,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div style={{ borderTop: "1px solid #E8E8ED", padding: "18px 24px" }}>
+      <div style={{ borderTop: "1px solid #E8E8ED", padding: "16px 24px" }}>
         <div style={{
           maxWidth: 1100, margin: "0 auto",
           display: "flex", alignItems: "center",
@@ -135,10 +153,10 @@ function FooterLink({ href, children }) {
       fontSize: 13, color: "#6E6E73",
       textDecoration: "none", fontWeight: 400,
       fontFamily: "var(--font-sans)",
-      transition: "color 0.15s", lineHeight: 1.4,
+      transition: "color 0.15s, padding-left 0.15s", lineHeight: 1.4,
     }}
-    onMouseEnter={e => e.currentTarget.style.color = "#010048"}
-    onMouseLeave={e => e.currentTarget.style.color = "#6E6E73"}>
+    onMouseEnter={e => { e.currentTarget.style.color = "#010048"; e.currentTarget.style.paddingLeft = "4px"; }}
+    onMouseLeave={e => { e.currentTarget.style.color = "#6E6E73"; e.currentTarget.style.paddingLeft = "0"; }}>
       {children}
     </a>
   );
