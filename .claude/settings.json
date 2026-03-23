@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(find '/d/Personal Project/TechSphere/techsphere/app' -type f -name *.js -o -name *.jsx -o -name *.ts -o -name *.tsx -o -name *.css -o -name layout.*)",
-      "Bash(node -e \":*)"
+      "Bash(node -e \":*)",
+      "WebFetch(domain:runwayml.com)"
     ]
   }
 }

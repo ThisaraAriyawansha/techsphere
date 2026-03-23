@@ -45,179 +45,94 @@ export default function HomePage() {
     <div style={{ background: "#FFFFFF" }}>
 
       {/* ── Hero / Masthead ───────────────────────── */}
-      <section style={{
-        background: "linear-gradient(135deg, #010048 0%, #030870 45%, #010048 100%)",
-        overflow: "hidden",
-        position: "relative",
-        marginTop: -96,
-      }}>
-        {/* Ambient right-side glow */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "radial-gradient(ellipse 55% 75% at 72% 50%, rgba(59,130,246,0.14) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }} />
+      <div style={{ padding: "0 16px 0", background: "#ffffff" }}>
+        <section style={{
+          position: "relative",
+          overflow: "hidden",
+          borderRadius: 16,
+          border: "1px solid rgba(0,0,0,0.1)",
+          height: "82vh",
+          minHeight: 480,
+          maxHeight: 900,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          {/* Background image */}
+          <img
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1800&q=85"
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+          />
 
-        <div className="hero-two-col" style={{ paddingTop: 176, position: "relative" }}>
+          {/* Dark overlay */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "rgba(0,0,0,0.42)",
+            pointerEvents: "none",
+          }} />
 
-          {/* ── LEFT: Text ── */}
-          <div>
-            {/* Trust badge */}
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.14)",
-              borderRadius: 100,
-              padding: "7px 16px 7px 10px",
-              marginBottom: 32,
-            }}>
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
-                <path d="M12 3L4 7v5c0 5.25 3.5 10.15 8 11.25C17.5 22.15 21 17.25 21 12V7L12 3Z"
-                  stroke="#93C5FD" strokeWidth="1.8" fill="rgba(59,130,246,0.25)"/>
-                <path d="M9 12l2 2 4-4" stroke="#93C5FD" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span style={{
-                fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 500,
-                color: "rgba(255,255,255,0.75)", letterSpacing: "0.2px",
-              }}>Open Tech Publication — Always Free</span>
-            </div>
-
-            <h1 style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(36px, 5.5vw, 64px)",
-              fontWeight: 900, color: "#ffffff",
-              lineHeight: 1.0, letterSpacing: "-2px",
-              marginBottom: 24,
-            }}>
-              Where Tech<br/>
-              <em style={{ fontStyle: "italic", color: "#93C5FD" }}>Minds</em> Meet
-            </h1>
-
+          {/* Centered content */}
+          <div style={{
+            position: "relative",
+            textAlign: "center",
+            padding: "0 24px",
+            maxWidth: 760,
+          }}>
+            {/* Eyebrow label */}
             <p style={{
               fontFamily: "var(--font-sans)",
-              fontSize: 16, color: "rgba(255,255,255,0.6)",
-              lineHeight: 1.8, maxWidth: 420, marginBottom: 40, fontWeight: 400,
+              fontSize: 15,
+              fontWeight: 400,
+              color: "rgba(255,255,255,0.8)",
+              letterSpacing: "0.2px",
+              marginBottom: 14,
             }}>
-              Discover tutorials, insights, and breakthroughs from developers and engineers worldwide. No login. Always free.
+              Open Tech Publication — Always Free
             </p>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 56 }}>
-              <a href="#posts" style={{
-                display: "flex", alignItems: "center", gap: 8,
-                padding: "14px 28px", background: "#ffffff", color: "#010048",
-                fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 14,
-                textDecoration: "none", letterSpacing: "0.2px",
-                borderRadius: 8,
-                transition: "opacity 0.15s, transform 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                Explore Articles
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-              <a href="/new" style={{
-                padding: "14px 28px",
-                border: "1.5px solid rgba(255,255,255,0.3)", color: "#ffffff",
-                fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14,
-                textDecoration: "none", letterSpacing: "0.2px",
-                borderRadius: 8,
-                transition: "background 0.15s, border-color 0.15s, transform 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                Write a Post
-              </a>
-            </div>
+            {/* Headline */}
+            <h1 style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(40px, 6.5vw, 80px)",
+              fontWeight: 800,
+              color: "#ffffff",
+              lineHeight: 1.05,
+              letterSpacing: "-2px",
+              marginBottom: 36,
+            }}>
+              Where Tech<br/>
+              <em style={{ fontStyle: "italic" }}>Minds</em> Meet
+            </h1>
 
-            {/* Stats row */}
-            <div style={{ display: "flex", gap: 0, flexWrap: "wrap", paddingTop: 28, borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-              {[
-                { value: loading ? "—" : `${posts.length}+`, label: "Articles" },
-                { value: "Free",  label: "Always" },
-                { value: "Open",  label: "Community" },
-              ].map((s, i) => (
-                <div key={s.label} style={{
-                  paddingRight: 36, paddingLeft: i > 0 ? 36 : 0,
-                  borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.1)" : "none",
-                }}>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "#ffffff", letterSpacing: "-1px", lineHeight: 1 }}>{s.value}</div>
-                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 5, textTransform: "uppercase", letterSpacing: "1.5px" }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
+            {/* CTA — white pill button like Runway */}
+            <a href="#posts" style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "13px 28px",
+              background: "#ffffff",
+              color: "#1a1a1a",
+              fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: 15,
+              textDecoration: "none",
+              borderRadius: 100,
+              transition: "opacity 0.18s, transform 0.18s",
+              letterSpacing: "0.1px",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}>
+              Explore Articles
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
           </div>
-
-          {/* ── RIGHT: Tech Globe visual ── */}
-          <div className="hero-illus-wrap" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 420 }}>
-            <svg
-              width="420" height="420" viewBox="0 0 420 420" fill="none"
-              style={{ filter: "drop-shadow(0 0 48px rgba(59,130,246,0.25))" }}
-              className="hero-robot"
-            >
-              <defs>
-                <radialGradient id="sG" cx="35%" cy="30%" r="65%">
-                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.45"/>
-                  <stop offset="55%" stopColor="#1D4ED8" stopOpacity="0.18"/>
-                  <stop offset="100%" stopColor="#010048" stopOpacity="0.05"/>
-                </radialGradient>
-                <radialGradient id="oG" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.1"/>
-                  <stop offset="100%" stopColor="#3B82F6" stopOpacity="0"/>
-                </radialGradient>
-              </defs>
-
-              {/* Outer ambient glow */}
-              <circle cx="210" cy="210" r="205" fill="url(#oG)"/>
-
-              {/* Sphere body */}
-              <circle cx="210" cy="210" r="155" fill="url(#sG)" stroke="rgba(59,130,246,0.3)" strokeWidth="1.2"/>
-
-              {/* Latitude rings */}
-              <ellipse cx="210" cy="210" rx="155" ry="52" stroke="rgba(147,197,253,0.18)" strokeWidth="0.8" fill="none"/>
-              <ellipse cx="210" cy="210" rx="155" ry="105" stroke="rgba(147,197,253,0.1)" strokeWidth="0.8" fill="none"/>
-              <ellipse cx="210" cy="175" rx="128" ry="38" stroke="rgba(147,197,253,0.12)" strokeWidth="0.8" fill="none"/>
-              <ellipse cx="210" cy="248" rx="120" ry="34" stroke="rgba(147,197,253,0.08)" strokeWidth="0.8" fill="none"/>
-
-              {/* Longitude meridians */}
-              <ellipse cx="210" cy="210" rx="78" ry="155" stroke="rgba(147,197,253,0.15)" strokeWidth="0.8" fill="none"/>
-              <ellipse cx="210" cy="210" rx="130" ry="155" stroke="rgba(147,197,253,0.08)" strokeWidth="0.8" fill="none"/>
-              <line x1="210" y1="55" x2="210" y2="365" stroke="rgba(147,197,253,0.15)" strokeWidth="0.8"/>
-
-              {/* Sphere highlight arc */}
-              <path d="M 158 132 Q 205 102 258 124" stroke="rgba(147,197,253,0.45)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-
-              {/* Data nodes with glow rings */}
-              <circle cx="210" cy="56"  r="11" fill="#60A5FA" opacity="0.15"/>
-              <circle cx="210" cy="56"  r="6"  fill="#60A5FA" opacity="0.95"/>
-
-              <circle cx="313" cy="152" r="9"   fill="#93C5FD" opacity="0.15"/>
-              <circle cx="313" cy="152" r="4.5" fill="#93C5FD" opacity="0.9"/>
-
-              <circle cx="282" cy="300" r="8"   fill="#60A5FA" opacity="0.12"/>
-              <circle cx="282" cy="300" r="4"   fill="#60A5FA" opacity="0.85"/>
-
-              <circle cx="128" cy="272" r="7"   fill="#93C5FD" opacity="0.1"/>
-              <circle cx="128" cy="272" r="3.5" fill="#93C5FD" opacity="0.75"/>
-
-              <circle cx="147" cy="142" r="9"   fill="#BFDBFE" opacity="0.12"/>
-              <circle cx="147" cy="142" r="5"   fill="#BFDBFE" opacity="0.85"/>
-
-              {/* Connector lines between nodes */}
-              <line x1="210"  y1="56"  x2="313" y2="152" stroke="rgba(147,197,253,0.3)"  strokeWidth="0.8"/>
-              <line x1="313"  y1="152" x2="282" y2="300" stroke="rgba(147,197,253,0.22)" strokeWidth="0.8"/>
-              <line x1="147"  y1="142" x2="313" y2="152" stroke="rgba(147,197,253,0.25)" strokeWidth="0.8"/>
-              <line x1="147"  y1="142" x2="128" y2="272" stroke="rgba(147,197,253,0.18)" strokeWidth="0.8"/>
-              <line x1="128"  y1="272" x2="282" y2="300" stroke="rgba(147,197,253,0.18)" strokeWidth="0.8"/>
-              <line x1="210"  y1="56"  x2="147" y2="142" stroke="rgba(147,197,253,0.2)"  strokeWidth="0.8"/>
-
-              {/* Outer dashed orbital ring */}
-              <ellipse cx="210" cy="210" rx="195" ry="50" stroke="rgba(59,130,246,0.18)" strokeWidth="1" strokeDasharray="5 9" fill="none" transform="rotate(-18 210 210)"/>
-            </svg>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* ── Trending Topic Cards ─────────────────── */}
       <section style={{ background: "#FFFFFF", borderBottom: "1px solid #E8E8ED" }}>
