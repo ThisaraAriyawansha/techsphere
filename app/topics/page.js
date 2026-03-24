@@ -1,4 +1,6 @@
 "use client";
+import { StaggerContainer, StaggerItem } from "../components/ScrollReveal";
+import Tilt3D from "../components/Tilt3D";
 
 const metadata = {
   title: "Topics — TechSphere",
@@ -73,87 +75,87 @@ export default function TopicsPage() {
 
       {/* ── Topics Grid with images ────────────── */}
       <section style={{ maxWidth: 1100, margin: "0 auto", padding: "8px 24px 80px" }}>
-        <div style={{
+        <StaggerContainer style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
           gap: 20,
         }}>
           {TOPICS.map(topic => (
-            <a
-              key={topic.id}
-              href={`/blog?category=${encodeURIComponent(topic.id)}`}
-              id={topic.id}
-              style={{
-                display: "block",
-                textDecoration: "none",
-                background: "#fff",
-                border: "1px solid #E8E8ED",
-                borderTop: "3px solid #010048",
-                overflow: "hidden",
-                transition: "transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-5px)";
-                e.currentTarget.style.boxShadow = "0 12px 36px rgba(1,0,72,0.13)";
-                e.currentTarget.style.borderColor = "#010048";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-                e.currentTarget.style.borderColor = "#E8E8ED";
-              }}
-            >
-              {/* Topic image thumbnail */}
-              <div style={{ height: 120, overflow: "hidden", position: "relative" }}>
-                <img
-                  src={topic.image}
-                  alt={topic.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.72 }}
-                />
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: "linear-gradient(180deg, transparent 30%, rgba(1,0,72,0.68) 100%)",
-                }}/>
-                <div style={{ position: "absolute", bottom: 10, left: 14, display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 20 }}>{topic.icon}</span>
-                </div>
-              </div>
+            <StaggerItem key={topic.id}>
+              <Tilt3D intensity={7} scale={1.03} style={{ height: "100%" }}>
+                <a
+                  href={`/blog?category=${encodeURIComponent(topic.id)}`}
+                  id={topic.id}
+                  className="img-shine"
+                  style={{
+                    display: "block",
+                    textDecoration: "none",
+                    background: "#fff",
+                    border: "1px solid #E8E8ED",
+                    borderTop: "3px solid #010048",
+                    overflow: "hidden",
+                    height: "100%",
+                  }}
+                >
+                  {/* Topic image thumbnail */}
+                  <div style={{ height: 120, overflow: "hidden", position: "relative" }}>
+                    <img
+                      src={topic.image}
+                      alt={topic.title}
+                      style={{
+                        width: "100%", height: "100%", objectFit: "cover", opacity: 0.72,
+                        transition: "transform 0.5s ease, opacity 0.3s ease",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08)"; e.currentTarget.style.opacity = "0.9"; }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.opacity = "0.72"; }}
+                    />
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      background: "linear-gradient(180deg, transparent 30%, rgba(1,0,72,0.68) 100%)",
+                    }}/>
+                    <div style={{ position: "absolute", bottom: 10, left: 14, display: "flex", alignItems: "center", gap: 8 }}>
+                      <span style={{ fontSize: 20, filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.5))" }}>{topic.icon}</span>
+                    </div>
+                  </div>
 
-              {/* Content */}
-              <div style={{ padding: "18px 20px 20px" }}>
-                <h3 style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 16, fontWeight: 700,
-                  color: "#1D1D1F", letterSpacing: "-0.2px",
-                  lineHeight: 1.25, marginBottom: 8,
-                }}>{topic.title}</h3>
+                  {/* Content */}
+                  <div style={{ padding: "18px 20px 20px" }}>
+                    <h3 style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: 16, fontWeight: 700,
+                      color: "#1D1D1F", letterSpacing: "-0.2px",
+                      lineHeight: 1.25, marginBottom: 8,
+                    }}>{topic.title}</h3>
 
-                <p style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 13, color: "#6E6E73",
-                  lineHeight: 1.65, marginBottom: 14,
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}>{topic.desc}</p>
-
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                  {topic.tags.slice(0, 3).map(tag => (
-                    <span key={tag} style={{
-                      padding: "3px 10px",
-                      border: "1px solid #E8E8ED",
-                      background: "#F5F5F7",
+                    <p style={{
                       fontFamily: "var(--font-sans)",
-                      fontSize: 10, fontWeight: 600,
-                      color: "#6E6E73", letterSpacing: "0.3px",
-                    }}>{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </a>
+                      fontSize: 13, color: "#6E6E73",
+                      lineHeight: 1.65, marginBottom: 14,
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}>{topic.desc}</p>
+
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                      {topic.tags.slice(0, 3).map(tag => (
+                        <span key={tag} style={{
+                          padding: "3px 10px",
+                          border: "1px solid #E8E8ED",
+                          background: "#F5F5F7",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: 10, fontWeight: 600,
+                          color: "#6E6E73", letterSpacing: "0.3px",
+                          transition: "border-color 0.15s, background 0.15s, color 0.15s",
+                        }}>{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </a>
+              </Tilt3D>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
       {/* ── CTA Banner ──────────────────────────── */}

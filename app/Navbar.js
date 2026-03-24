@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -152,38 +153,52 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile dropdown */}
-      {menuOpen && (
-        <div style={{
-          background: "#ffffff",
-          borderTop: "1px solid #E8E8ED",
-          padding: "8px 24px 20px",
-        }}>
-          {[
-            { label: "Home",       href: "/" },
-            { label: "Blog",       href: "/blog" },
-            { label: "Topics",     href: "/topics" },
-            { label: "About",      href: "/about" },
-            { label: "Newsletter", href: "/newsletter" },
-            { label: "Admin",      href: "/admin" },
-          ].map(({ label, href }) => (
-            <a key={label} href={href} onClick={() => setMenuOpen(false)} style={{
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              padding: "14px 0",
-              fontFamily: "var(--font-sans)",
-              fontSize: 14, fontWeight: 600,
-              color: "#010048",
-              textDecoration: "none",
-              borderBottom: "1px solid #E8E8ED",
-            }}>
-              {label}
-              <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
-                <path d="M9 18l6-6-6-6" stroke="rgba(1,0,72,0.35)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-          ))}
-        </div>
-      )}
+      {/* Mobile dropdown — animated */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
+            style={{ overflow: "hidden", background: "#ffffff", borderTop: "1px solid #E8E8ED" }}
+          >
+            <div style={{ padding: "8px 24px 20px" }}>
+              {[
+                { label: "Home",       href: "/" },
+                { label: "Blog",       href: "/blog" },
+                { label: "Topics",     href: "/topics" },
+                { label: "About",      href: "/about" },
+                { label: "Newsletter", href: "/newsletter" },
+                { label: "Admin",      href: "/admin" },
+              ].map(({ label, href }, i) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.045, duration: 0.22 }}
+                  style={{
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                    padding: "14px 0",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 14, fontWeight: 600,
+                    color: "#010048",
+                    textDecoration: "none",
+                    borderBottom: "1px solid #E8E8ED",
+                  }}
+                >
+                  {label}
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
+                    <path d="M9 18l6-6-6-6" stroke="rgba(1,0,72,0.35)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

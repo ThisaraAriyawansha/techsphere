@@ -107,11 +107,273 @@ img { display: block; max-width: 100%; }
   100% { transform: translateY(-4px) scale(1.005); }
 }
 
+/* ── NEW: Rich Motion Keyframes ─────────────── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes particleFloat1 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.6; }
+  25%       { transform: translateY(-30px) translateX(15px) rotate(90deg); opacity: 1; }
+  50%       { transform: translateY(-15px) translateX(-10px) rotate(180deg); opacity: 0.7; }
+  75%       { transform: translateY(-45px) translateX(8px) rotate(270deg); opacity: 0.9; }
+}
+@keyframes particleFloat2 {
+  0%, 100% { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.4; }
+  33%       { transform: translateY(-50px) translateX(-20px) scale(1.3); opacity: 0.8; }
+  66%       { transform: translateY(-20px) translateX(25px) scale(0.8); opacity: 0.5; }
+}
+@keyframes particleFloat3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.5; }
+  50%       { transform: translateY(-38px) rotate(180deg) scale(1.2); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(1,0,72,0); }
+  50%       { box-shadow: 0 0 20px 6px rgba(1,0,72,0.18); }
+}
+
+@keyframes borderSweep {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes typewriterBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes magneticPull {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes heroImageDrift {
+  0%, 100% { transform: scale(1.06) translateX(0px) translateY(0px); }
+  25%       { transform: scale(1.08) translateX(-8px) translateY(-4px); }
+  50%       { transform: scale(1.06) translateX(4px) translateY(-8px); }
+  75%       { transform: scale(1.09) translateX(-4px) translateY(4px); }
+}
+
+@keyframes numberSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ── Bento grid layout ───────────────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  grid-template-rows: auto;
+  gap: 16px;
+}
+.bento-main { grid-row: 1 / 3; }
+@media (max-width: 820px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-main { grid-row: auto; }
+}
+
+/* ── Articles + sidebar layout ───────────────── */
+.articles-sidebar-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .articles-sidebar-layout { grid-template-columns: 1fr; }
+  .articles-sidebar { display: none; }
+}
+
+/* ── 2-col articles grid ─────────────────────── */
+.articles-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (max-width: 560px) {
+  .articles-2col { grid-template-columns: 1fr; }
+}
+
+/* ── Stats bar grid ─────────────────────────── */
+.stats-bar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 640px) {
+  .stats-bar-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Trending dark grid ──────────────────────── */
+.trending-dark-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 640px) {
+  .trending-dark-grid { grid-template-columns: 1fr; }
+}
+
+/* ── How it works grid ───────────────────────── */
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 720px) {
+  .how-grid { grid-template-columns: 1fr; }
+  .how-line { display: none; }
+}
+
+/* ── Community banner grid ───────────────────── */
+.community-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 720px) {
+  .community-grid { grid-template-columns: 1fr; }
+  .community-grid > div:last-child { display: none; }
+}
+
+/* ── Category scroll track ───────────────────── */
+.cat-scroll-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+.cat-scroll-track::-webkit-scrollbar { display: none; }
+.cat-scroll-track:active { cursor: grabbing; }
+
+/* ── Apply animation classes ─────────────────── */
 .hero-robot      { animation: heroFloat  4s ease-in-out infinite; }
 .hero-ant-pulse  { animation: heroPulse  1.8s ease-in-out infinite; }
 .hero-orbit-1    { animation: heroOrbit1 7s linear infinite; }
 .hero-orbit-2    { animation: heroOrbit2 10s linear infinite; }
 .hero-bot-glow   { animation: heroGlow  4s ease-in-out infinite; }
+
+.anim-fade-up     { animation: fadeInUp   0.65s ease both; }
+.anim-fade-left   { animation: fadeInLeft  0.65s ease both; }
+.anim-fade-right  { animation: fadeInRight 0.65s ease both; }
+.anim-scale-in    { animation: scaleIn    0.5s ease both; }
+.anim-hero-drift  { animation: heroImageDrift 18s ease-in-out infinite; }
+.anim-gradient    {
+  background-size: 300% 300%;
+  animation: gradientShift 6s ease infinite;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.particle-1 { animation: particleFloat1 6s ease-in-out infinite; }
+.particle-2 { animation: particleFloat2 8s ease-in-out infinite; }
+.particle-3 { animation: particleFloat3 5s ease-in-out infinite; }
+.particle-4 { animation: particleFloat1 9s ease-in-out infinite reverse; }
+.particle-5 { animation: particleFloat2 7s ease-in-out infinite reverse; }
+
+/* ── 3D Card utilities ───────────────────────── */
+.card-3d {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.card-3d:hover {
+  box-shadow: 0 24px 60px rgba(1,0,72,0.18), 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ── Magnetic button effect ──────────────────── */
+.btn-magnetic {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+}
+.btn-magnetic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-100%) skewX(-15deg);
+  transition: transform 0.45s ease;
+}
+.btn-magnetic:hover::before {
+  transform: translateX(200%) skewX(-15deg);
+}
+.btn-magnetic:hover {
+  box-shadow: 0 8px 32px rgba(1,0,72,0.25);
+}
+
+/* ── Glowing accent ──────────────────────────── */
+.glow-on-hover {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.glow-on-hover:hover {
+  box-shadow: 0 0 0 3px rgba(1,0,72,0.12), 0 8px 28px rgba(1,0,72,0.16);
+  transform: translateY(-3px);
+}
+
+/* ── Shine sweep on image hover ──────────────── */
+.img-shine {
+  position: relative;
+  overflow: hidden;
+}
+.img-shine::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.img-shine:hover::after {
+  left: 125%;
+}
+
+/* ── Stagger delay utilities ─────────────────── */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
 
 /* ── Newspaper rule dividers ─────────────────── */
 .rule-newspaper {

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { getPosts } from "../../lib/firebase";
+import { StaggerContainer, StaggerItem } from "../components/ScrollReveal";
 
 const CATEGORIES = [
   { label: "All",          key: null },
@@ -191,13 +192,15 @@ export default function BlogPage() {
         ) : filtered.length === 0 ? (
           <EmptyState onClear={() => { setSearch(""); setCategory(null); }} />
         ) : view === "grid" ? (
-          <div className="blog-list-grid">
+          <StaggerContainer className="blog-list-grid">
             {filtered.map(post => (
-              <div key={post.id} className="post-card-wrap">
-                <BlogCard post={post} />
-              </div>
+              <StaggerItem key={post.id}>
+                <div className="post-card-wrap">
+                  <BlogCard post={post} />
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         ) : (
           <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 0 }}>
             {filtered.map((post, i) => (

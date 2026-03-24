@@ -1,4 +1,8 @@
 "use client";
+import { motion } from "framer-motion";
+import ScrollReveal, { StaggerContainer, StaggerItem } from "../components/ScrollReveal";
+import Tilt3D from "../components/Tilt3D";
+import CountUp from "../components/CountUp";
 
 export default function AboutPage() {
   return (
@@ -18,33 +22,44 @@ export default function AboutPage() {
         {/* Newspaper top rule */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "rgba(255,255,255,0.2)" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 760, margin: "0 auto", padding: "88px 24px 80px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-            <span style={{ display: "inline-block", width: 24, height: 3, background: "rgba(255,255,255,0.5)" }}/>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: "2px", textTransform: "uppercase" }}>
-              Our Story
-            </span>
-          </div>
-          <h1 style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(28px, 4.5vw, 52px)",
-            fontWeight: 900, color: "#fff",
-            lineHeight: 1.0, letterSpacing: "-1px", marginBottom: 22,
-          }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+              <span style={{ display: "inline-block", width: 24, height: 3, background: "rgba(255,255,255,0.5)" }}/>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: "2px", textTransform: "uppercase" }}>
+                Our Story
+              </span>
+            </div>
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(28px, 4.5vw, 52px)",
+              fontWeight: 900, color: "#fff",
+              lineHeight: 1.0, letterSpacing: "-1px", marginBottom: 22,
+            }}>
             Built for the<br/><em style={{ fontStyle: "italic" }}>tech community</em>
-          </h1>
-          <p style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: 17, color: "rgba(255,255,255,0.7)",
-            lineHeight: 1.85, fontWeight: 300, maxWidth: 500,
-          }}>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.65 }}
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 17, color: "rgba(255,255,255,0.7)",
+              lineHeight: 1.85, fontWeight: 300, maxWidth: 500,
+            }}>
             TechSphere is a free, open publishing platform where anyone can read and write about technology — no account, no barriers, just knowledge.
-          </p>
+          </motion.p>
         </div>
       </section>
 
       {/* ── Mission with image ─────────────────── */}
       <section style={{ maxWidth: 1100, margin: "0 auto", padding: "72px 24px" }}>
         <div className="about-two-col">
+          <ScrollReveal direction="left">
           <div>
             {/* Newspaper section header */}
             <div style={{ borderTop: "3px solid #010048", paddingTop: 10, marginBottom: 22 }}>
@@ -90,15 +105,18 @@ export default function AboutPage() {
               </a>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Image */}
-          <div style={{ position: "relative", overflow: "hidden", height: 380 }}>
-            {/* Newspaper top accent */}
+          <ScrollReveal direction="right">
+          <div className="img-shine" style={{ position: "relative", overflow: "hidden", height: 380 }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "#010048", zIndex: 2 }} />
             <img
               src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80"
               alt="Developer coding"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease" }}
+              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
             />
             <div style={{
               position: "absolute", bottom: 0, left: 0, right: 0,
@@ -110,6 +128,7 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -128,30 +147,32 @@ export default function AboutPage() {
               </h2>
             </div>
           </div>
-          <div className="about-stats-grid">
+          <StaggerContainer className="about-stats-grid">
             {[
-              { value: "∞", label: "Articles Published" },
-              { value: "Free", label: "Always & Forever" },
-              { value: "0", label: "Login Required" },
-              { value: "Open", label: "Community Platform" },
+              { value: "∞",    label: "Articles Published", num: null },
+              { value: "Free", label: "Always & Forever",   num: null },
+              { value: "0",    label: "Login Required",     num: 0 },
+              { value: "Open", label: "Community Platform", num: null },
             ].map(stat => (
-              <div key={stat.label} style={{
-                background: "#fff", border: "1px solid #E8E8ED",
-                borderTop: "3px solid #010048",
-                padding: "36px 20px", textAlign: "center",
-                transition: "transform 0.22s ease, box-shadow 0.22s ease",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 12px 36px rgba(1,0,72,0.10)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 900, color: "#010048", letterSpacing: "-1px", marginBottom: 10 }}>
-                  {stat.value}
-                </div>
-                <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#6E6E73", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                  {stat.label}
-                </div>
-              </div>
+              <StaggerItem key={stat.label}>
+                <Tilt3D intensity={10} scale={1.04} style={{ height: "100%" }}>
+                  <div style={{
+                    background: "#fff", border: "1px solid #E8E8ED",
+                    borderTop: "3px solid #010048",
+                    padding: "36px 20px", textAlign: "center",
+                    height: "100%",
+                  }}>
+                    <div style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 900, color: "#010048", letterSpacing: "-1px", marginBottom: 10 }}>
+                      {stat.num !== null ? <CountUp end={stat.num} suffix="%" /> : stat.value}
+                    </div>
+                    <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#6E6E73", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                      {stat.label}
+                    </div>
+                  </div>
+                </Tilt3D>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -168,28 +189,30 @@ export default function AboutPage() {
               Core values
             </h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 16 }}>
+          <StaggerContainer style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 16 }}>
             {[
               { title: "Open Access",      desc: "All content is freely accessible to everyone, always. No exceptions.",              icon: "🔓" },
               { title: "Simplicity",       desc: "We keep the experience clean and fast. Focus on content, not complexity.",           icon: "✨" },
               { title: "Community First",  desc: "TechSphere exists for its readers and writers — the community shapes it.",           icon: "🌍" },
               { title: "Privacy Respect",  desc: "We don't track you unnecessarily. Your data is yours.",                              icon: "🔒" },
             ].map(({ title, desc, icon }) => (
-              <div key={title} style={{
-                background: "#FFFFFF",
-                border: "1px solid #E8E8ED",
-                borderTop: "3px solid #010048",
-                padding: "32px 28px",
-                transition: "transform 0.22s ease, box-shadow 0.22s ease",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 12px 36px rgba(1,0,72,0.10)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
-                <div style={{ fontSize: 28, marginBottom: 16 }}>{icon}</div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 16, fontWeight: 700, color: "#1D1D1F", marginBottom: 10 }}>{title}</h3>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#6E6E73", lineHeight: 1.7 }}>{desc}</p>
-              </div>
+              <StaggerItem key={title}>
+                <Tilt3D intensity={8} scale={1.03} style={{ height: "100%" }}>
+                  <div style={{
+                    background: "#FFFFFF",
+                    border: "1px solid #E8E8ED",
+                    borderTop: "3px solid #010048",
+                    padding: "32px 28px",
+                    height: "100%",
+                  }}>
+                    <div style={{ fontSize: 30, marginBottom: 16, filter: "drop-shadow(0 2px 6px rgba(1,0,72,0.15))" }}>{icon}</div>
+                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: 16, fontWeight: 700, color: "#1D1D1F", marginBottom: 10 }}>{title}</h3>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#6E6E73", lineHeight: 1.7 }}>{desc}</p>
+                  </div>
+                </Tilt3D>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
