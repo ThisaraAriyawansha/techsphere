@@ -4,11 +4,11 @@ import Footer from "./Footer";
 import ScrollToTop from "./ScrollToTop";
 
 export const metadata = {
-  title: "TechSphere — Open Tech Blog",
+  title: "TechSphere - Open Tech Blog",
   description: "An open platform for tech insights. No login required. Share freely.",
   icons: { icon: "/logo/logo.png" },
   openGraph: {
-    title: "TechSphere — Open Tech Blog",
+    title: "TechSphere - Open Tech Blog",
     description: "An open platform for tech insights. No login required. Share freely.",
     images: [{ url: "/logo/og-image.png", width: 1200, height: 630 }],
   },
