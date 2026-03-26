@@ -1,7 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { getPosts } from "../lib/firebase";
+import ScrollReveal, { StaggerContainer, StaggerItem } from "./components/ScrollReveal";
+import Tilt3D from "./components/Tilt3D";
+import CountUp from "./components/CountUp";
 
+/* ── Data ──────────────────────────────────── */
 const TOPICS = [
   { label: "All",          key: null },
   { label: "AI & ML",      key: "ai" },
@@ -15,18 +20,41 @@ const TOPICS = [
   { label: "Programming",  key: "programming" },
 ];
 
-const TOPIC_META = [
-  { key: "ai",       label: "AI & Machine Learning", icon: "🤖", color: "#4F46E5", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80" },
-  { key: "web",      label: "Web Development",       icon: "🌐", color: "#0891B2", image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?w=400&q=80" },
-  { key: "cloud",    label: "Cloud & DevOps",        icon: "☁️", color: "#0D9488", image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80" },
-  { key: "security", label: "Cybersecurity",         icon: "🔒", color: "#2563EB", image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=400&q=80" },
+const CATEGORIES = [
+  { key: "ai",          label: "AI & Machine Learning", icon: "🤖", image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80" },
+  { key: "web",         label: "Web Development",       icon: "🌐", image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?w=600&q=80" },
+  { key: "cloud",       label: "Cloud & DevOps",        icon: "☁️", image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80" },
+  { key: "security",    label: "Cybersecurity",         icon: "🔐", image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=600&q=80" },
+  { key: "mobile",      label: "Mobile Dev",            icon: "📱", image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80" },
+  { key: "data",        label: "Data Science",          icon: "📊", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" },
+  { key: "programming", label: "Programming",           icon: "💻", image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80" },
+  { key: "ux",          label: "UI & UX Design",        icon: "🎨", image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" },
 ];
 
+const FEATURES = [
+  { icon: "📚", title: "Read anything, instantly.", desc: "Thousands of articles spanning AI, cloud, security, web dev, and more. No paywalls, no subscriptions. Just open knowledge.", cta: "Browse Articles", href: "/blog" },
+  { icon: "✍️", title: "Write without an account.", desc: "Share your expertise, tutorials, and insights with the global tech community. Zero friction from idea to published post.", cta: "Start Writing", href: "/new" },
+  { icon: "🌐", title: "Explore every corner of tech.", desc: "12 curated topic areas from AI to hardware. Dive deep into your specialty or discover something completely new.", cta: "See All Topics", href: "/topics" },
+];
+
+/* ── Page ──────────────────────────────────── */
 export default function HomePage() {
-  const [posts, setPosts]       = useState([]);
-  const [loading, setLoading]   = useState(true);
-  const [search, setSearch]     = useState("");
-  const activeTopic             = null;
+  const [posts, setPosts]     = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch]   = useState("");
+  const [activeTab, setActiveTab] = useState(null);
+  const heroRef   = useRef(null);
+  const { scrollY } = useScroll();
+  const heroY     = useTransform(scrollY, [0, 500], [0, 100]);
+  const heroScale = useTransform(scrollY, [0, 500], [1, 1.07]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  useEffect(() => {
+    const update = () => { setIsMobile(window.innerWidth < 640); setIsTablet(window.innerWidth < 900); };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   useEffect(() => {
     getPosts().then(setPosts).catch(console.error).finally(() => setLoading(false));
@@ -34,633 +62,752 @@ export default function HomePage() {
 
   const filtered = posts.filter(p => {
     const q = search.toLowerCase();
-    const matchQ = !q || p.title?.toLowerCase().includes(q) || p.description?.toLowerCase().includes(q);
-    const matchT = !activeTopic || p.title?.toLowerCase().includes(activeTopic) || p.description?.toLowerCase().includes(activeTopic);
-    return matchQ && matchT;
+    return (!q || p.title?.toLowerCase().includes(q) || p.description?.toLowerCase().includes(q))
+      && (!activeTab || p.title?.toLowerCase().includes(activeTab) || p.description?.toLowerCase().includes(activeTab));
   });
 
-  const isFiltered = search || activeTopic;
-
   return (
-    <div style={{ background: "#FFFFFF" }}>
+    <div style={{ background: "#fff", color: "#1D1D1F" }}>
 
-      {/* ── Hero ─────────────────────────────────── */}
-      <section style={{ background: "#ffffff", borderBottom: "1px solid #E8E8ED", overflow: "hidden" }}>
+      {/* ══ 1. HERO ════════════════════════════════ */}
+      <div style={{ padding: "0 16px", background: "#fff" }}>
+        <section ref={heroRef} style={{
+          position: "relative", overflow: "hidden", borderRadius: 20,
+          height: "82vh", minHeight: 480, maxHeight: 900,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          border: "1px solid rgba(0,0,0,0.08)",
+        }}>
+          <motion.video
+            src="/img/0326.mp4"
+            autoPlay loop muted playsInline aria-hidden="true"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "110%", top: "-5%", objectFit: "cover", y: heroY, scale: heroScale }}
+          />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(1,0,72,0.72) 0%, rgba(0,0,20,0.5) 60%, rgba(1,0,60,0.62) 100%)" }} />
+          {/* Subtle particles */}
+          {[
+            { w:5, h:5, t:"22%", l:"10%", d:"0s"   },
+            { w:3, h:3, t:"68%", l:"7%",  d:"1.5s"  },
+            { w:6, h:6, t:"32%", r:"9%",  d:"0.6s"  },
+            { w:4, h:4, t:"72%", r:"14%", d:"2.2s"  },
+            { w:5, h:5, t:"48%", r:"28%", d:"1.1s"  },
+          ].map((p, i) => (
+            <div key={i} className={`particle particle-${(i%3)+1}`} style={{ width:p.w, height:p.h, background:"rgba(255,255,255,0.45)", top:p.t, left:p.l, right:p.r, borderRadius:"50%", position:"absolute", animationDelay:p.d }} />
+          ))}
+          {/* Thin rings */}
+          <div style={{ position:"absolute", width:400, height:400, border:"1px solid rgba(255,255,255,0.07)", borderRadius:"50%", top:"50%", left:"50%", transform:"translate(-50%,-50%)", animation:"heroOrbit1 28s linear infinite" }} />
+          <div style={{ position:"absolute", width:620, height:620, border:"1px solid rgba(255,255,255,0.04)", borderRadius:"50%", top:"50%", left:"50%", transform:"translate(-50%,-50%)", animation:"heroOrbit2 42s linear infinite" }} />
 
-        {/* Two-column content */}
-        <div className="hero-two-col">
-
-          {/* ── LEFT: Text ── */}
-          <div>
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              marginBottom: 28, padding: "5px 14px",
-              background: "#F5F5F7",
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#010048", display: "inline-block", flexShrink: 0 }}/>
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "#010048" }}>
-                Open Tech Publication
+          <div style={{ position:"relative", textAlign:"center", padding:"0 24px", maxWidth:720 }}>
+            <motion.div initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.65, delay:0.2 }}>
+              <span style={{ display:"inline-flex", alignItems:"center", gap:6, background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:100, padding:"6px 16px", backdropFilter:"blur(10px)", fontFamily:"var(--font-sans)", fontSize:12, fontWeight:500, color:"rgba(255,255,255,0.9)", letterSpacing:"0.3px", marginBottom:24, WebkitBackdropFilter:"blur(10px)" }}>
+                <span style={{ width:6, height:6, borderRadius:"50%", background:"#34D399", display:"inline-block" }}/>
+                Open Tech Publication · Always Free
               </span>
-            </div>
-
-            <h1 style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "clamp(26px, 4vw, 42px)",
-              fontWeight: 800, color: "#1D1D1F",
-              lineHeight: 1.05, letterSpacing: "-2px",
-              marginBottom: 20,
-            }}>
-              Where Tech<br/>Minds Meet
-            </h1>
-
-            <p style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 15, color: "#6E6E73",
-              lineHeight: 1.8, maxWidth: 420, marginBottom: 36, fontWeight: 400,
-            }}>
-              Discover tutorials, insights, and breakthroughs from developers and engineers worldwide. No login. Always free.
-            </p>
-
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 48 }}>
-              <a href="#posts" style={{
-                padding: "13px 28px", background: "#010048", color: "#fff",
-                fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14,
-                textDecoration: "none",
-                transition: "opacity 0.15s",
-              }}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            </motion.div>
+            <motion.h1 initial={{ opacity:0, y:28 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.9, delay:0.38, ease:[0.16,1,0.3,1] }}
+              style={{ fontFamily:"var(--font-display)", fontSize:"clamp(42px,6.5vw,82px)", fontWeight:800, color:"#fff", lineHeight:1.04, letterSpacing:"-2.5px", marginBottom:32 }}>
+              Where Tech<br/><em style={{ fontStyle:"italic" }}>Minds</em> Meet
+            </motion.h1>
+            <motion.div initial={{ opacity:0, y:18 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.65, delay:0.7 }}
+              style={{ display:"inline-flex", gap:10, flexWrap:"wrap", justifyContent:"center" }}>
+              <a href="#articles" style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"9px 18px", background:"transparent", color:"#fff", border:"1px solid #fff", fontFamily:"var(--font-sans)", fontWeight:600, fontSize:13, textDecoration:"none", borderRadius:6, transition:"opacity 0.18s, transform 0.18s, background 0.18s" }}
+                onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.12)"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.background="transparent"; e.currentTarget.style.transform="translateY(0)"; }}>
                 Explore Articles
+                <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </a>
-              <a href="/new" style={{
-                padding: "13px 28px",
-                border: "1.5px solid #010048", color: "#010048",
-                fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14,
-                textDecoration: "none",
-                transition: "background 0.15s, color 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#010048"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#010048"; }}>
+              <a href="/new" style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"9px 18px", background:"rgba(255,255,255,0.1)", color:"#fff", border:"1px solid rgba(255,255,255,0.28)", fontFamily:"var(--font-sans)", fontWeight:500, fontSize:13, textDecoration:"none", borderRadius:6, backdropFilter:"blur(10px)", WebkitBackdropFilter:"blur(10px)", transition:"background 0.18s, transform 0.18s" }}
+                onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.18)"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.1)"; e.currentTarget.style.transform="translateY(0)"; }}>
                 Write a Post
               </a>
-            </div>
-
-            <div style={{ display: "flex", gap: 32, flexWrap: "wrap", paddingTop: 24, borderTop: "1px solid #E8E8ED" }}>
-              {[
-                { value: loading ? "—" : posts.length, label: "Articles" },
-                { value: "Free",  label: "Always" },
-                { value: "Open",  label: "Community" },
-              ].map(s => (
-                <div key={s.label}>
-                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 28, fontWeight: 700, color: "#1D1D1F", letterSpacing: "-0.5px" }}>{s.value}</div>
-                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6", marginTop: 2 }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
+            </motion.div>
           </div>
+        </section>
+      </div>
 
-          {/* ── RIGHT: Robot illustration ── */}
-          <div className="hero-illus-wrap" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 400 }}>
-
-            {/* Glow under robot */}
-            <div className="hero-bot-glow" style={{
-              position: "absolute", bottom: "8%", left: "50%",
-              width: 180, height: 24, background: "rgba(1,0,72,0.07)",
-              filter: "blur(18px)", borderRadius: "50%", transform: "translateX(-50%)",
-            }}/>
-
-            {/* Robot SVG */}
-            <svg className="hero-robot" width="300" height="360" viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="148" y="18" width="4" height="42" rx="2" fill="#E8E8ED"/>
-              <circle cx="150" cy="13" r="9" fill="#010048" opacity="0.1"/>
-              <circle className="hero-ant-pulse" cx="150" cy="13" r="6" fill="#010048"/>
-              <circle cx="150" cy="13" r="3" fill="#fff"/>
-              <rect x="85" y="58" width="130" height="108" rx="18" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="89" y="62" width="55" height="16" rx="8" fill="#fff" opacity="0.7"/>
-              <rect x="103" y="86" width="38" height="30" rx="7" fill="#010048"/>
-              <circle cx="122" cy="101" r="11" fill="#6E6E73"/>
-              <circle cx="122" cy="101" r="5.5" fill="#fff" opacity="0.95"/>
-              <circle cx="125" cy="98"  r="2.2" fill="#fff"/>
-              <rect x="159" y="86" width="38" height="30" rx="7" fill="#010048"/>
-              <circle cx="178" cy="101" r="11" fill="#6E6E73"/>
-              <circle cx="178" cy="101" r="5.5" fill="#fff" opacity="0.95"/>
-              <circle cx="181" cy="98"  r="2.2" fill="#fff"/>
-              <rect x="120" y="138" width="60" height="10" rx="5" fill="#E8E8ED"/>
-              <rect x="127" y="141" width="22" height="4" rx="2" fill="#010048" opacity="0.45"/>
-              <rect x="153" y="141" width="20" height="4" rx="2" fill="#A1A1A6" opacity="0.4"/>
-              <rect x="135" y="166" width="30" height="18" rx="4" fill="#E8E8ED"/>
-              <rect x="70" y="182" width="160" height="128" rx="18" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="96" y="200" width="108" height="84" rx="7" fill="#010048" stroke="#010048" strokeWidth="1"/>
-              <rect x="104" y="212" width="38" height="3" rx="1.5" fill="#A1A1A6" opacity="0.9"/>
-              <rect x="104" y="220" width="68" height="3" rx="1.5" fill="rgba(255,255,255,0.22)"/>
-              <rect x="104" y="228" width="52" height="3" rx="1.5" fill="rgba(255,255,255,0.14)"/>
-              <rect x="104" y="236" width="62" height="3" rx="1.5" fill="#A1A1A6" opacity="0.45"/>
-              <rect x="104" y="244" width="44" height="3" rx="1.5" fill="rgba(255,255,255,0.11)"/>
-              <rect x="104" y="252" width="72" height="3" rx="1.5" fill="rgba(255,255,255,0.16)"/>
-              <rect x="104" y="260" width="32" height="3" rx="1.5" fill="#A1A1A6" opacity="0.55"/>
-              <rect x="104" y="268" width="56" height="3" rx="1.5" fill="rgba(255,255,255,0.09)"/>
-              <circle cx="87"  cy="216" r="3" fill="#010048" opacity="0.3"/>
-              <circle cx="87"  cy="234" r="3" fill="#010048" opacity="0.18"/>
-              <circle cx="213" cy="216" r="3" fill="#010048" opacity="0.3"/>
-              <circle cx="213" cy="234" r="3" fill="#010048" opacity="0.18"/>
-              <rect x="18"  y="190" width="52" height="26" rx="13" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <circle cx="34" cy="203" r="6" fill="#010048" opacity="0.15"/>
-              <rect x="230" y="190" width="52" height="26" rx="13" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <circle cx="266" cy="203" r="6" fill="#010048" opacity="0.15"/>
-              <rect x="100" y="306" width="36" height="42" rx="10" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="94"  y="340" width="48" height="12" rx="6"  fill="#E8E8ED" stroke="#E8E8ED" strokeWidth="1"/>
-              <rect x="164" y="306" width="36" height="42" rx="10" fill="#F5F5F7" stroke="#E8E8ED" strokeWidth="1.5"/>
-              <rect x="158" y="340" width="48" height="12" rx="6"  fill="#E8E8ED" stroke="#E8E8ED" strokeWidth="1"/>
-            </svg>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Trending Topic Cards ─────────────────── */}
-      <section style={{ background: "#FFFFFF", borderBottom: "1px solid #E8E8ED" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "32px 0 20px" }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600, color: "#1D1D1F" }}>
-              Trending Topics
+      {/* ══ 2. TICKER ══════════════════════════════ */}
+      <div style={{  borderBottom:"1px solid #E8E8ED", overflow:"hidden" }}>
+        <div className="marquee-track" style={{ padding:"12px 0" }}>
+          {[..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),
+            ..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),
+          ].map((item, i) => (
+            <span key={i} style={{ display:"inline-flex", alignItems:"center", gap:20, padding:"0 28px", flexShrink:0 }}>
+              <span style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:500, color:"#6E6E73", letterSpacing:"1px", textTransform:"uppercase", whiteSpace:"nowrap" }}>{item}</span>
+              <span style={{ width:3, height:3, borderRadius:"50%", background:"#D2D2D7", flexShrink:0 }}/>
             </span>
-            <a href="/topics" style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, color: "#6E6E73", textDecoration: "none", transition: "color 0.15s" }}
-              onMouseEnter={e => e.currentTarget.style.color = "#010048"}
-              onMouseLeave={e => e.currentTarget.style.color = "#6E6E73"}>
-              All Topics →
-            </a>
-          </div>
-          <div className="trending-grid" style={{ marginBottom: 32 }}>
-            {TOPIC_META.map(topic => (
-              <button
-                key={topic.key}
-                onClick={() => { window.location.href = `/blog?category=${topic.key}`; }}
-                style={{
-                  position: "relative", overflow: "hidden",
-                  height: 140, border: "none", cursor: "pointer",
-                  textAlign: "left", padding: 0,
-                  background: "#010048",
-                  outline: "none",
-                }}
-              >
-                <img src={topic.image} alt={topic.label} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.4 }}/>
-                <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${topic.color}BB 0%, rgba(1,0,72,0.7) 100%)` }}/>
-                <div style={{ position: "relative", zIndex: 1, padding: "20px" }}>
-                  <div style={{ fontSize: 24, marginBottom: 8 }}>{topic.icon}</div>
-                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: 600, color: "#fff", lineHeight: 1.3 }}>
-                    {topic.label}
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Topic filter tabs ─────────────────────── */}
-      <TopicsBar topics={TOPICS} activeTopic={activeTopic} />
-
-      {/* ── Main content ──────────────────────────── */}
-      <section id="posts" style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px 80px" }}>
-
-        {/* Section header */}
-        <div style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          flexWrap: "wrap", gap: 12,
-          paddingBottom: 16,
-          borderBottom: "1px solid #E8E8ED",
-          marginBottom: 0,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600, color: "#1D1D1F" }}>
-              {activeTopic ? TOPICS.find(t => t.key === activeTopic)?.label : search ? `Results for "${search}"` : "Latest Articles"}
-            </span>
-            {!search && (
-              <span style={{ fontSize: 13, color: "#A1A1A6", fontFamily: "var(--font-sans)" }}>
-                {filtered.length} {filtered.length !== 1 ? "articles" : "article"}
-              </span>
-            )}
-          </div>
-          <SearchBar value={search} onChange={setSearch} />
-        </div>
-
-        {loading ? <LoadingGrid /> : filtered.length === 0 ? (
-          <EmptyState search={search} onClear={() => { setSearch(""); }} />
-        ) : (
-          <div>
-            {filtered.length > 0 && !isFiltered && (
-              <div style={{ marginBottom: 24, marginTop: 24 }}>
-                <FeaturedRow post={filtered[0]} secondaryPosts={filtered.slice(1, 4)} />
-              </div>
-            )}
-            <div className="posts-grid">
-              {(isFiltered ? filtered : filtered.slice(1)).map(post => (
-                <div key={post.id} className="post-card-wrap">
-                  <PostCard post={post} />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* ── Explore Topics Strip ─────────────────── */}
-      <section style={{ background: "#F5F5F7", borderTop: "1px solid #E8E8ED", borderBottom: "1px solid #E8E8ED", padding: "56px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600, color: "#1D1D1F" }}>
-              Explore Topics
-            </span>
-            <a href="/topics" style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, color: "#6E6E73", textDecoration: "none", transition: "color 0.15s" }}
-              onMouseEnter={e => e.currentTarget.style.color = "#010048"}
-              onMouseLeave={e => e.currentTarget.style.color = "#6E6E73"}>
-              View All →
-            </a>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {[
-              { label: "AI & Machine Learning", icon: "🤖", href: "/blog?category=ai" },
-              { label: "Web Development",        icon: "🌐", href: "/blog?category=web" },
-              { label: "Cloud & DevOps",         icon: "☁️", href: "/blog?category=cloud" },
-              { label: "Cybersecurity",          icon: "🔐", href: "/blog?category=security" },
-              { label: "Mobile Development",     icon: "📱", href: "/blog?category=mobile" },
-              { label: "Data Science",           icon: "📊", href: "/blog?category=data" },
-              { label: "Open Source",            icon: "🔓", href: "/blog?category=opensource" },
-              { label: "Programming",            icon: "💻", href: "/blog?category=programming" },
-              { label: "UI & UX Design",         icon: "🎨", href: "/blog?category=ux" },
-              { label: "Tech & Startups",        icon: "🚀", href: "/blog?category=startup" },
-            ].map(tag => (
-              <a key={tag.label} href={tag.href} style={{
-                display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "8px 16px",
-                background: "#fff",
-                border: "1px solid #E8E8ED",
-                fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500,
-                color: "#1D1D1F", textDecoration: "none",
-                transition: "border-color 0.15s, background 0.15s, color 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#010048"; e.currentTarget.style.background = "#010048"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8ED"; e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#1D1D1F"; }}>
-                <span>{tag.icon}</span> {tag.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Why TechSphere ───────────────────────── */}
-      <section style={{ background: "#FFFFFF", padding: "80px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "#A1A1A6", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-              Why TechSphere
-            </span>
-            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(18px, 2.5vw, 28px)", fontWeight: 700, color: "#1D1D1F", marginTop: 12, letterSpacing: "-0.5px" }}>
-              A Platform Built for the Community
-            </h2>
-          </div>
-          <div className="why-grid">
-            {[
-              { icon: "✍️", title: "Write Freely",    desc: "No account required. Share your knowledge, tutorials, and insights in minutes." },
-              { icon: "📖", title: "Read Everything", desc: "Thousands of articles across AI, web dev, cloud, security, and more — always free." },
-              { icon: "🌍", title: "Open Community",  desc: "A global platform where developers, engineers, and enthusiasts connect and learn." },
-            ].map(item => (
-              <div key={item.title} style={{
-                background: "#fff",
-                border: "1px solid #E8E8ED",
-                padding: "32px 28px",
-                textAlign: "center",
-              }}>
-                <div style={{ fontSize: 36, marginBottom: 18 }}>{item.icon}</div>
-                <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 16, fontWeight: 600, color: "#1D1D1F", marginBottom: 10 }}>{item.title}</h3>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#6E6E73", lineHeight: 1.7 }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Newsletter CTA ─────────────────────────── */}
-      <section style={{ background: "#F5F5F7", borderTop: "1px solid #E8E8ED", padding: "80px 24px" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, letterSpacing: "0.5px", color: "#A1A1A6", textTransform: "uppercase", marginBottom: 16 }}>
-            Stay Updated
-          </p>
-          <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(18px, 2.5vw, 30px)", fontWeight: 700, color: "#1D1D1F", letterSpacing: "-0.5px", lineHeight: 1.2, marginBottom: 16 }}>
-            Never miss a great article
-          </h2>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "#6E6E73", lineHeight: 1.7, marginBottom: 32 }}>
-            Join the TechSphere newsletter — weekly, curated, free.
-          </p>
-          <a href="/newsletter" style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "13px 32px", background: "#010048", color: "#ffffff",
-            fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: 600,
-            textDecoration: "none",
-            transition: "opacity 0.15s",
-          }}
-          onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-            Subscribe — It&apos;s Free
-          </a>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-/* ── Components ───────────────────────────────── */
-
-function FeaturedRow({ post, secondaryPosts }) {
-  const [hovered, setHovered] = useState(false);
-  let displayDate = "—";
-  try { displayDate = new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }); } catch {}
-
-  return (
-    <div className={secondaryPosts.length ? "featured-row-grid" : ""} style={{ background: "#fff" }}>
-      <a href={`/blog/${post.id}`}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          display: "block", textDecoration: "none",
-          borderRight: secondaryPosts.length ? "1px solid #E8E8ED" : "none",
-          position: "relative", overflow: "hidden",
-        }}>
-        {post.imageUrl ? (
-          <div style={{ height: 340, overflow: "hidden", background: "#F5F5F7" }}>
-            <img src={post.imageUrl} alt={post.title} style={{
-              width: "100%", height: "100%", objectFit: "cover",
-              transform: hovered ? "scale(1.03)" : "scale(1)",
-              transition: "transform 0.5s ease",
-            }}/>
-          </div>
-        ) : (
-          <div style={{ height: 200, background: "linear-gradient(135deg, #010048 0%, #3730a3 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 72, color: "rgba(255,255,255,0.06)", fontWeight: 900 }}>TS</span>
-          </div>
-        )}
-        <div style={{ padding: "24px 28px 28px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 600, color: "#010048", background: "#F5F5F7", padding: "3px 10px", border: "1px solid #E8E8ED" }}>
-              Editor&apos;s Pick
-            </span>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6" }}>{displayDate}</span>
-          </div>
-          <h2 style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "clamp(20px, 2.8vw, 28px)",
-            fontWeight: 700, color: "#1D1D1F",
-            lineHeight: 1.2, letterSpacing: "-0.3px", marginBottom: 12,
-            textDecoration: hovered ? "underline" : "none",
-            textDecorationColor: "#1D1D1F",
-          }}>
-            {post.title}
-          </h2>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#6E6E73", lineHeight: 1.7, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-            {post.description}
-          </p>
-          <span style={{
-            display: "inline-flex", alignItems: "center", gap: 5, marginTop: 16,
-            fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, color: "#010048",
-          }}>
-            Continue Reading
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" style={{ transform: hovered ? "translateX(3px)" : "none", transition: "transform 0.2s" }}>
-              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </span>
-        </div>
-      </a>
-
-      {secondaryPosts.length > 0 && (
-        <div className="featured-row-secondary" style={{ display: "flex", flexDirection: "column" }}>
-          {secondaryPosts.map((sp, i) => (
-            <SecondaryStory key={sp.id} post={sp} isLast={i === secondaryPosts.length - 1} />
           ))}
-          {/* Fill remaining space */}
-          <div style={{
-            flex: 1, background: "#F5F5F7",
-            padding: "20px", display: "flex", flexDirection: "column",
-            justifyContent: "center", alignItems: "flex-start", gap: 10,
-            borderTop: "1px solid #E8E8ED",
-          }}>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "#A1A1A6" }}>
-              Open Publishing
-            </p>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: 600, color: "#1D1D1F", lineHeight: 1.4 }}>
-              Have an insight to share?
-            </p>
-            <a href="/new" style={{
-              display: "inline-flex", alignItems: "center", gap: 6,
-              padding: "8px 16px",
-              background: "#010048", color: "#fff",
-              fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600,
-              textDecoration: "none",
-              transition: "opacity 0.15s",
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-              Write a Post →
-            </a>
+        </div>
+      </div>
+
+      {/* ══ 3. BENTO FEATURED ══════════════════════ */}
+      <section style={{ background:"#fff", padding:"72px 24px 0" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:32 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                <div style={{ width:3, height:20, background:"#010048", borderRadius:2 }}/>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,2.5vw,26px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.4px" }}>Featured Stories</h2>
+              </div>
+              <a href="/blog" style={{ fontFamily:"var(--font-sans)", fontSize:13, fontWeight:500, color:"#010048", textDecoration:"none", display:"flex", alignItems:"center", gap:4, transition:"opacity 0.15s" }}
+                onMouseEnter={e=>e.currentTarget.style.opacity="0.65"}
+                onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
+                All articles
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+            </div>
+          </ScrollReveal>
+          {loading ? <BentoSkeleton/> : posts.length > 0 ? <BentoGrid posts={posts}/> : null}
+        </div>
+      </section>
+
+      {/* ══ 4. TRENDING NOW ════════════════════════ */}
+      {!loading && posts.length > 0 && (
+        <section style={{ background:"#fff", padding:"72px 24px 0" }}>
+          <div style={{ maxWidth:1120, margin:"0 auto" }}>
+            <ScrollReveal direction="up">
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:28 }}>
+                <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                  <div style={{ width:3, height:20, background:"#010048", borderRadius:2 }}/>
+                  <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,2.5vw,26px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.4px" }}>Trending Now</h2>
+                </div>
+                <a href="/blog" style={{ fontFamily:"var(--font-sans)", fontSize:13, fontWeight:500, color:"#010048", textDecoration:"none", transition:"opacity 0.15s" }}
+                  onMouseEnter={e=>e.currentTarget.style.opacity="0.65"}
+                  onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
+                  View all →
+                </a>
+              </div>
+            </ScrollReveal>
+            <div style={{ border:"1px solid #E8E8ED", borderRadius:16, overflow:"hidden", background:"#fff" }}>
+              <div className="trending-dark-grid">
+                {posts.slice(0, 6).map((post, i) => (
+                  <TrendingItem key={post.id} post={post} rank={i+1} isLast={i >= 4} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ══ 5. CATEGORIES ══════════════════════════ */}
+      <section style={{ padding:"72px 0 0" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto", padding:"0 24px" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:28 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                <div style={{ width:3, height:20, background:"#010048", borderRadius:2 }}/>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,2.5vw,26px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.4px" }}>Browse Topics</h2>
+              </div>
+              <a href="/topics" style={{ fontFamily:"var(--font-sans)", fontSize:13, fontWeight:500, color:"#010048", textDecoration:"none", transition:"opacity 0.15s" }}
+                onMouseEnter={e=>e.currentTarget.style.opacity="0.65"}
+                onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
+                All topics →
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
+        <CategoryScroll categories={CATEGORIES}/>
+      </section>
+
+      {/* ══ 6. STATS STRIP ═════════════════════════ */}
+      <section style={{ padding:"80px 24px", marginTop:72, position:"relative", overflow:"hidden" }}>
+        {/* fixed bg image */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:"url('/img/2454628.webp')", backgroundSize:"cover", backgroundPosition:"center", backgroundAttachment:"fixed", zIndex:0 }}/>
+        {/* subtle radial glow */}
+        <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse 70% 60% at 50% 100%, rgba(99,102,241,0.18) 0%, transparent 70%)", pointerEvents:"none", zIndex:2 }}/>
+        <div style={{ maxWidth:1120, margin:"0 auto", position:"relative", zIndex:3 }}>
+          <ScrollReveal direction="up">
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, color:"rgba(255,255,255,0.45)", letterSpacing:"2px", textTransform:"uppercase", textAlign:"center", marginBottom:56 }}>By the numbers</p>
+            <div className="stats-bar-grid">
+              {[
+                { end:12,  suffix:"+",  label:"Topic Categories",  desc:"Spanning every major tech domain" },
+                { end:100, suffix:"%",  label:"Free Forever",       desc:"No hidden fees or paywalls" },
+                { end:0,   suffix:"",   label:"Login Required",     desc:"Read anything, anytime" },
+                { end:60,  suffix:"s",  label:"To Publish a Post",  desc:"Frictionless writing experience" },
+              ].map((s, i) => (
+                <div key={s.label} style={{
+                  textAlign:"center", padding:"40px 24px",
+                  borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                }}>
+                  <div style={{ fontFamily:"var(--font-display)", fontSize:"clamp(40px,4.5vw,60px)", fontWeight:700, color:"#fff", letterSpacing:"-2px", lineHeight:1, marginBottom:10 }}>
+                    <CountUp end={s.end} suffix={s.suffix} duration={2200}/>
+                  </div>
+                  <div style={{ fontFamily:"var(--font-display)", fontSize:15, fontWeight:600, color:"rgba(255,255,255,0.9)", marginBottom:6 }}>{s.label}</div>
+                  <div style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"rgba(255,255,255,0.4)", lineHeight:1.5 }}>{s.desc}</div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ══ 7. ARTICLES + SIDEBAR ══════════════════ */}
+      <section id="articles" style={{ background:"#fff", padding:"72px 24px 80px" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12, marginBottom:20 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                <div style={{ width:3, height:20, background:"#010048", borderRadius:2 }}/>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,2.5vw,26px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.4px" }}>
+                  {search ? `"${search}"` : "Latest Articles"}
+                  {!search && !loading && <span style={{ fontFamily:"var(--font-sans)", fontSize:13, fontWeight:400, color:"#A1A1A6", marginLeft:8 }}>{filtered.length} articles</span>}
+                </h2>
+              </div>
+              <SearchBar value={search} onChange={setSearch}/>
+            </div>
+            {/* Tabs */}
+            <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:36 }}>
+              {TOPICS.map(t => (
+                <button key={t.label} onClick={()=>setActiveTab(t.key)} style={{
+                  padding:"6px 16px", borderRadius:100,
+                  border:`1.5px solid ${activeTab===t.key ? "#010048" : "#E8E8ED"}`,
+                  background: activeTab===t.key ? "#010048" : "#fff",
+                  color: activeTab===t.key ? "#fff" : "#6E6E73",
+                  fontFamily:"var(--font-sans)", fontSize:12, fontWeight:500,
+                  cursor:"pointer", transition:"all 0.18s",
+                }}>
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </ScrollReveal>
+
+          <div className="articles-sidebar-layout">
+            <div>
+              {loading ? <LoadingGrid2/> : filtered.length===0 ? (
+                <EmptyState search={search} onClear={()=>{ setSearch(""); setActiveTab(null); }}/>
+              ) : (
+                <StaggerContainer className="articles-2col">
+                  {filtered.map(post => (
+                    <StaggerItem key={post.id}><ArticleCard post={post}/></StaggerItem>
+                  ))}
+                </StaggerContainer>
+              )}
+            </div>
+            <aside className="articles-sidebar" style={{ position:"sticky", top:88 }}>
+              <SidebarPanel posts={posts}/>
+            </aside>
           </div>
         </div>
-      )}
+      </section>
+
+      {/* ══ 8. HOW IT WORKS ════════════════════════ */}
+      <section style={{ background:"#F8F8FB", padding:"110px 24px" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ textAlign:"center", marginBottom:80 }}>
+              <span style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"2.5px", textTransform:"uppercase", background:"rgba(1,0,72,0.07)", borderRadius:100, padding:"7px 18px", marginBottom:20 }}>
+                <span style={{ width:5, height:5, borderRadius:"50%", background:"#010048", display:"inline-block" }}/>
+                Simple by Design
+              </span>
+              <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(30px,3.8vw,48px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1.2px", lineHeight:1.08, marginBottom:18 }}>
+                How TechSphere works
+              </h2>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:16, color:"#6E6E73", maxWidth:460, margin:"0 auto", lineHeight:1.75 }}>
+                Three steps. Zero friction. Built for readers and writers alike.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <StaggerContainer className="how-grid" style={{ position:"relative", alignItems:"stretch" }}>
+            {[
+              { step:"01", title:"Discover",  tag:"Explore",  desc:"Browse thousands of free articles across 12 tech topics. Search, filter, and explore at your pace.",              href:"/blog", cta:"Browse articles" },
+              { step:"02", title:"Read Free", tag:"Access",   desc:"Every article is 100% free. No paywall, no account required, no limits — open knowledge for everyone.",          href:null,    cta:null              },
+              { step:"03", title:"Publish",   tag:"Create",   desc:"Write and publish your own article in under 60 seconds. No friction, no barriers — your voice deserves to be heard.", href:"/new",  cta:"Start writing"   },
+            ].map((item, i) => (
+              <StaggerItem key={item.step} style={{ display:"flex" }}>
+                <div style={{
+                  flex:1, display:"flex", flexDirection:"column",
+                  background:"#fff",
+                  border:"1px solid #EBEBF0",
+                  borderTop: i===1 ? "3px solid #010048" : "3px solid transparent",
+                  borderRadius:20,
+                  padding:"40px 36px 36px",
+                  boxShadow: i===1 ? "0 16px 48px rgba(1,0,72,0.1)" : "0 2px 16px rgba(0,0,0,0.04)",
+                  position:"relative", overflow:"hidden",
+                  transform: i===1 ? "translateY(-8px)" : "none",
+                }}>
+                  {/* watermark step */}
+                  <div style={{ position:"absolute", bottom:-10, right:16, fontFamily:"var(--font-display)", fontSize:100, fontWeight:900, color:"rgba(1,0,72,0.035)", lineHeight:1, userSelect:"none", pointerEvents:"none" }}>{item.step}</div>
+
+                  {/* tag + step */}
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:32 }}>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase", color: i===1 ? "#010048" : "#A0A0AB", background: i===1 ? "rgba(1,0,72,0.07)" : "#F3F3F7", borderRadius:100, padding:"5px 12px" }}>{item.tag}</span>
+                    <span style={{ fontFamily:"var(--font-display)", fontSize:13, fontWeight:700, color:"#D0D0DA" }}>{item.step}</span>
+                  </div>
+
+                  {/* icon circle */}
+                  <div style={{ width:52, height:52, borderRadius:14, background: i===1 ? "#010048" : "#F3F3F7", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:24, boxShadow: i===1 ? "0 6px 20px rgba(1,0,72,0.2)" : "none" }}>
+                    {i===0 && <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#010048" strokeWidth="2"/><path d="M20 20l-3-3" stroke="#010048" strokeWidth="2" strokeLinecap="round"/></svg>}
+                    {i===1 && <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>}
+                    {i===2 && <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" stroke="#010048" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                  </div>
+
+                  <h3 style={{ fontFamily:"var(--font-display)", fontSize:22, fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.5px", marginBottom:12 }}>{item.title}</h3>
+                  <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", lineHeight:1.85, flexGrow:1, marginBottom: item.cta ? 28 : 0 }}>{item.desc}</p>
+
+                  {item.cta && (
+                    <a href={item.href} style={{ display:"inline-flex", alignItems:"center", gap:8, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"#fff", textDecoration:"none", background:"#010048", borderRadius:100, padding:"10px 20px", alignSelf:"flex-start", transition:"opacity 0.18s, transform 0.18s" }}
+                      onMouseEnter={e=>{ e.currentTarget.style.opacity="0.85"; e.currentTarget.style.transform="translateY(-1px)"; }}
+                      onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
+                      {item.cta}
+                      <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </a>
+                  )}
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* ══ 9. PLATFORM FEATURES ═══════════════════ */}
+      <section style={{ background:"#fff", padding: isMobile ? "60px 16px" : "100px 24px" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", alignItems: isMobile ? "flex-start" : "flex-end", flexDirection: isMobile ? "column" : "row", justifyContent:"space-between", marginBottom: isMobile ? 40 : 64, gap:32 }}>
+              <div>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"2.5px", textTransform:"uppercase", marginBottom:14 }}>Platform</p>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(28px,3.5vw,44px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, maxWidth:420 }}>
+                  Knowledge without barriers
+                </h2>
+              </div>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", maxWidth: isMobile ? "100%" : 340, lineHeight:1.75, margin:0 }}>
+                Everything you need to read, write, and grow — completely free, forever.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "repeat(3,1fr)", gap:2 }}>
+            {FEATURES.map((feat, i) => (
+              <ScrollReveal key={i} direction="up">
+                <div style={{ padding: isMobile ? "32px 20px" : "44px 36px", borderTop:"1px solid #E8E8ED", position:"relative", height:"100%", display:"flex", flexDirection:"column" }}
+                  onMouseEnter={e=>e.currentTarget.style.background="#F8F8FB"}
+                  onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                  <div style={{ width:40, height:40, borderRadius:10, background:"#010048", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:28 }}>
+                    {i===0 && <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#fff" strokeWidth="2" strokeLinecap="round"/><path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z" stroke="#fff" strokeWidth="2"/></svg>}
+                    {i===1 && <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                    {i===2 && <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#fff" strokeWidth="2"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="#fff" strokeWidth="2"/></svg>}
+                  </div>
+                  <h3 style={{ fontFamily:"var(--font-display)", fontSize:19, fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.4px", marginBottom:12, lineHeight:1.3 }}>{feat.title}</h3>
+                  <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", lineHeight:1.8, flexGrow:1, marginBottom:28 }}>{feat.desc}</p>
+                  <a href={feat.href} style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, color:"#010048", textDecoration:"none", transition:"gap 0.2s" }}
+                    onMouseEnter={e=>e.currentTarget.style.gap="10px"}
+                    onMouseLeave={e=>e.currentTarget.style.gap="6px"}>
+                    {feat.cta}
+                    <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </a>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 10. COMMUNITY (one blue accent section) ═ */}
+            <section style={{ background:"#010048", padding:"120px 24px", position:"relative", overflow:"hidden" }}>
+        {/* grid pattern */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize:"64px 64px", pointerEvents:"none" }}/>
+        {/* glow */}
+        <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:600, height:400, background:"radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 70%)", pointerEvents:"none" }}/>
+
+        <div style={{ maxWidth:780, margin:"0 auto", textAlign:"center", position:"relative", zIndex:1 }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:100, padding:"6px 16px", marginBottom:32 }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:"#34D399", display:"inline-block", boxShadow:"0 0 8px #34D399" }}/>
+              <span style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.6)", letterSpacing:"1.5px", textTransform:"uppercase" }}>Open Community</span>
+            </div>
+
+            <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(32px,5vw,60px)", fontWeight:700, color:"#fff", letterSpacing:"-1.5px", lineHeight:1.06, marginBottom:20 }}>
+              Your knowledge<br/>
+              <span style={{ color:"rgba(255,255,255,0.35)" }}>belongs here.</span>
+            </h2>
+
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:17, color:"rgba(255,255,255,0.45)", lineHeight:1.8, maxWidth:500, margin:"0 auto 48px" }}>
+              Join thousands of developers sharing tutorials, insights, and breakthroughs — no account, no friction, no cost.
+            </p>
+
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:12, flexWrap:"wrap", marginBottom:64 }}>
+              <a href="/new" style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"14px 32px", background:"#fff", color:"#010048", fontFamily:"var(--font-sans)", fontSize:14, fontWeight:700, textDecoration:"none", borderRadius:100, transition:"opacity 0.15s, transform 0.15s", letterSpacing:"-0.2px" }}
+                onMouseEnter={e=>{ e.currentTarget.style.opacity="0.9"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
+                Start Writing
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+              <a href="/blog" style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"14px 28px", background:"transparent", color:"rgba(255,255,255,0.65)", border:"1px solid rgba(255,255,255,0.15)", fontFamily:"var(--font-sans)", fontSize:14, fontWeight:500, textDecoration:"none", borderRadius:100, transition:"border-color 0.18s, color 0.18s" }}
+                onMouseEnter={e=>{ e.currentTarget.style.borderColor="rgba(255,255,255,0.4)"; e.currentTarget.style.color="#fff"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.borderColor="rgba(255,255,255,0.15)"; e.currentTarget.style.color="rgba(255,255,255,0.65)"; }}>
+                Browse Articles
+              </a>
+            </div>
+
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:32, flexWrap:"wrap" }}>
+              {[["12+","Topic categories"],["100%","Free forever"],["60s","To publish"]].map(([val,lbl])=>(
+                <div key={lbl} style={{ textAlign:"center" }}>
+                  <div style={{ fontFamily:"var(--font-display)", fontSize:28, fontWeight:700, color:"#fff", letterSpacing:"-0.8px", lineHeight:1 }}>{val}</div>
+                  <div style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"rgba(255,255,255,0.35)", marginTop:4 }}>{lbl}</div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ══ 11. TOPICS EXPLORER ════════════════════ */}
+            <section style={{ background:"#fff", borderTop:"1px solid #EBEBF0", padding:"90px 24px" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:44, gap:16, flexWrap:"wrap" }}>
+              <div>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"2.5px", textTransform:"uppercase", marginBottom:10 }}>Topics</p>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(24px,3vw,36px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.8px", lineHeight:1.1 }}>Explore by Topic</h2>
+              </div>
+              <a href="/topics" style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"#010048", textDecoration:"none", borderBottom:"1.5px solid rgba(1,0,72,0.2)", paddingBottom:2, transition:"border-color 0.18s, gap 0.2s", whiteSpace:"nowrap" }}
+                onMouseEnter={e=>{ e.currentTarget.style.borderColor="#010048"; e.currentTarget.style.gap="10px"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.borderColor="rgba(1,0,72,0.2)"; e.currentTarget.style.gap="6px"; }}>
+                View all topics
+                <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+            </div>
+          </ScrollReveal>
+          <StaggerContainer style={{ display:"flex", flexWrap:"wrap", gap:10 }}>
+            {[
+              { label:"AI & Machine Learning", href:"/blog?category=ai"          },
+              { label:"Web Development",        href:"/blog?category=web"         },
+              { label:"Cloud & DevOps",         href:"/blog?category=cloud"       },
+              { label:"Cybersecurity",          href:"/blog?category=security"    },
+              { label:"Mobile Development",     href:"/blog?category=mobile"      },
+              { label:"Data Science",           href:"/blog?category=data"        },
+              { label:"Open Source",            href:"/blog?category=opensource"  },
+              { label:"Programming",            href:"/blog?category=programming" },
+              { label:"UI & UX Design",         href:"/blog?category=ux"          },
+              { label:"Tech & Startups",        href:"/blog?category=startup"     },
+              { label:"Hardware & IoT",         href:"/blog?category=hardware"    },
+              { label:"DevOps",                 href:"/blog?category=devops"      },
+            ].map(tag => (
+              <StaggerItem key={tag.label}>
+                <a href={tag.href} style={{ display:"inline-flex", alignItems:"center", padding:"10px 20px", background:"#F5F5F8", border:"1px solid transparent", borderRadius:100, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:500, color:"#3A3A4A", textDecoration:"none", transition:"all 0.18s" }}
+                  onMouseEnter={e=>{ e.currentTarget.style.background="#010048"; e.currentTarget.style.color="#fff"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                  onMouseLeave={e=>{ e.currentTarget.style.background="#F5F5F8"; e.currentTarget.style.color="#3A3A4A"; e.currentTarget.style.transform="none"; }}>
+                  {tag.label}
+                </a>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      <section style={{ background:"#F8F8FB", borderTop:"1px solid #EBEBF0", padding: isMobile ? "60px 16px" : "100px 24px" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap:0, borderRadius:24, overflow:"hidden", border:"1px solid #E2E2EA", boxShadow:"0 4px 32px rgba(0,0,0,0.06)" }} className="community-grid">
+              {/* Left */}
+              <div style={{ padding: isMobile ? "40px 28px" : "60px 56px", background:"#fff", display:"flex", flexDirection:"column", justifyContent:"center" }}>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3vw,38px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, marginBottom:16 }}>
+                  Stay in the loop
+                </h2>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", lineHeight:1.8, marginBottom:0, maxWidth:320 }}>
+                  Weekly digest of the best tech articles — curated, concise, and completely free.
+                </p>
+              </div>
+              {/* Right */}
+              <div style={{ padding: isMobile ? "40px 28px" : "60px 56px", background:"#F8F8FB", display:"flex", flexDirection:"column", justifyContent:"center", gap:20 }}>
+                {[
+                  { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"Handpicked articles every week" },
+                  { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"No spam, unsubscribe anytime" },
+                  { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"100% free, always" },
+                ].map((item, i) => (
+                  <div key={i} style={{ display:"flex", alignItems:"center", gap:12 }}>
+                    <div style={{ width:28, height:28, borderRadius:8, background:"rgba(1,0,72,0.07)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>{item.icon}</div>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#3A3A4A", fontWeight:500 }}>{item.text}</span>
+                  </div>
+                ))}
+                <a href="/newsletter" style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"13px 28px", background:"#010048", color:"#fff", fontFamily:"var(--font-sans)", fontSize:13, fontWeight:700, textDecoration:"none", borderRadius:100, alignSelf:"flex-start", marginTop:8, transition:"opacity 0.18s, transform 0.18s" }}
+                  onMouseEnter={e=>{ e.currentTarget.style.opacity="0.85"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                  onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
+                  Subscribe — It&apos;s Free
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
     </div>
   );
 }
 
-function SecondaryStory({ post, isLast }) {
+/* ══════════════════════════════════════════════
+   SECTION COMPONENTS
+══════════════════════════════════════════════ */
+
+/* ── Bento Grid ─────────────────────────────── */
+function BentoGrid({ posts }) {
+  return (
+    <div className="bento-grid">
+      <BentoMainCard post={posts[0]}/>
+      <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+        {posts.slice(1,4).map(p => <BentoSideCard key={p.id} post={p}/>)}
+      </div>
+    </div>
+  );
+}
+
+function BentoMainCard({ post }) {
   const [hov, setHov] = useState(false);
   let date = "—";
-  try { date = new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }); } catch {}
-
+  try { date = new Date(post.date).toLocaleDateString("en-US", { month:"long", day:"numeric", year:"numeric" }); } catch {}
   return (
-    <a href={`/blog/${post.id}`}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        display: "flex", gap: 14, alignItems: "flex-start",
-        padding: "16px 20px",
-        borderBottom: isLast ? "none" : "1px solid #E8E8ED",
-        textDecoration: "none",
-        background: hov ? "#F5F5F7" : "#fff",
-        transition: "background 0.15s", flex: 1,
-      }}>
-      {post.imageUrl ? (
-        <div style={{ width: 60, height: 60, flexShrink: 0, overflow: "hidden", background: "#F5F5F7" }}>
-          <img src={post.imageUrl} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
+    <a href={`/blog/${post.id}`} className="bento-main"
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{ display:"block", textDecoration:"none", borderRadius:16, overflow:"hidden", position:"relative", minHeight:440, background:"#1D1D1F", boxShadow: hov ? "0 20px 60px rgba(0,0,0,0.16)" : "0 4px 24px rgba(0,0,0,0.08)", transition:"box-shadow 0.3s" }}>
+      {post.imageUrl && <img src={post.imageUrl} alt={post.title} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", opacity: hov?0.5:0.4, transform: hov?"scale(1.04)":"scale(1)", transition:"transform 0.7s ease, opacity 0.3s ease" }}/>}
+      <div style={{ position:"absolute", inset:0, background:"linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.82) 100%)" }}/>
+      {/* Top accent */}
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:3, background:"#010048" }}/>
+      <div style={{ position:"relative", zIndex:2, padding:"32px", height:"100%", display:"flex", flexDirection:"column", justifyContent:"flex-end", minHeight:440 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+          <span style={{ background:"rgba(1,0,72,0.85)", backdropFilter:"blur(8px)", padding:"4px 12px", borderRadius:100, fontFamily:"var(--font-sans)", fontSize:10, fontWeight:600, color:"#fff", letterSpacing:"1px", textTransform:"uppercase" }}>Featured</span>
+          <span style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"rgba(255,255,255,0.45)" }}>{date}</span>
         </div>
-      ) : (
-        <div style={{ width: 60, height: 60, flexShrink: 0, background: "linear-gradient(135deg, #010048, #3730a3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 18, color: "rgba(255,255,255,0.3)", fontWeight: 700 }}>T</span>
-        </div>
-      )}
-      <div style={{ flex: 1 }}>
-        <p style={{
-          fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600,
-          color: hov ? "#010048" : "#1D1D1F",
-          lineHeight: 1.4, marginBottom: 5,
-          display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
-          transition: "color 0.15s",
-        }}>{post.title}</p>
-        <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#A1A1A6" }}>{date}</span>
+        <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,2.8vw,32px)", fontWeight:700, color:"#fff", lineHeight:1.2, letterSpacing:"-0.5px", marginBottom:12, transition:"opacity 0.2s", opacity: hov?1:0.92 }}>
+          {post.title}
+        </h2>
+        <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"rgba(255,255,255,0.55)", lineHeight:1.7, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden", marginBottom:18 }}>
+          {post.description}
+        </p>
+        <span style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, color:"rgba(255,255,255,0.8)" }}>
+          Read Article
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" style={{ transform: hov?"translateX(4px)":"none", transition:"transform 0.2s" }}>
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
       </div>
     </a>
   );
 }
 
-function SearchBar({ value, onChange }) {
+function BentoSideCard({ post }) {
+  const [hov, setHov] = useState(false);
+  let date = "—";
+  try { date = new Date(post.date).toLocaleDateString("en-US", { month:"short", day:"numeric" }); } catch {}
   return (
-    <div style={{ position: "relative" }}>
-      <svg style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#A1A1A6", pointerEvents: "none" }}
-        width="13" height="13" fill="none" viewBox="0 0 24 24">
+    <a href={`/blog/${post.id}`}
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{ display:"flex", gap:14, alignItems:"center", textDecoration:"none", background:"#fff", border:`1px solid ${hov?"#D2D2D7":"#E8E8ED"}`, borderRadius:12, padding:"14px 16px", flex:1, transition:"border-color 0.2s, box-shadow 0.2s, transform 0.2s", boxShadow: hov?"0 6px 24px rgba(0,0,0,0.07)":"none", transform: hov?"translateX(3px)":"none" }}>
+      <div style={{ width:56, height:56, borderRadius:10, overflow:"hidden", flexShrink:0, background:"#F5F5F7" }}>
+        {post.imageUrl && <img src={post.imageUrl} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>}
+      </div>
+      <div style={{ flex:1, minWidth:0 }}>
+        <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"#A1A1A6", display:"block", marginBottom:4 }}>{date}</span>
+        <p style={{ fontFamily:"var(--font-display)", fontSize:14, fontWeight:600, color: hov?"#010048":"#1D1D1F", lineHeight:1.35, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden", transition:"color 0.18s" }}>
+          {post.title}
+        </p>
+      </div>
+    </a>
+  );
+}
+
+function BentoSkeleton() {
+  const s = { background:"linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.4s infinite" };
+  return (
+    <div className="bento-grid">
+      <div style={{ ...s, borderRadius:16, minHeight:440 }}/>
+      <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+        {[1,2,3].map(i => <div key={i} style={{ ...s, borderRadius:12, height:88 }}/>)}
+      </div>
+    </div>
+  );
+}
+
+/* ── Trending Item ──────────────────────────── */
+function TrendingItem({ post, rank, isLast }) {
+  const [hov, setHov] = useState(false);
+  let date = "—";
+  try { date = new Date(post.date).toLocaleDateString("en-US", { month:"short", day:"numeric" }); } catch {}
+  const isRight = rank % 2 === 0;
+  return (
+    <a href={`/blog/${post.id}`}
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{ display:"flex", gap:16, alignItems:"center", padding:"18px 24px", textDecoration:"none", background: hov?"rgba(1,0,72,0.02)":"#fff", transition:"background 0.18s", borderBottom: isLast?"none":"1px solid #F5F5F7", borderLeft: isRight?"1px solid #F5F5F7":"none" }}>
+      <span style={{ fontFamily:"var(--font-display)", fontSize:28, fontWeight:700, color: hov?"rgba(1,0,72,0.18)":"rgba(0,0,0,0.06)", lineHeight:1, flexShrink:0, width:44, textAlign:"right", transition:"color 0.22s", letterSpacing:"-1px" }}>
+        {String(rank).padStart(2,"0")}
+      </span>
+      <div style={{ width:48, height:48, borderRadius:8, overflow:"hidden", flexShrink:0, background:"#F5F5F7" }}>
+        {post.imageUrl && <img src={post.imageUrl} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>}
+      </div>
+      <div style={{ flex:1, minWidth:0 }}>
+        <p style={{ fontFamily:"var(--font-display)", fontSize:14, fontWeight:600, color: hov?"#010048":"#1D1D1F", lineHeight:1.35, display:"-webkit-box", WebkitLineClamp:1, WebkitBoxOrient:"vertical", overflow:"hidden", transition:"color 0.18s", marginBottom:3 }}>
+          {post.title}
+        </p>
+        <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"#A1A1A6" }}>{date}</span>
+      </div>
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" style={{ color: hov?"#010048":"#D2D2D7", flexShrink:0, transition:"color 0.18s, transform 0.18s", transform: hov?"translateX(2px)":"none" }}>
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </a>
+  );
+}
+
+/* ── Category Horizontal Scroll ─────────────── */
+function CategoryScroll({ categories }) {
+  const ref = useRef(null);
+  const drag = useRef({ active:false, startX:0, scrollLeft:0 });
+  function onDown(e) { drag.current = { active:true, startX:e.pageX-ref.current.offsetLeft, scrollLeft:ref.current.scrollLeft }; }
+  function onMove(e) { if (!drag.current.active) return; e.preventDefault(); ref.current.scrollLeft = drag.current.scrollLeft-(e.pageX-ref.current.offsetLeft-drag.current.startX); }
+  function onUp() { drag.current.active=false; }
+  useEffect(() => { window.addEventListener("mouseup",onUp); return()=>window.removeEventListener("mouseup",onUp); }, []);
+  return (
+    <div ref={ref} className="cat-scroll-track" style={{ padding:"4px 24px 16px" }} onMouseDown={onDown} onMouseMove={onMove}>
+      {categories.map(cat => <CategoryCard key={cat.key} cat={cat}/>)}
+    </div>
+  );
+}
+
+function CategoryCard({ cat }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <Tilt3D intensity={8} scale={1.03} style={{ flexShrink:0, width:172, height:220 }}>
+      <a href={`/blog?category=${cat.key}`}
+        onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+        style={{ display:"block", width:"100%", height:"100%", textDecoration:"none", borderRadius:14, overflow:"hidden", position:"relative", userSelect:"none" }}>
+        <img src={cat.image} alt={cat.label} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", opacity: hov?0.85:1, transform: hov?"scale(1.06)":"scale(1)", transition:"transform 0.55s ease, opacity 0.3s ease" }}/>
+        <div style={{ position:"absolute", inset:0, background:"linear-gradient(180deg, transparent 40%, rgba(1,0,72,0.85) 100%)" }}/>
+        {/* Top accent */}
+        <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:"#010048", opacity: hov?1:0, transition:"opacity 0.25s" }}/>
+        <div style={{ position:"relative", zIndex:2, padding:"18px 16px", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
+          <span style={{ fontSize:24, filter:"drop-shadow(0 2px 6px rgba(0,0,0,0.3))" }}>{cat.icon}</span>
+          <div>
+            <div style={{ fontFamily:"var(--font-display)", fontSize:14, fontWeight:600, color:"#fff", lineHeight:1.3, marginBottom:6, textShadow:"0 1px 4px rgba(0,0,0,0.4)" }}>{cat.label}</div>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:3, background:"rgba(255,255,255,0.12)", backdropFilter:"blur(6px)", borderRadius:100, padding:"3px 10px", fontFamily:"var(--font-sans)", fontSize:10, fontWeight:500, color:"rgba(255,255,255,0.85)", transition:"background 0.2s" }}>
+              Explore →
+            </div>
+          </div>
+        </div>
+      </a>
+    </Tilt3D>
+  );
+}
+
+
+/* ── Article Card ───────────────────────────── */
+function ArticleCard({ post }) {
+  const [hov, setHov] = useState(false);
+  let date = "—";
+  try { date = new Date(post.date).toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" }); } catch {}
+  const readTime = post.description ? Math.max(1,Math.ceil(post.description.split(" ").length/200)) : 1;
+  return (
+    <a href={`/blog/${post.id}`}
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{ display:"flex", flexDirection:"column", background:"#fff", textDecoration:"none", borderRadius:12, overflow:"hidden", border:`1px solid ${hov?"#D2D2D7":"#E8E8ED"}`, height:"100%", transition:"border-color 0.2s, box-shadow 0.25s, transform 0.25s", transform: hov?"translateY(-4px)":"none", boxShadow: hov?"0 12px 40px rgba(0,0,0,0.08)":"0 1px 4px rgba(0,0,0,0.04)" }}>
+      {post.imageUrl ? (
+        <div style={{ height:176, overflow:"hidden", background:"#F5F5F7", flexShrink:0 }}>
+          <img src={post.imageUrl} alt={post.title} style={{ width:"100%", height:"100%", objectFit:"cover", transform: hov?"scale(1.05)":"scale(1)", transition:"transform 0.45s ease" }}/>
+        </div>
+      ) : (
+        <div style={{ height:90, background:"linear-gradient(135deg,#010048,rgba(1,0,72,0.7))", flexShrink:0 }}/>
+      )}
+      <div style={{ padding:"18px 20px 20px", flex:1, display:"flex", flexDirection:"column" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:10 }}>
+          <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"#A1A1A6" }}>{date}</span>
+          <span style={{ width:2, height:2, background:"#D2D2D7", borderRadius:"50%", flexShrink:0 }}/>
+          <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"#A1A1A6" }}>{readTime} min read</span>
+        </div>
+        <h3 style={{ fontFamily:"var(--font-display)", fontSize:16, fontWeight:600, color: hov?"#010048":"#1D1D1F", lineHeight:1.35, marginBottom:8, flex:1, transition:"color 0.2s" }}>{post.title}</h3>
+        <p style={{ fontFamily:"var(--font-sans)", fontSize:13, color:"#6E6E73", lineHeight:1.65, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden", marginBottom:14 }}>{post.description}</p>
+        <span style={{ display:"inline-flex", alignItems:"center", gap:4, fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color: hov?"#010048":"#A1A1A6", transition:"color 0.2s" }}>
+          Read Article
+          <svg width="10" height="10" fill="none" viewBox="0 0 24 24" style={{ transform: hov?"translateX(2px)":"none", transition:"transform 0.2s" }}>
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+  );
+}
+
+/* ── Sidebar ────────────────────────────────── */
+function SidebarPanel({ posts }) {
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+      {/* Stats */}
+      <div style={{ background:"#010048", borderRadius:14, padding:"22px 20px" }}>
+        <p style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:600, color:"rgba(255,255,255,0.4)", letterSpacing:"2px", textTransform:"uppercase", marginBottom:16 }}>Platform</p>
+        {[
+          { label:"Articles",      value: posts.length>0?`${posts.length}+`:"∞" },
+          { label:"Always Free",   value:"Yes"  },
+          { label:"Login Required",value:"None" },
+        ].map((s,i) => (
+          <div key={s.label} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom: i<2?"1px solid rgba(255,255,255,0.07)":"none", padding:"10px 0" }}>
+            <span style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"rgba(255,255,255,0.45)" }}>{s.label}</span>
+            <span style={{ fontFamily:"var(--font-display)", fontSize:16, fontWeight:700, color:"#fff" }}>{s.value}</span>
+          </div>
+        ))}
+      </div>
+      {/* Recent */}
+      <div style={{ background:"#fff", border:"1px solid #E8E8ED", borderRadius:14, padding:"18px 18px" }}>
+        <p style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:600, color:"#010048", letterSpacing:"2px", textTransform:"uppercase", marginBottom:16 }}>Recent</p>
+        {posts.slice(0,5).map((post,i) => <SidebarPost key={post.id} post={post} isLast={i===4}/>)}
+      </div>
+      {/* CTA */}
+      <div style={{ background:"#F5F5F7", border:"1px solid #E8E8ED", borderRadius:14, padding:"22px 18px", textAlign:"center" }}>
+        <p style={{ fontFamily:"var(--font-display)", fontSize:15, fontWeight:600, color:"#1D1D1F", marginBottom:8 }}>Share your knowledge</p>
+        <p style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"#6E6E73", lineHeight:1.65, marginBottom:16 }}>No account required. Publish instantly.</p>
+        <a href="/new" style={{ display:"inline-flex", alignItems:"center", gap:5, padding:"9px 20px", background:"#010048", color:"#fff", fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, textDecoration:"none", borderRadius:100, transition:"opacity 0.15s" }}
+          onMouseEnter={e=>e.currentTarget.style.opacity="0.85"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
+          Write a Post
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function SidebarPost({ post, isLast }) {
+  const [hov, setHov] = useState(false);
+  let date = "—";
+  try { date = new Date(post.date).toLocaleDateString("en-US", { month:"short", day:"numeric" }); } catch {}
+  return (
+    <a href={`/blog/${post.id}`} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{ display:"flex", gap:10, alignItems:"flex-start", paddingBottom: isLast?0:12, marginBottom: isLast?0:12, borderBottom: isLast?"none":"1px solid #F5F5F7", textDecoration:"none" }}>
+      <div style={{ width:34, height:34, borderRadius:7, overflow:"hidden", flexShrink:0, background:"#F5F5F7" }}>
+        {post.imageUrl && <img src={post.imageUrl} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>}
+      </div>
+      <div>
+        <p style={{ fontFamily:"var(--font-display)", fontSize:12, fontWeight:600, color: hov?"#010048":"#1D1D1F", lineHeight:1.35, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden", transition:"color 0.15s", marginBottom:2 }}>{post.title}</p>
+        <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"#A1A1A6" }}>{date}</span>
+      </div>
+    </a>
+  );
+}
+
+/* ── Utilities ──────────────────────────────── */
+function SearchBar({ value, onChange }) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <div style={{ position:"relative", background: focused?"#fff":"#F5F5F7", border:`1px solid ${focused?"#010048":"#E8E8ED"}`, borderRadius:100, transition:"border-color 0.18s, background 0.18s, box-shadow 0.18s", boxShadow: focused?"0 0 0 3px rgba(1,0,72,0.07)":"none" }}>
+      <svg style={{ position:"absolute", left:12, top:"50%", transform:"translateY(-50%)", color: focused?"#010048":"#A1A1A6", transition:"color 0.18s", pointerEvents:"none" }} width="13" height="13" fill="none" viewBox="0 0 24 24">
         <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
         <path d="m16.5 16.5 4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
-      <input
-        type="text" placeholder="Search articles..."
-        value={value} onChange={e => onChange(e.target.value)}
-        style={{
-          padding: "9px 14px 9px 32px",
-          border: "1px solid #D2D2D7", background: "#fff",
-          fontFamily: "var(--font-sans)", fontSize: 13, color: "#1D1D1F",
-          width: 210, outline: "none", transition: "border-color 0.15s",
-        }}
-        onFocus={e => e.currentTarget.style.borderColor = "#010048"}
-        onBlur={e => e.currentTarget.style.borderColor = "#D2D2D7"}
-      />
+      <input type="text" placeholder="Search articles…" value={value} onChange={e=>onChange(e.target.value)} onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)}
+        style={{ padding:"9px 16px 9px 34px", border:"none", background:"transparent", fontFamily:"var(--font-sans)", fontSize:13, color:"#1D1D1F", width:210, outline:"none" }}/>
     </div>
   );
 }
 
-function TopicsBar({ topics, activeTopic }) {
-  const scrollRef = useRef(null);
-  const drag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
-
-  function onMouseDown(e) {
-    const el = scrollRef.current;
-    drag.current = { active: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft, moved: false };
-    el.style.cursor = "grabbing";
-  }
-  function onMouseMove(e) {
-    if (!drag.current.active) return;
-    e.preventDefault();
-    const el = scrollRef.current;
-    const dx = e.pageX - el.offsetLeft - drag.current.startX;
-    if (Math.abs(dx) > 4) drag.current.moved = true;
-    el.scrollLeft = drag.current.scrollLeft - dx;
-  }
-  function onMouseUp() {
-    drag.current.active = false;
-    if (scrollRef.current) scrollRef.current.style.cursor = "grab";
-  }
-
-  useEffect(() => {
-    window.addEventListener("mouseup", onMouseUp);
-    return () => window.removeEventListener("mouseup", onMouseUp);
-  }, []);
-
+function LoadingGrid2() {
+  const s = { background:"linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.4s infinite" };
   return (
-    <div style={{ background: "#FFFFFF", borderBottom: "1px solid #E8E8ED" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
-        <div
-          ref={scrollRef}
-          className="topics-scroll"
-          style={{ display: "flex", cursor: "grab", userSelect: "none" }}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-        >
-          {topics.map(({ label, key }) => (
-            <button
-              key={label}
-              onClick={() => { if (!drag.current.moved) { if (key === null) window.location.href = "/blog"; else window.location.href = `/blog?category=${key}`; } }}
-              style={{
-                padding: "12px 15px",
-                background: "transparent",
-                color: activeTopic === key ? "#010048" : "#6E6E73",
-                borderBottom: activeTopic === key ? "2px solid #010048" : "2px solid transparent",
-                borderTop: "none", borderLeft: "none", borderRight: "none",
-                fontFamily: "var(--font-sans)",
-                fontSize: 12, fontWeight: 500,
-                cursor: "inherit",
-                transition: "color 0.15s, border-color 0.15s",
-                whiteSpace: "nowrap",
-              }}>
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PostCard({ post }) {
-  const [hovered, setHovered] = useState(false);
-  let displayDate = "—";
-  try { displayDate = new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }); } catch {}
-  const readTime = post.description ? Math.max(1, Math.ceil(post.description.split(" ").length / 200)) : 1;
-
-  return (
-    <a href={`/blog/${post.id}`}
-      style={{
-        display: "flex", flexDirection: "column",
-        background: "#fff",
-        textDecoration: "none", height: "100%",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}>
-      {post.imageUrl ? (
-        <div style={{ height: 180, overflow: "hidden", background: "#F5F5F7" }}>
-          <img src={post.imageUrl} alt={post.title} style={{
-            width: "100%", height: "100%", objectFit: "cover",
-            transition: "transform 0.4s ease", transform: hovered ? "scale(1.04)" : "scale(1)",
-          }}/>
-        </div>
-      ) : (
-        <div style={{ height: 4, background: hovered ? "#010048" : "#E8E8ED", transition: "background 0.2s" }}/>
-      )}
-      <div style={{ padding: "20px 22px", flex: 1, display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6" }}>{displayDate}</span>
-          <span style={{ width: 2, height: 2, background: "#D2D2D7", borderRadius: "50%", flexShrink: 0 }}/>
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6" }}>{readTime} min read</span>
-        </div>
-        <h3 style={{
-          fontFamily: "var(--font-sans)", fontSize: 16, fontWeight: 600,
-          color: hovered ? "#010048" : "#1D1D1F",
-          lineHeight: 1.35, marginBottom: 10, flex: 1,
-          transition: "color 0.15s",
-        }}>{post.title}</h3>
-        <p style={{
-          fontFamily: "var(--font-sans)", fontSize: 13, color: "#6E6E73", lineHeight: 1.65,
-          display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
-          marginBottom: 16,
-        }}>{post.description}</p>
-        <div style={{
-          display: "flex", alignItems: "center", gap: 5,
-          fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 500,
-          color: hovered ? "#010048" : "#A1A1A6",
-          transition: "color 0.15s",
-        }}>
-          Read Article
-          <svg width="10" height="10" fill="none" viewBox="0 0 24 24"
-            style={{ transform: hovered ? "translateX(3px)" : "translateX(0)", transition: "transform 0.2s" }}>
-            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-      </div>
-    </a>
-  );
-}
-
-function LoadingGrid() {
-  return (
-    <div className="posts-grid" style={{ marginTop: 24 }}>
-      {[1,2,3,4,5,6].map(i => (
-        <div key={i} className="post-card-wrap" style={{ padding: 22 }}>
-          <div style={{ height: 10, width: "35%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 14, borderRadius: 4 }}/>
-          <div style={{ height: 20, width: "88%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 8, borderRadius: 4 }}/>
-          <div style={{ height: 13, width: "72%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", marginBottom: 6, borderRadius: 4 }}/>
-          <div style={{ height: 13, width: "60%", background: "linear-gradient(90deg,#F5F5F7 25%,#E8E8ED 50%,#F5F5F7 75%)", backgroundSize: "200% 100%", animation: "shimmer 1.4s infinite", borderRadius: 4 }}/>
+    <div className="articles-2col">
+      {[1,2,3,4].map(i=>(
+        <div key={i} style={{ borderRadius:12, overflow:"hidden", border:"1px solid #E8E8ED" }}>
+          <div style={{ ...s, height:176 }}/>
+          <div style={{ padding:"18px 20px" }}>
+            <div style={{ ...s, height:9, width:"40%", borderRadius:4, marginBottom:12 }}/>
+            <div style={{ ...s, height:16, width:"90%", borderRadius:4, marginBottom:8 }}/>
+            <div style={{ ...s, height:13, width:"65%", borderRadius:4 }}/>
+          </div>
         </div>
       ))}
     </div>
@@ -669,31 +816,17 @@ function LoadingGrid() {
 
 function EmptyState({ search, onClear }) {
   return (
-    <div style={{ textAlign: "center", padding: "80px 24px", border: "1px solid #E8E8ED", background: "#fff", marginTop: 24 }}>
-      <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#A1A1A6", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>
-        {search ? `No results for "${search}"` : "No posts yet"}
-      </p>
-      <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: 700, color: "#1D1D1F", marginBottom: 10 }}>
-        {search ? "Nothing found" : "Be the first to publish"}
+    <div style={{ textAlign:"center", padding:"64px 24px", border:"1px solid #E8E8ED", borderRadius:14, background:"#fff" }}>
+      <div style={{ fontSize:36, marginBottom:14 }}>📭</div>
+      <h3 style={{ fontFamily:"var(--font-display)", fontSize:20, fontWeight:700, color:"#1D1D1F", marginBottom:8 }}>
+        {search?"Nothing found":"Be the first to publish"}
       </h3>
-      <p style={{ fontFamily: "var(--font-sans)", color: "#A1A1A6", fontSize: 14, marginBottom: 28 }}>
-        {search ? "Try a different keyword." : "Share your first tech insight with the world."}
+      <p style={{ fontFamily:"var(--font-sans)", color:"#6E6E73", fontSize:14, marginBottom:24, lineHeight:1.7 }}>
+        {search?`No results for "${search}". Try a different keyword.`:"Share your first tech insight with the world."}
       </p>
-      <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
-        {search && (
-          <button onClick={onClear} style={{
-            padding: "10px 22px", border: "1px solid #D2D2D7",
-            background: "#fff", color: "#6E6E73",
-            fontFamily: "var(--font-sans)", fontWeight: 600,
-            fontSize: 13, cursor: "pointer",
-          }}>Clear Search</button>
-        )}
-        <a href="/new" style={{
-          display: "inline-block", padding: "10px 22px",
-          background: "#010048", color: "white",
-          fontFamily: "var(--font-sans)", fontWeight: 600,
-          fontSize: 13, textDecoration: "none",
-        }}>Write a Post</a>
+      <div style={{ display:"flex", gap:8, justifyContent:"center" }}>
+        {search && <button onClick={onClear} style={{ padding:"9px 20px", border:"1px solid #E8E8ED", borderRadius:100, background:"#fff", color:"#6E6E73", fontFamily:"var(--font-sans)", fontWeight:500, fontSize:13, cursor:"pointer" }}>Clear</button>}
+        <a href="/new" style={{ padding:"9px 20px", background:"#010048", color:"#fff", fontFamily:"var(--font-sans)", fontWeight:600, fontSize:13, textDecoration:"none", borderRadius:100 }}>Write a Post</a>
       </div>
     </div>
   );
