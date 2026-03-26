@@ -104,8 +104,8 @@ export default function BlogPostPage() {
         <main>
           {/* Cover image */}
           {post.imageUrl && (
-            <div style={{ overflow: "hidden", background: "#E8E8ED", marginBottom: 0 }}>
-              <img src={post.imageUrl} alt={post.title} style={{ width: "100%", height: 420, objectFit: "cover", display: "block" }}/>
+            <div style={{ overflow: "hidden", background: "#E8E8ED" }}>
+              <img src={post.imageUrl} alt={post.title} className="blog-cover-img" />
             </div>
           )}
 
@@ -117,12 +117,12 @@ export default function BlogPostPage() {
             <div style={{ height: 1, background: "#D2D2D7" }} />
 
             {/* Article header */}
-            <div style={{ padding: "32px 44px 28px", borderBottom: "1px solid #E8E8ED" }}>
+            <div className="article-header">
               <p style={{
                 fontFamily: "var(--font-sans)",
                 fontSize: 10, color: "#010048", fontWeight: 700,
                 marginBottom: 18, letterSpacing: "2px", textTransform: "uppercase",
-                display: "flex", alignItems: "center", gap: 8,
+                display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap",
               }}>
                 <span>TechSphere</span>
                 <span style={{ color: "#D2D2D7" }}>—</span>
@@ -142,7 +142,7 @@ export default function BlogPostPage() {
             </div>
 
             {/* Article body */}
-            <div className="article-body" style={{ padding: "32px 44px 44px" }}>
+            <div className="article-body">
               <p style={{
                 fontFamily: "var(--font-serif)",
                 fontSize: 17, color: "#1D1D1F",
@@ -154,19 +154,13 @@ export default function BlogPostPage() {
             </div>
 
             {/* Article footer / author */}
-            <div style={{
-              borderTop: "1px solid #E8E8ED",
-              padding: "16px 44px",
-              display: "flex", alignItems: "center", gap: 12,
-              background: "#F5F5F7",
-            }}>
+            <div className="article-footer">
               <div style={{
                 width: 36, height: 36,
-                background: "#010048",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 flexShrink: 0,
               }}>
-                <img src="/logo/logo.png" alt="TechSphere" style={{ width: 20, height: 20, objectFit: "contain" }} />
+                <img src="/logo/logo.png" alt="TechSphere" style={{ width: 40, height: 40, objectFit: "contain" }} />
               </div>
               <div>
                 <span style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "#1D1D1F", display: "block" }}>TechSphere</span>
@@ -176,15 +170,7 @@ export default function BlogPostPage() {
           </article>
 
           {/* Write CTA */}
-          <div style={{
-            marginTop: 16,
-            background: "#fff",
-            border: "1px solid #E8E8ED",
-            borderTop: "3px solid #010048",
-            padding: "28px 36px",
-            display: "flex", alignItems: "center",
-            justifyContent: "space-between", flexWrap: "wrap", gap: 16,
-          }}>
+          <div className="blog-cta">
             <div>
               <p style={{ fontFamily: "var(--font-display)", color: "#1D1D1F", fontWeight: 800, fontSize: 18, marginBottom: 6 }}>
                 Have something to share?

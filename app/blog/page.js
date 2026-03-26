@@ -93,13 +93,13 @@ export default function BlogPage() {
       {/* ── Filters bar ──────────────────────────── */}
       <div style={{ background: "#fff", borderBottom: "1px solid #E8E8ED", position: "sticky", top: 69, zIndex: 10 }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+          <div className="blog-filters-bar">
 
             {/* Category tabs with scroll */}
             <BlogCategoryTabs categories={CATEGORIES} category={category} setCategory={changeCategory} />
 
             {/* Right controls */}
-            <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 2 }}>
+            <div className="blog-filters-controls">
               {/* Search */}
               <div style={{ position: "relative" }}>
                 <svg style={{ position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", color: "#A1A1A6", pointerEvents: "none" }}
@@ -112,15 +112,7 @@ export default function BlogPage() {
                   placeholder="Search…"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
-                  style={{
-                    padding: "8px 12px 8px 28px",
-                    border: "1px solid #D2D2D7",
-                    background: "#fff",
-                    fontFamily: "var(--font-sans)",
-                    fontSize: 12, color: "#1D1D1F",
-                    width: 170, outline: "none",
-                    transition: "border-color 0.15s",
-                  }}
+                  className="blog-search-input"
                   onFocus={e => e.currentTarget.style.borderColor = "#010048"}
                   onBlur={e => e.currentTarget.style.borderColor = "#D2D2D7"}
                 />
@@ -412,11 +404,10 @@ function BlogListItem({ post, isFirst }) {
       </div>
 
       {/* Arrow */}
-      <div style={{
-        flexShrink: 0, color: hov ? "#010048" : "#D2D2D7",
+      <div className="blog-list-arrow" style={{
+        color: hov ? "#010048" : "#D2D2D7",
         transition: "color 0.15s, transform 0.2s",
         transform: hov ? "translateX(4px)" : "none",
-        alignSelf: "center",
       }}>
         <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
           <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

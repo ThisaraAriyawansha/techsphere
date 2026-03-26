@@ -34,7 +34,6 @@ export default function AdminLoginPage() {
       alignItems: "center",
       justifyContent: "center",
       padding: "24px",
-      background: "#F0F0FA",
     }}>
       <div style={{
         width: "100%",

@@ -47,6 +47,14 @@ export default function HomePage() {
   const { scrollY } = useScroll();
   const heroY     = useTransform(scrollY, [0, 500], [0, 100]);
   const heroScale = useTransform(scrollY, [0, 500], [1, 1.07]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  useEffect(() => {
+    const update = () => { setIsMobile(window.innerWidth < 640); setIsTablet(window.innerWidth < 900); };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   useEffect(() => {
     getPosts().then(setPosts).catch(console.error).finally(() => setLoading(false));
@@ -69,8 +77,9 @@ export default function HomePage() {
           display: "flex", alignItems: "center", justifyContent: "center",
           border: "1px solid rgba(0,0,0,0.08)",
         }}>
-          <motion.img src="/img/1702441745439.gif"
-            alt="" aria-hidden="true"
+          <motion.video
+            src="/img/0326.mp4"
+            autoPlay loop muted playsInline aria-hidden="true"
             style={{ position: "absolute", inset: 0, width: "100%", height: "110%", top: "-5%", objectFit: "cover", y: heroY, scale: heroScale }}
           />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(1,0,72,0.72) 0%, rgba(0,0,20,0.5) 60%, rgba(1,0,60,0.62) 100%)" }} />
@@ -353,26 +362,26 @@ export default function HomePage() {
       </section>
 
       {/* ══ 9. PLATFORM FEATURES ═══════════════════ */}
-      <section style={{ background:"#fff", padding:"100px 24px" }}>
+      <section style={{ background:"#fff", padding: isMobile ? "60px 16px" : "100px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <ScrollReveal direction="up">
-            <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:64, gap:32, flexWrap:"wrap" }}>
+            <div style={{ display:"flex", alignItems: isMobile ? "flex-start" : "flex-end", flexDirection: isMobile ? "column" : "row", justifyContent:"space-between", marginBottom: isMobile ? 40 : 64, gap:32 }}>
               <div>
                 <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"2.5px", textTransform:"uppercase", marginBottom:14 }}>Platform</p>
                 <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(28px,3.5vw,44px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, maxWidth:420 }}>
                   Knowledge without barriers
                 </h2>
               </div>
-              <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", maxWidth:340, lineHeight:1.75, margin:0 }}>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", maxWidth: isMobile ? "100%" : 340, lineHeight:1.75, margin:0 }}>
                 Everything you need to read, write, and grow — completely free, forever.
               </p>
             </div>
           </ScrollReveal>
 
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "repeat(3,1fr)", gap:2 }}>
             {FEATURES.map((feat, i) => (
               <ScrollReveal key={i} direction="up">
-                <div style={{ padding:"44px 36px", borderTop:"1px solid #E8E8ED", position:"relative", height:"100%", display:"flex", flexDirection:"column" }}
+                <div style={{ padding: isMobile ? "32px 20px" : "44px 36px", borderTop:"1px solid #E8E8ED", position:"relative", height:"100%", display:"flex", flexDirection:"column" }}
                   onMouseEnter={e=>e.currentTarget.style.background="#F8F8FB"}
                   onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
                   <div style={{ width:40, height:40, borderRadius:10, background:"#010048", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:28 }}>
@@ -488,12 +497,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section style={{ background:"#F8F8FB", borderTop:"1px solid #EBEBF0", padding:"100px 24px" }}>
+      <section style={{ background:"#F8F8FB", borderTop:"1px solid #EBEBF0", padding: isMobile ? "60px 16px" : "100px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <ScrollReveal direction="up">
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0, borderRadius:24, overflow:"hidden", border:"1px solid #E2E2EA", boxShadow:"0 4px 32px rgba(0,0,0,0.06)" }} className="community-grid">
+            <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap:0, borderRadius:24, overflow:"hidden", border:"1px solid #E2E2EA", boxShadow:"0 4px 32px rgba(0,0,0,0.06)" }} className="community-grid">
               {/* Left */}
-              <div style={{ padding:"60px 56px", background:"#fff", display:"flex", flexDirection:"column", justifyContent:"center" }}>
+              <div style={{ padding: isMobile ? "40px 28px" : "60px 56px", background:"#fff", display:"flex", flexDirection:"column", justifyContent:"center" }}>
                 <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3vw,38px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, marginBottom:16 }}>
                   Stay in the loop
                 </h2>
@@ -502,7 +511,7 @@ export default function HomePage() {
                 </p>
               </div>
               {/* Right */}
-              <div style={{ padding:"60px 56px", background:"#F8F8FB", display:"flex", flexDirection:"column", justifyContent:"center", gap:20 }}>
+              <div style={{ padding: isMobile ? "40px 28px" : "60px 56px", background:"#F8F8FB", display:"flex", flexDirection:"column", justifyContent:"center", gap:20 }}>
                 {[
                   { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"Handpicked articles every week" },
                   { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"No spam, unsubscribe anytime" },
