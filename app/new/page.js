@@ -5,7 +5,7 @@ import { createPost, uploadImage } from "../../lib/firebase";
 
 export default function NewPostPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ title: "", description: "", date: today(), imageUrl: "" });
+  const [form, setForm] = useState({ title: "", description: "", date: today(), imageUrl: "", tags: [] });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [charCount, setCharCount] = useState(0);
@@ -49,6 +49,13 @@ export default function NewPostPage() {
     setForm((f) => ({ ...f, [key]: val }));
     setErrors((e) => { const next = { ...e }; delete next[key]; return next; });
     if (key === "description") setCharCount(val.length);
+  }
+
+  function toggleTag(key) {
+    setForm((f) => ({
+      ...f,
+      tags: f.tags.includes(key) ? f.tags.filter(t => t !== key) : [...f.tags, key],
+    }));
   }
 
   function handleImageChange(e) {
@@ -156,6 +163,43 @@ export default function NewPostPage() {
                 )}
               </div>
             )}
+          </Field>
+
+          <Field label="Topics" hint="Select all that apply">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {[
+                { label: "AI & ML",      key: "ai" },
+                { label: "Web Dev",      key: "web" },
+                { label: "Mobile",       key: "mobile" },
+                { label: "Cloud",        key: "cloud" },
+                { label: "Security",     key: "security" },
+                { label: "Open Source",  key: "open source" },
+                { label: "Data Science", key: "data" },
+                { label: "DevOps",       key: "devops" },
+                { label: "Programming",  key: "programming" },
+              ].map(({ label, key }) => {
+                const active = form.tags.includes(key);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => toggleTag(key)}
+                    style={{
+                      padding: "6px 14px",
+                      border: `1px solid ${active ? "#010048" : "#D2D2D7"}`,
+                      background: active ? "#010048" : "#fff",
+                      color: active ? "#fff" : "#6E6E73",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: 12, fontWeight: active ? 600 : 500,
+                      cursor: "pointer",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           </Field>
 
           <Field

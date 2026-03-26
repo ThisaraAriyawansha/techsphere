@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getPosts } from "../../lib/firebase";
 import { StaggerContainer, StaggerItem } from "../components/ScrollReveal";
 
@@ -22,6 +23,7 @@ const SORT_OPTIONS = [
 ];
 
 export default function BlogPage() {
+  const router = useRouter();
   const [posts, setPosts]       = useState([]);
   const [loading, setLoading]   = useState(true);
   const [search, setSearch]     = useState("");
@@ -36,11 +38,21 @@ export default function BlogPage() {
     getPosts().then(setPosts).catch(console.error).finally(() => setLoading(false));
   }, []);
 
+  function changeCategory(key) {
+    setCategory(key);
+    const url = key ? `/blog?category=${encodeURIComponent(key)}` : "/blog";
+    router.replace(url, { scroll: false });
+  }
+
   const filtered = posts
     .filter(p => {
       const q = search.toLowerCase();
       const matchQ = !q || p.title?.toLowerCase().includes(q) || p.description?.toLowerCase().includes(q);
-      const matchC = !category || p.title?.toLowerCase().includes(category) || p.description?.toLowerCase().includes(category);
+      const matchC = !category || (
+        p.tags?.length
+          ? p.tags.includes(category)
+          : p.title?.toLowerCase().includes(category) || p.description?.toLowerCase().includes(category)
+      );
       return matchQ && matchC;
     })
     .sort((a, b) => {
@@ -84,7 +96,7 @@ export default function BlogPage() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
 
             {/* Category tabs with scroll */}
-            <BlogCategoryTabs categories={CATEGORIES} category={category} setCategory={setCategory} />
+            <BlogCategoryTabs categories={CATEGORIES} category={category} setCategory={changeCategory} />
 
             {/* Right controls */}
             <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 2 }}>
@@ -175,7 +187,7 @@ export default function BlogPage() {
               </span>
             </div>
             {(search || category) && (
-              <button onClick={() => { setSearch(""); setCategory(null); }} style={{
+              <button onClick={() => { setSearch(""); changeCategory(null); }} style={{
                 background: "none", border: "1px solid #D2D2D7", padding: "5px 12px",
                 fontFamily: "var(--font-sans)", fontSize: 11, color: "#6E6E73",
                 cursor: "pointer", letterSpacing: "0.3px",
@@ -190,7 +202,7 @@ export default function BlogPage() {
         {loading ? (
           <LoadingState view={view} />
         ) : filtered.length === 0 ? (
-          <EmptyState onClear={() => { setSearch(""); setCategory(null); }} />
+          <EmptyState onClear={() => { setSearch(""); changeCategory(null); }} />
         ) : view === "grid" ? (
           <StaggerContainer className="blog-list-grid">
             {filtered.map(post => (
