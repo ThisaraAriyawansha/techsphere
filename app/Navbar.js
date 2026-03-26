@@ -73,7 +73,6 @@ export default function Navbar() {
                 textDecoration: "none",
                 transition: "color 0.15s",
                 display: "inline-block",
-                borderBottom: isActive ? "2px solid #010048" : "2px solid transparent",
               }}
               onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#010048"; }}
               onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "rgba(1,0,72,0.5)"; }}>
@@ -186,7 +185,6 @@ export default function Navbar() {
                     fontSize: 14, fontWeight: 600,
                     color: "#010048",
                     textDecoration: "none",
-                    borderBottom: "1px solid #E8E8ED",
                   }}
                 >
                   {label}

@@ -101,13 +101,13 @@ export default function HomePage() {
             </motion.h1>
             <motion.div initial={{ opacity:0, y:18 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.65, delay:0.7 }}
               style={{ display:"inline-flex", gap:10, flexWrap:"wrap", justifyContent:"center" }}>
-              <a href="#articles" style={{ display:"inline-flex", alignItems:"center", gap:7, padding:"13px 26px", background:"#fff", color:"#1D1D1F", fontFamily:"var(--font-sans)", fontWeight:600, fontSize:14, textDecoration:"none", borderRadius:100, transition:"opacity 0.18s, transform 0.18s, box-shadow 0.18s", boxShadow:"0 4px 20px rgba(0,0,0,0.18)" }}
-                onMouseEnter={e=>{ e.currentTarget.style.opacity="0.92"; e.currentTarget.style.transform="translateY(-2px)"; }}
-                onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
+              <a href="#articles" style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"9px 18px", background:"transparent", color:"#fff", border:"1px solid #fff", fontFamily:"var(--font-sans)", fontWeight:600, fontSize:13, textDecoration:"none", borderRadius:6, transition:"opacity 0.18s, transform 0.18s, background 0.18s" }}
+                onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.12)"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.background="transparent"; e.currentTarget.style.transform="translateY(0)"; }}>
                 Explore Articles
-                <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </a>
-              <a href="/new" style={{ display:"inline-flex", alignItems:"center", gap:7, padding:"13px 26px", background:"rgba(255,255,255,0.1)", color:"#fff", border:"1px solid rgba(255,255,255,0.28)", fontFamily:"var(--font-sans)", fontWeight:500, fontSize:14, textDecoration:"none", borderRadius:100, backdropFilter:"blur(10px)", WebkitBackdropFilter:"blur(10px)", transition:"background 0.18s, transform 0.18s" }}
+              <a href="/new" style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"9px 18px", background:"rgba(255,255,255,0.1)", color:"#fff", border:"1px solid rgba(255,255,255,0.28)", fontFamily:"var(--font-sans)", fontWeight:500, fontSize:13, textDecoration:"none", borderRadius:6, backdropFilter:"blur(10px)", WebkitBackdropFilter:"blur(10px)", transition:"background 0.18s, transform 0.18s" }}
                 onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.18)"; e.currentTarget.style.transform="translateY(-2px)"; }}
                 onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.1)"; e.currentTarget.style.transform="translateY(0)"; }}>
                 Write a Post
@@ -118,7 +118,7 @@ export default function HomePage() {
       </div>
 
       {/* ══ 2. TICKER ══════════════════════════════ */}
-      <div style={{ background:"#F5F5F7", borderBottom:"1px solid #E8E8ED", overflow:"hidden" }}>
+      <div style={{  borderBottom:"1px solid #E8E8ED", overflow:"hidden" }}>
         <div className="marquee-track" style={{ padding:"12px 0" }}>
           {[..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),
             ..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),
