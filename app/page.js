@@ -69,7 +69,7 @@ export default function HomePage() {
           display: "flex", alignItems: "center", justifyContent: "center",
           border: "1px solid rgba(0,0,0,0.08)",
         }}>
-          <motion.img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1800&q=85"
+          <motion.img src="/img/1702441745439.gif"
             alt="" aria-hidden="true"
             style={{ position: "absolute", inset: 0, width: "100%", height: "110%", top: "-5%", objectFit: "cover", y: heroY, scale: heroScale }}
           />
@@ -181,7 +181,7 @@ export default function HomePage() {
       )}
 
       {/* ══ 5. CATEGORIES ══════════════════════════ */}
-      <section style={{ background:"#fff", padding:"72px 0 0" }}>
+      <section style={{ padding:"72px 0 0" }}>
         <div style={{ maxWidth:1120, margin:"0 auto", padding:"0 24px" }}>
           <ScrollReveal direction="up">
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:28 }}>
@@ -201,25 +201,30 @@ export default function HomePage() {
       </section>
 
       {/* ══ 6. STATS STRIP ═════════════════════════ */}
-      <section style={{ background:"#F5F5F7", borderTop:"1px solid #E8E8ED", borderBottom:"1px solid #E8E8ED", padding:"64px 24px", marginTop:72 }}>
-        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+      <section style={{ padding:"80px 24px", marginTop:72, position:"relative", overflow:"hidden" }}>
+        {/* fixed bg image */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:"url('/img/2454628.webp')", backgroundSize:"cover", backgroundPosition:"center", backgroundAttachment:"fixed", zIndex:0 }}/>
+        {/* subtle radial glow */}
+        <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse 70% 60% at 50% 100%, rgba(99,102,241,0.18) 0%, transparent 70%)", pointerEvents:"none", zIndex:2 }}/>
+        <div style={{ maxWidth:1120, margin:"0 auto", position:"relative", zIndex:3 }}>
           <ScrollReveal direction="up">
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, color:"rgba(255,255,255,0.45)", letterSpacing:"2px", textTransform:"uppercase", textAlign:"center", marginBottom:56 }}>By the numbers</p>
             <div className="stats-bar-grid">
               {[
-                { end:12,  suffix:"+",  label:"Topic Categories",   icon:"🗂️"  },
-                { end:100, suffix:"%",  label:"Free Forever",        icon:"✓"   },
-                { end:0,   suffix:"",   label:"Login Required",      icon:"🔓"  },
-                { end:60,  suffix:"s",  label:"To Publish a Post",   icon:"⚡"  },
+                { end:12,  suffix:"+",  label:"Topic Categories",  desc:"Spanning every major tech domain" },
+                { end:100, suffix:"%",  label:"Free Forever",       desc:"No hidden fees or paywalls" },
+                { end:0,   suffix:"",   label:"Login Required",     desc:"Read anything, anytime" },
+                { end:60,  suffix:"s",  label:"To Publish a Post",  desc:"Frictionless writing experience" },
               ].map((s, i) => (
                 <div key={s.label} style={{
-                  textAlign:"center", padding:"36px 20px",
-                  borderRight: i < 3 ? "1px solid #E8E8ED" : "none",
+                  textAlign:"center", padding:"40px 24px",
+                  borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none",
                 }}>
-                  <div style={{ fontSize:22, marginBottom:14, opacity:0.7 }}>{s.icon}</div>
-                  <div style={{ fontFamily:"var(--font-display)", fontSize:"clamp(36px,4.5vw,56px)", fontWeight:700, color:"#010048", letterSpacing:"-2px", lineHeight:1, marginBottom:10 }}>
+                  <div style={{ fontFamily:"var(--font-display)", fontSize:"clamp(40px,4.5vw,60px)", fontWeight:700, color:"#fff", letterSpacing:"-2px", lineHeight:1, marginBottom:10 }}>
                     <CountUp end={s.end} suffix={s.suffix} duration={2200}/>
                   </div>
-                  <div style={{ fontFamily:"var(--font-sans)", fontSize:13, color:"#6E6E73", letterSpacing:"0.2px" }}>{s.label}</div>
+                  <div style={{ fontFamily:"var(--font-display)", fontSize:15, fontWeight:600, color:"rgba(255,255,255,0.9)", marginBottom:6 }}>{s.label}</div>
+                  <div style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"rgba(255,255,255,0.4)", lineHeight:1.5 }}>{s.desc}</div>
                 </div>
               ))}
             </div>
@@ -278,41 +283,69 @@ export default function HomePage() {
       </section>
 
       {/* ══ 8. HOW IT WORKS ════════════════════════ */}
-      <section style={{ background:"#F5F5F7", borderTop:"1px solid #E8E8ED", padding:"80px 24px" }}>
+      <section style={{ background:"#F8F8FB", padding:"110px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <ScrollReveal direction="up">
-            <div style={{ textAlign:"center", marginBottom:52 }}>
-              <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"#010048", letterSpacing:"2px", textTransform:"uppercase", marginBottom:10 }}>Simple by Design</p>
-              <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3.2vw,40px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.8px", lineHeight:1.1 }}>
+            <div style={{ textAlign:"center", marginBottom:80 }}>
+              <span style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"2.5px", textTransform:"uppercase", background:"rgba(1,0,72,0.07)", borderRadius:100, padding:"7px 18px", marginBottom:20 }}>
+                <span style={{ width:5, height:5, borderRadius:"50%", background:"#010048", display:"inline-block" }}/>
+                Simple by Design
+              </span>
+              <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(30px,3.8vw,48px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1.2px", lineHeight:1.08, marginBottom:18 }}>
                 How TechSphere works
               </h2>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:16, color:"#6E6E73", maxWidth:460, margin:"0 auto", lineHeight:1.75 }}>
+                Three steps. Zero friction. Built for readers and writers alike.
+              </p>
             </div>
           </ScrollReveal>
-          <StaggerContainer className="how-grid" style={{ position:"relative" }}>
-            <div style={{ position:"absolute", top:52, left:"17%", right:"17%", height:1, background:"linear-gradient(90deg,transparent,#D2D2D7 20%,#D2D2D7 80%,transparent)" }} className="how-line"/>
+
+          <StaggerContainer className="how-grid" style={{ position:"relative", alignItems:"stretch" }}>
             {[
-              { step:"01", icon:"🔍", title:"Discover",   desc:"Browse thousands of free articles across 12 tech topics. Search, filter, explore.",          href:"/blog",   cta:"Browse" },
-              { step:"02", icon:"📖", title:"Read Free",  desc:"Every article is completely free. No paywall, no account, no limit. Just open knowledge.",    href:null,      cta:null     },
-              { step:"03", icon:"✍️", title:"Publish",   desc:"Write and publish your own article in 60 seconds — no friction, no barriers.",                href:"/new",    cta:"Write"  },
-            ].map(item => (
-              <StaggerItem key={item.step}>
-                <Tilt3D intensity={6} scale={1.02} style={{ height:"100%" }}>
-                  <div style={{ background:"#fff", border:"1px solid #E8E8ED", borderRadius:16, padding:"32px 28px", height:"100%", position:"relative", overflow:"hidden" }}>
-                    <div style={{ position:"absolute", top:20, right:20, fontFamily:"var(--font-display)", fontSize:72, fontWeight:900, color:"rgba(1,0,72,0.04)", lineHeight:1, userSelect:"none" }}>{item.step}</div>
-                    <div style={{ width:48, height:48, borderRadius:12, background:"rgba(1,0,72,0.06)", border:"1px solid rgba(1,0,72,0.08)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, marginBottom:20 }}>{item.icon}</div>
-                    <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"1.5px", textTransform:"uppercase", marginBottom:10 }}>Step {item.step}</p>
-                    <h3 style={{ fontFamily:"var(--font-display)", fontSize:20, fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.3px", marginBottom:12 }}>{item.title}</h3>
-                    <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", lineHeight:1.75, marginBottom: item.cta ? 22 : 0 }}>{item.desc}</p>
-                    {item.cta && (
-                      <a href={item.href} style={{ display:"inline-flex", alignItems:"center", gap:5, fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, color:"#010048", textDecoration:"none", transition:"gap 0.2s" }}
-                        onMouseEnter={e=>e.currentTarget.style.gap="9px"}
-                        onMouseLeave={e=>e.currentTarget.style.gap="5px"}>
-                        {item.cta}
-                        <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </a>
-                    )}
+              { step:"01", title:"Discover",  tag:"Explore",  desc:"Browse thousands of free articles across 12 tech topics. Search, filter, and explore at your pace.",              href:"/blog", cta:"Browse articles" },
+              { step:"02", title:"Read Free", tag:"Access",   desc:"Every article is 100% free. No paywall, no account required, no limits — open knowledge for everyone.",          href:null,    cta:null              },
+              { step:"03", title:"Publish",   tag:"Create",   desc:"Write and publish your own article in under 60 seconds. No friction, no barriers — your voice deserves to be heard.", href:"/new",  cta:"Start writing"   },
+            ].map((item, i) => (
+              <StaggerItem key={item.step} style={{ display:"flex" }}>
+                <div style={{
+                  flex:1, display:"flex", flexDirection:"column",
+                  background:"#fff",
+                  border:"1px solid #EBEBF0",
+                  borderTop: i===1 ? "3px solid #010048" : "3px solid transparent",
+                  borderRadius:20,
+                  padding:"40px 36px 36px",
+                  boxShadow: i===1 ? "0 16px 48px rgba(1,0,72,0.1)" : "0 2px 16px rgba(0,0,0,0.04)",
+                  position:"relative", overflow:"hidden",
+                  transform: i===1 ? "translateY(-8px)" : "none",
+                }}>
+                  {/* watermark step */}
+                  <div style={{ position:"absolute", bottom:-10, right:16, fontFamily:"var(--font-display)", fontSize:100, fontWeight:900, color:"rgba(1,0,72,0.035)", lineHeight:1, userSelect:"none", pointerEvents:"none" }}>{item.step}</div>
+
+                  {/* tag + step */}
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:32 }}>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase", color: i===1 ? "#010048" : "#A0A0AB", background: i===1 ? "rgba(1,0,72,0.07)" : "#F3F3F7", borderRadius:100, padding:"5px 12px" }}>{item.tag}</span>
+                    <span style={{ fontFamily:"var(--font-display)", fontSize:13, fontWeight:700, color:"#D0D0DA" }}>{item.step}</span>
                   </div>
-                </Tilt3D>
+
+                  {/* icon circle */}
+                  <div style={{ width:52, height:52, borderRadius:14, background: i===1 ? "#010048" : "#F3F3F7", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:24, boxShadow: i===1 ? "0 6px 20px rgba(1,0,72,0.2)" : "none" }}>
+                    {i===0 && <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#010048" strokeWidth="2"/><path d="M20 20l-3-3" stroke="#010048" strokeWidth="2" strokeLinecap="round"/></svg>}
+                    {i===1 && <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>}
+                    {i===2 && <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" stroke="#010048" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                  </div>
+
+                  <h3 style={{ fontFamily:"var(--font-display)", fontSize:22, fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.5px", marginBottom:12 }}>{item.title}</h3>
+                  <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", lineHeight:1.85, flexGrow:1, marginBottom: item.cta ? 28 : 0 }}>{item.desc}</p>
+
+                  {item.cta && (
+                    <a href={item.href} style={{ display:"inline-flex", alignItems:"center", gap:8, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"#fff", textDecoration:"none", background:"#010048", borderRadius:100, padding:"10px 20px", alignSelf:"flex-start", transition:"opacity 0.18s, transform 0.18s" }}
+                      onMouseEnter={e=>{ e.currentTarget.style.opacity="0.85"; e.currentTarget.style.transform="translateY(-1px)"; }}
+                      onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
+                      {item.cta}
+                      <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </a>
+                  )}
+                </div>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -320,113 +353,133 @@ export default function HomePage() {
       </section>
 
       {/* ══ 9. PLATFORM FEATURES ═══════════════════ */}
-      <section style={{ background:"#fff", padding:"80px 24px" }}>
+      <section style={{ background:"#fff", padding:"100px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <ScrollReveal direction="up">
-            <div style={{ textAlign:"center", marginBottom:56 }}>
-              <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"#010048", letterSpacing:"2px", textTransform:"uppercase", marginBottom:10 }}>Platform</p>
-              <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3.2vw,40px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.8px", lineHeight:1.1 }}>
-                Knowledge without barriers
-              </h2>
+            <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:64, gap:32, flexWrap:"wrap" }}>
+              <div>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"2.5px", textTransform:"uppercase", marginBottom:14 }}>Platform</p>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(28px,3.5vw,44px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, maxWidth:420 }}>
+                  Knowledge without barriers
+                </h2>
+              </div>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", maxWidth:340, lineHeight:1.75, margin:0 }}>
+                Everything you need to read, write, and grow — completely free, forever.
+              </p>
             </div>
           </ScrollReveal>
-          <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
-            {FEATURES.map((feat, i) => <FeatureRow key={i} feat={feat} flip={i%2===1}/>)}
+
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2 }}>
+            {FEATURES.map((feat, i) => (
+              <ScrollReveal key={i} direction="up">
+                <div style={{ padding:"44px 36px", borderTop:"1px solid #E8E8ED", position:"relative", height:"100%", display:"flex", flexDirection:"column" }}
+                  onMouseEnter={e=>e.currentTarget.style.background="#F8F8FB"}
+                  onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                  <div style={{ width:40, height:40, borderRadius:10, background:"#010048", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:28 }}>
+                    {i===0 && <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#fff" strokeWidth="2" strokeLinecap="round"/><path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z" stroke="#fff" strokeWidth="2"/></svg>}
+                    {i===1 && <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                    {i===2 && <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#fff" strokeWidth="2"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="#fff" strokeWidth="2"/></svg>}
+                  </div>
+                  <h3 style={{ fontFamily:"var(--font-display)", fontSize:19, fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.4px", marginBottom:12, lineHeight:1.3 }}>{feat.title}</h3>
+                  <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", lineHeight:1.8, flexGrow:1, marginBottom:28 }}>{feat.desc}</p>
+                  <a href={feat.href} style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, color:"#010048", textDecoration:"none", transition:"gap 0.2s" }}
+                    onMouseEnter={e=>e.currentTarget.style.gap="10px"}
+                    onMouseLeave={e=>e.currentTarget.style.gap="6px"}>
+                    {feat.cta}
+                    <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </a>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ══ 10. COMMUNITY (one blue accent section) ═ */}
-      <section style={{ background:"#010048", padding:"80px 24px" }}>
-        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+            <section style={{ background:"#010048", padding:"120px 24px", position:"relative", overflow:"hidden" }}>
+        {/* grid pattern */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize:"64px 64px", pointerEvents:"none" }}/>
+        {/* glow */}
+        <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:600, height:400, background:"radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 70%)", pointerEvents:"none" }}/>
+
+        <div style={{ maxWidth:780, margin:"0 auto", textAlign:"center", position:"relative", zIndex:1 }}>
           <ScrollReveal direction="up">
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0, borderRadius:20, overflow:"hidden", border:"1px solid rgba(255,255,255,0.08)" }} className="community-grid">
-              {/* Left */}
-              <div style={{ padding:"56px 52px", display:"flex", flexDirection:"column", justifyContent:"center", background:"rgba(255,255,255,0.03)" }}>
-                <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(255,255,255,0.07)", borderRadius:100, padding:"5px 14px", width:"fit-content", marginBottom:24 }}>
-                  <span style={{ width:6, height:6, borderRadius:"50%", background:"#34D399", display:"inline-block", boxShadow:"0 0 8px #34D399" }}/>
-                  <span style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:500, color:"rgba(255,255,255,0.6)", letterSpacing:"0.5px" }}>Open Community</span>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:100, padding:"6px 16px", marginBottom:32 }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:"#34D399", display:"inline-block", boxShadow:"0 0 8px #34D399" }}/>
+              <span style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.6)", letterSpacing:"1.5px", textTransform:"uppercase" }}>Open Community</span>
+            </div>
+
+            <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(32px,5vw,60px)", fontWeight:700, color:"#fff", letterSpacing:"-1.5px", lineHeight:1.06, marginBottom:20 }}>
+              Your knowledge<br/>
+              <span style={{ color:"rgba(255,255,255,0.35)" }}>belongs here.</span>
+            </h2>
+
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:17, color:"rgba(255,255,255,0.45)", lineHeight:1.8, maxWidth:500, margin:"0 auto 48px" }}>
+              Join thousands of developers sharing tutorials, insights, and breakthroughs — no account, no friction, no cost.
+            </p>
+
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:12, flexWrap:"wrap", marginBottom:64 }}>
+              <a href="/new" style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"14px 32px", background:"#fff", color:"#010048", fontFamily:"var(--font-sans)", fontSize:14, fontWeight:700, textDecoration:"none", borderRadius:100, transition:"opacity 0.15s, transform 0.15s", letterSpacing:"-0.2px" }}
+                onMouseEnter={e=>{ e.currentTarget.style.opacity="0.9"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
+                Start Writing
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+              <a href="/blog" style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"14px 28px", background:"transparent", color:"rgba(255,255,255,0.65)", border:"1px solid rgba(255,255,255,0.15)", fontFamily:"var(--font-sans)", fontSize:14, fontWeight:500, textDecoration:"none", borderRadius:100, transition:"border-color 0.18s, color 0.18s" }}
+                onMouseEnter={e=>{ e.currentTarget.style.borderColor="rgba(255,255,255,0.4)"; e.currentTarget.style.color="#fff"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.borderColor="rgba(255,255,255,0.15)"; e.currentTarget.style.color="rgba(255,255,255,0.65)"; }}>
+                Browse Articles
+              </a>
+            </div>
+
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:32, flexWrap:"wrap" }}>
+              {[["12+","Topic categories"],["100%","Free forever"],["60s","To publish"]].map(([val,lbl])=>(
+                <div key={lbl} style={{ textAlign:"center" }}>
+                  <div style={{ fontFamily:"var(--font-display)", fontSize:28, fontWeight:700, color:"#fff", letterSpacing:"-0.8px", lineHeight:1 }}>{val}</div>
+                  <div style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"rgba(255,255,255,0.35)", marginTop:4 }}>{lbl}</div>
                 </div>
-                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(24px,3vw,38px)", fontWeight:700, color:"#fff", letterSpacing:"-0.8px", lineHeight:1.1, marginBottom:16 }}>
-                  Your knowledge<br/><em style={{ fontStyle:"italic", color:"rgba(255,255,255,0.55)" }}>belongs here</em>
-                </h2>
-                <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"rgba(255,255,255,0.45)", lineHeight:1.8, marginBottom:32, maxWidth:340 }}>
-                  Join thousands of developers sharing tutorials, insights, and breakthroughs — no friction, no account, no cost.
-                </p>
-                <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
-                  <a href="/new" style={{ display:"inline-flex", alignItems:"center", gap:7, padding:"12px 26px", background:"#fff", color:"#010048", fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, textDecoration:"none", borderRadius:100, transition:"opacity 0.15s, transform 0.15s" }}
-                    onMouseEnter={e=>{ e.currentTarget.style.opacity="0.9"; e.currentTarget.style.transform="translateY(-1px)"; }}
-                    onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
-                    Write an Article
-                    <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </a>
-                  <a href="/blog" style={{ display:"inline-flex", alignItems:"center", gap:7, padding:"12px 22px", background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.75)", border:"1px solid rgba(255,255,255,0.12)", fontFamily:"var(--font-sans)", fontSize:13, fontWeight:500, textDecoration:"none", borderRadius:100, transition:"background 0.18s" }}
-                    onMouseEnter={e=>e.currentTarget.style.background="rgba(255,255,255,0.12)"}
-                    onMouseLeave={e=>e.currentTarget.style.background="rgba(255,255,255,0.07)"}>
-                    Read Articles
-                  </a>
-                </div>
-              </div>
-              {/* Right: floating cards */}
-              <div style={{ padding:"48px 36px", display:"flex", flexDirection:"column", justifyContent:"center", gap:12, background:"rgba(255,255,255,0.02)" }}>
-                {[
-                  { icon:"🤖", text:"Building LLMs from scratch",    tag:"AI & ML"    },
-                  { icon:"⚡", text:"Next.js 15 performance guide",   tag:"Web Dev"    },
-                  { icon:"🔐", text:"Zero Trust architecture",        tag:"Security"   },
-                ].map((card, i) => (
-                  <motion.div key={i}
-                    initial={{ opacity:0, x:28 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }}
-                    transition={{ delay:0.12+i*0.12, duration:0.5, ease:[0.25,0.1,0.25,1] }}
-                    style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.08)", borderRadius:14, padding:"16px 18px", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", display:"flex", alignItems:"center", gap:14, transform:`translateX(${i===1?20:0}px)` }}>
-                    <span style={{ fontSize:22 }}>{card.icon}</span>
-                    <div>
-                      <p style={{ fontFamily:"var(--font-display)", fontSize:14, fontWeight:600, color:"rgba(255,255,255,0.88)", marginBottom:4, lineHeight:1.2 }}>{card.text}</p>
-                      <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"rgba(255,255,255,0.35)", fontWeight:500 }}>{card.tag}</span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              ))}
             </div>
           </ScrollReveal>
         </div>
       </section>
 
       {/* ══ 11. TOPICS EXPLORER ════════════════════ */}
-      <section style={{ background:"#fff", borderTop:"1px solid #E8E8ED", padding:"72px 24px" }}>
+            <section style={{ background:"#fff", borderTop:"1px solid #EBEBF0", padding:"90px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <ScrollReveal direction="up">
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:32 }}>
-              <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-                <div style={{ width:3, height:20, background:"#010048", borderRadius:2 }}/>
-                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,2.5vw,26px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.4px" }}>Explore by Topic</h2>
+            <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:44, gap:16, flexWrap:"wrap" }}>
+              <div>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#010048", letterSpacing:"2.5px", textTransform:"uppercase", marginBottom:10 }}>Topics</p>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(24px,3vw,36px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.8px", lineHeight:1.1 }}>Explore by Topic</h2>
               </div>
-              <a href="/topics" style={{ fontFamily:"var(--font-sans)", fontSize:13, fontWeight:500, color:"#010048", textDecoration:"none", transition:"opacity 0.15s" }}
-                onMouseEnter={e=>e.currentTarget.style.opacity="0.65"}
-                onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
-                All topics →
+              <a href="/topics" style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"#010048", textDecoration:"none", borderBottom:"1.5px solid rgba(1,0,72,0.2)", paddingBottom:2, transition:"border-color 0.18s, gap 0.2s", whiteSpace:"nowrap" }}
+                onMouseEnter={e=>{ e.currentTarget.style.borderColor="#010048"; e.currentTarget.style.gap="10px"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.borderColor="rgba(1,0,72,0.2)"; e.currentTarget.style.gap="6px"; }}>
+                View all topics
+                <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </a>
             </div>
           </ScrollReveal>
-          <StaggerContainer style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+          <StaggerContainer style={{ display:"flex", flexWrap:"wrap", gap:10 }}>
             {[
-              { label:"AI & Machine Learning", icon:"🤖", href:"/blog?category=ai"          },
-              { label:"Web Development",        icon:"🌐", href:"/blog?category=web"         },
-              { label:"Cloud & DevOps",         icon:"☁️", href:"/blog?category=cloud"       },
-              { label:"Cybersecurity",          icon:"🔐", href:"/blog?category=security"    },
-              { label:"Mobile Development",     icon:"📱", href:"/blog?category=mobile"      },
-              { label:"Data Science",           icon:"📊", href:"/blog?category=data"        },
-              { label:"Open Source",            icon:"🔓", href:"/blog?category=opensource"  },
-              { label:"Programming",            icon:"💻", href:"/blog?category=programming" },
-              { label:"UI & UX Design",         icon:"🎨", href:"/blog?category=ux"          },
-              { label:"Tech & Startups",        icon:"🚀", href:"/blog?category=startup"     },
-              { label:"Hardware & IoT",         icon:"🔧", href:"/blog?category=hardware"    },
-              { label:"DevOps",                 icon:"⚙️", href:"/blog?category=devops"      },
+              { label:"AI & Machine Learning", href:"/blog?category=ai"          },
+              { label:"Web Development",        href:"/blog?category=web"         },
+              { label:"Cloud & DevOps",         href:"/blog?category=cloud"       },
+              { label:"Cybersecurity",          href:"/blog?category=security"    },
+              { label:"Mobile Development",     href:"/blog?category=mobile"      },
+              { label:"Data Science",           href:"/blog?category=data"        },
+              { label:"Open Source",            href:"/blog?category=opensource"  },
+              { label:"Programming",            href:"/blog?category=programming" },
+              { label:"UI & UX Design",         href:"/blog?category=ux"          },
+              { label:"Tech & Startups",        href:"/blog?category=startup"     },
+              { label:"Hardware & IoT",         href:"/blog?category=hardware"    },
+              { label:"DevOps",                 href:"/blog?category=devops"      },
             ].map(tag => (
               <StaggerItem key={tag.label}>
-                <a href={tag.href} style={{ display:"inline-flex", alignItems:"center", gap:7, padding:"9px 18px", background:"#fff", border:"1px solid #E8E8ED", borderRadius:100, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:400, color:"#1D1D1F", textDecoration:"none", transition:"all 0.18s" }}
-                  onMouseEnter={e=>{ e.currentTarget.style.borderColor="#010048"; e.currentTarget.style.background="rgba(1,0,72,0.04)"; e.currentTarget.style.color="#010048"; e.currentTarget.style.transform="translateY(-2px)"; }}
-                  onMouseLeave={e=>{ e.currentTarget.style.borderColor="#E8E8ED"; e.currentTarget.style.background="#fff"; e.currentTarget.style.color="#1D1D1F"; e.currentTarget.style.transform="none"; }}>
-                  <span style={{ fontSize:14 }}>{tag.icon}</span>
+                <a href={tag.href} style={{ display:"inline-flex", alignItems:"center", padding:"10px 20px", background:"#F5F5F8", border:"1px solid transparent", borderRadius:100, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:500, color:"#3A3A4A", textDecoration:"none", transition:"all 0.18s" }}
+                  onMouseEnter={e=>{ e.currentTarget.style.background="#010048"; e.currentTarget.style.color="#fff"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                  onMouseLeave={e=>{ e.currentTarget.style.background="#F5F5F8"; e.currentTarget.style.color="#3A3A4A"; e.currentTarget.style.transform="none"; }}>
                   {tag.label}
                 </a>
               </StaggerItem>
@@ -435,27 +488,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ 12. NEWSLETTER ═════════════════════════ */}
-      <section style={{ background:"#F5F5F7", borderTop:"1px solid #E8E8ED", padding:"80px 24px" }}>
-        <div style={{ maxWidth:520, margin:"0 auto" }}>
-          <ScrollReveal direction="scale">
-            <div style={{ textAlign:"center" }}>
-              <div style={{ width:52, height:52, borderRadius:14, background:"rgba(1,0,72,0.06)", border:"1px solid rgba(1,0,72,0.1)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, margin:"0 auto 24px" }}>
-                ✉️
+      <section style={{ background:"#F8F8FB", borderTop:"1px solid #EBEBF0", padding:"100px 24px" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0, borderRadius:24, overflow:"hidden", border:"1px solid #E2E2EA", boxShadow:"0 4px 32px rgba(0,0,0,0.06)" }} className="community-grid">
+              {/* Left */}
+              <div style={{ padding:"60px 56px", background:"#fff", display:"flex", flexDirection:"column", justifyContent:"center" }}>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3vw,38px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, marginBottom:16 }}>
+                  Stay in the loop
+                </h2>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", lineHeight:1.8, marginBottom:0, maxWidth:320 }}>
+                  Weekly digest of the best tech articles — curated, concise, and completely free.
+                </p>
               </div>
-              <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(24px,3vw,34px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.6px", lineHeight:1.15, marginBottom:12 }}>
-                Stay in the loop
-              </h2>
-              <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", lineHeight:1.8, marginBottom:32 }}>
-                Weekly digest of the best tech articles — curated, concise, and completely free.
-              </p>
-              <a href="/newsletter" style={{ display:"inline-flex", alignItems:"center", gap:7, padding:"14px 34px", background:"#010048", color:"#fff", fontFamily:"var(--font-sans)", fontSize:14, fontWeight:600, textDecoration:"none", borderRadius:100, transition:"opacity 0.18s, transform 0.18s, box-shadow 0.18s", boxShadow:"0 4px 20px rgba(1,0,72,0.22)" }}
-                onMouseEnter={e=>{ e.currentTarget.style.opacity="0.88"; e.currentTarget.style.transform="translateY(-2px)"; e.currentTarget.style.boxShadow="0 10px 32px rgba(1,0,72,0.3)"; }}
-                onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; e.currentTarget.style.boxShadow="0 4px 20px rgba(1,0,72,0.22)"; }}>
-                Subscribe — It&apos;s Free
-                <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </a>
-              <p style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"#A1A1A6", marginTop:14 }}>No spam. Unsubscribe anytime.</p>
+              {/* Right */}
+              <div style={{ padding:"60px 56px", background:"#F8F8FB", display:"flex", flexDirection:"column", justifyContent:"center", gap:20 }}>
+                {[
+                  { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"Handpicked articles every week" },
+                  { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"No spam, unsubscribe anytime" },
+                  { icon:<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="#010048" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, text:"100% free, always" },
+                ].map((item, i) => (
+                  <div key={i} style={{ display:"flex", alignItems:"center", gap:12 }}>
+                    <div style={{ width:28, height:28, borderRadius:8, background:"rgba(1,0,72,0.07)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>{item.icon}</div>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#3A3A4A", fontWeight:500 }}>{item.text}</span>
+                  </div>
+                ))}
+                <a href="/newsletter" style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"13px 28px", background:"#010048", color:"#fff", fontFamily:"var(--font-sans)", fontSize:13, fontWeight:700, textDecoration:"none", borderRadius:100, alignSelf:"flex-start", marginTop:8, transition:"opacity 0.18s, transform 0.18s" }}
+                  onMouseEnter={e=>{ e.currentTarget.style.opacity="0.85"; e.currentTarget.style.transform="translateY(-2px)"; }}
+                  onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
+                  Subscribe — It&apos;s Free
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </a>
+              </div>
             </div>
           </ScrollReveal>
         </div>
@@ -598,9 +662,9 @@ function CategoryCard({ cat }) {
     <Tilt3D intensity={8} scale={1.03} style={{ flexShrink:0, width:172, height:220 }}>
       <a href={`/blog?category=${cat.key}`}
         onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-        style={{ display:"block", width:"100%", height:"100%", textDecoration:"none", borderRadius:14, overflow:"hidden", position:"relative", userSelect:"none", border:"1px solid #E8E8ED" }}>
-        <img src={cat.image} alt={cat.label} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", opacity: hov?0.65:0.55, transform: hov?"scale(1.06)":"scale(1)", transition:"transform 0.55s ease, opacity 0.3s ease" }}/>
-        <div style={{ position:"absolute", inset:0, background:"linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(1,0,72,0.75) 100%)" }}/>
+        style={{ display:"block", width:"100%", height:"100%", textDecoration:"none", borderRadius:14, overflow:"hidden", position:"relative", userSelect:"none" }}>
+        <img src={cat.image} alt={cat.label} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", opacity: hov?0.85:1, transform: hov?"scale(1.06)":"scale(1)", transition:"transform 0.55s ease, opacity 0.3s ease" }}/>
+        <div style={{ position:"absolute", inset:0, background:"linear-gradient(180deg, transparent 40%, rgba(1,0,72,0.85) 100%)" }}/>
         {/* Top accent */}
         <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:"#010048", opacity: hov?1:0, transition:"opacity 0.25s" }}/>
         <div style={{ position:"relative", zIndex:2, padding:"18px 16px", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
@@ -617,32 +681,6 @@ function CategoryCard({ cat }) {
   );
 }
 
-/* ── Feature Row ────────────────────────────── */
-function FeatureRow({ feat, flip }) {
-  return (
-    <ScrollReveal direction={flip?"right":"left"}>
-      <div style={{ display:"grid", gridTemplateColumns: flip?"1fr 380px":"380px 1fr", gap:0, borderRadius:16, overflow:"hidden", border:"1px solid #E8E8ED" }} className="feature-row-grid">
-        {/* Text */}
-        <div style={{ order: flip?2:1, padding:"48px 44px", display:"flex", flexDirection:"column", justifyContent:"center", background:"#fff" }}>
-          <div style={{ width:44, height:44, borderRadius:12, background:"rgba(1,0,72,0.05)", border:"1px solid rgba(1,0,72,0.08)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, marginBottom:22 }}>{feat.icon}</div>
-          <h3 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(18px,2.2vw,26px)", fontWeight:700, color:"#1D1D1F", letterSpacing:"-0.4px", lineHeight:1.2, marginBottom:14 }}>{feat.title}</h3>
-          <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", lineHeight:1.8, marginBottom:26 }}>{feat.desc}</p>
-          <a href={feat.href} style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"10px 22px", background:"#010048", color:"#fff", fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, textDecoration:"none", borderRadius:100, alignSelf:"flex-start", transition:"opacity 0.18s, transform 0.18s" }}
-            onMouseEnter={e=>{ e.currentTarget.style.opacity="0.85"; e.currentTarget.style.transform="translateY(-1px)"; }}
-            onMouseLeave={e=>{ e.currentTarget.style.opacity="1"; e.currentTarget.style.transform="translateY(0)"; }}>
-            {feat.cta}
-          </a>
-        </div>
-        {/* Visual */}
-        <div style={{ order: flip?1:2, background:"#F5F5F7", display:"flex", alignItems:"center", justifyContent:"center", minHeight:220, position:"relative", overflow:"hidden" }}>
-          <div style={{ position:"absolute", width:240, height:240, borderRadius:"50%", border:"1px solid #E8E8ED", top:"50%", left:"50%", transform:"translate(-50%,-50%)" }}/>
-          <div style={{ position:"absolute", width:160, height:160, borderRadius:"50%", border:"1px solid #E8E8ED", top:"50%", left:"50%", transform:"translate(-50%,-50%)" }}/>
-          <span style={{ fontSize:60, position:"relative", zIndex:1, animation:"heroFloat 4s ease-in-out infinite", filter:"drop-shadow(0 8px 16px rgba(0,0,0,0.1))" }}>{feat.icon}</span>
-        </div>
-      </div>
-    </ScrollReveal>
-  );
-}
 
 /* ── Article Card ───────────────────────────── */
 function ArticleCard({ post }) {

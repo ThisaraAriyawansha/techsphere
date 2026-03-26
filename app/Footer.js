@@ -7,7 +7,6 @@ export default function Footer() {
     <footer style={{ background: "#F5F5F7", borderTop: "1px solid #E8E8ED" }}>
 
       {/* ── Newspaper masthead top rule ── */}
-      <div style={{ height: 4, background: "#010048" }} />
       <div style={{ height: 1, background: "#D2D2D7" }} />
 
       {/* Main grid */}
