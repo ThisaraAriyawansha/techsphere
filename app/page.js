@@ -126,7 +126,59 @@ export default function HomePage() {
         </section>
       </div>
 
+      {/* ══ 2. TICKER ══════════════════════════════ */}
+      <div style={{ borderBottom:"1px solid #E8E8ED", borderTop:"1px solid #E8E8ED", overflow:"hidden" }}>
+        <div className="marquee-track" style={{ padding:"12px 0" }}>
+          {[..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(",")].map((item, i) => (
+            <span key={i} style={{ display:"inline-flex", alignItems:"center", gap:20, padding:"0 28px", flexShrink:0 }}>
+              <span style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:500, color:"#6E6E73", letterSpacing:"1px", textTransform:"uppercase", whiteSpace:"nowrap" }}>{item}</span>
+              <span style={{ width:3, height:3, borderRadius:"50%", background:"#D2D2D7", flexShrink:0 }}/>
+            </span>
+          ))}
+        </div>
+      </div>
 
+      {/* ══ A. MANIFESTO ═══════════════════════════ */}
+      <section style={{ background:"#010122", padding:"140px 24px", overflow:"hidden" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <motion.p
+            initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
+            transition={{ duration:0.6 }}
+            style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.22)", letterSpacing:"3.5px", textTransform:"uppercase", marginBottom:48 }}
+          >
+            Our Belief
+          </motion.p>
+          {[
+            { text:"Knowledge",  muted:false, italic:false, delay:0.05 },
+            { text:"should be",  muted:true,  italic:true,  delay:0.18 },
+            { text:"free.",      muted:false, italic:false, delay:0.3  },
+          ].map((line, i) => (
+            <motion.p key={i}
+              initial={{ opacity:0, y:48 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+              transition={{ duration:1.1, delay:line.delay, ease:[0.16,1,0.3,1] }}
+              style={{ fontFamily:"var(--font-display)", fontSize:"clamp(68px,11vw,148px)", fontWeight:800, color: line.muted ? "rgba(255,255,255,0.14)" : "#fff", letterSpacing:"-4px", lineHeight:0.92, fontStyle: line.italic ? "italic" : "normal", margin:"0 0 6px" }}
+            >
+              {line.text}
+            </motion.p>
+          ))}
+          <motion.div
+            initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
+            transition={{ duration:0.7, delay:0.5 }}
+            style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:24, marginTop:72, paddingTop:40, borderTop:"1px solid rgba(255,255,255,0.07)" }}
+          >
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"rgba(255,255,255,0.3)", maxWidth:400, lineHeight:1.85, margin:0 }}>
+              No paywalls. No accounts. No noise. Just open technology knowledge for every curious mind on the planet.
+            </p>
+            <a href="/blog"
+              style={{ display:"inline-flex", alignItems:"center", gap:8, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.45)", textDecoration:"none", border:"1px solid rgba(255,255,255,0.1)", borderRadius:100, padding:"13px 26px", transition:"all 0.22s" }}
+              onMouseEnter={e=>{ e.currentTarget.style.color="#fff"; e.currentTarget.style.borderColor="rgba(255,255,255,0.35)"; e.currentTarget.style.background="rgba(255,255,255,0.05)"; }}
+              onMouseLeave={e=>{ e.currentTarget.style.color="rgba(255,255,255,0.45)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; e.currentTarget.style.background="transparent"; }}>
+              Start reading
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
+          </motion.div>
+        </div>
+      </section>
 
       {/* ══ 3. BENTO FEATURED ══════════════════════ */}
       <section style={{ background:"#fff", padding:"72px 24px 0" }}>
@@ -148,62 +200,6 @@ export default function HomePage() {
           {loading ? <BentoSkeleton/> : posts.length > 0 ? <BentoGrid posts={posts}/> : null}
         </div>
       </section>
-
-
-            {/* ══ 2. TICKER ══════════════════════════════ */}
-          <div 
-            style={{ 
-              borderBottom: "1px solid #E8E8ED",
-              borderTop: "1px solid #E8E8ED", 
-              overflow: "hidden",
-              marginTop: "40px",     // ← Increased top margin
-              marginBottom: "20px"   // ← Added some bottom margin for better spacing
-            }}
-          >
-            <div className="marquee-track" style={{ padding: "12px 0" }}>
-              {[... 
-                "Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge"
-                  .split(","),
-                ...
-                "Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge"
-                  .split(",")
-              ].map((item, i) => (
-                <span 
-                  key={i} 
-                  style={{ 
-                    display: "inline-flex", 
-                    alignItems: "center", 
-                    gap: 20, 
-                    padding: "0 28px", 
-                    flexShrink: 0 
-                  }}
-                >
-                  <span 
-                    style={{ 
-                      fontFamily: "var(--font-sans)", 
-                      fontSize: 11, 
-                      fontWeight: 500, 
-                      color: "#6E6E73", 
-                      letterSpacing: "1px", 
-                      textTransform: "uppercase", 
-                      whiteSpace: "nowrap" 
-                    }}
-                  >
-                    {item}
-                  </span>
-                  <span 
-                    style={{ 
-                      width: 3, 
-                      height: 3, 
-                      borderRadius: "50%", 
-                      background: "#D2D2D7", 
-                      flexShrink: 0 
-                    }} 
-                  />
-                </span>
-              ))}
-            </div>
-          </div>
 
       {/* ══ 4. TRENDING NOW ════════════════════════ */}
       {!loading && posts.length > 0 && (
@@ -285,7 +281,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      
+      {/* ══ C. SIGNAL LINES ════════════════════════ */}
+      <div style={{ background:"#fff", padding:"72px 0", overflow:"hidden", borderTop:"1px solid #EBEBF0", borderBottom:"1px solid #EBEBF0" }}>
+        {[
+          { items:["AI & Machine Learning","Web Development","Cybersecurity","Cloud Computing","Mobile Dev","Data Science"], reverse:false, speed:"50s", color:"#010122" },
+          { items:["Open Source","DevOps","UI & UX Design","Tech & Startups","Hardware & IoT","Programming"],                reverse:true,  speed:"40s", color:"#D2D2D7" },
+        ].map((row, ri) => (
+          <div key={ri} style={{ overflow:"hidden", padding:"8px 0" }}>
+            <div className={row.reverse ? "marquee-track-reverse" : "marquee-track"} style={{ animationDuration: row.speed }}>
+              {[...row.items, ...row.items, ...row.items].map((item, i) => (
+                <span key={i} style={{ display:"inline-flex", alignItems:"center", gap:20, flexShrink:0 }}>
+                  <span style={{ fontFamily:"var(--font-display)", fontSize:"clamp(30px,4.2vw,52px)", fontWeight:700, color: row.color, letterSpacing:"-1.2px", whiteSpace:"nowrap", paddingRight:20 }}>
+                    {item}
+                  </span>
+                  <span style={{ width:5, height:5, borderRadius:"50%", background:"#E2E2EA", flexShrink:0, marginRight:20 }}/>
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* ══ 7. ARTICLES + SIDEBAR ══════════════════ */}
       <section id="articles" style={{ background:"#fff", padding:"72px 24px 80px" }}>
@@ -334,28 +349,6 @@ export default function HomePage() {
               <SidebarPanel posts={posts}/>
             </aside>
           </div>
-        </div>
-      </section>
-
-      {/* ══ D. PERSPECTIVE ═════════════════════════ */}
-      <section style={{ background:"#010122", padding:"96px 24px" }}>
-        <div style={{ maxWidth:760, margin:"0 auto", textAlign:"center" }}>
-          <motion.div
-            initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
-            transition={{ duration:1.1, ease:[0.16,1,0.3,1] }}
-          >
-            <svg width="28" height="20" fill="none" viewBox="0 0 32 24" style={{ marginBottom:32, opacity:0.15 }}>
-              <path d="M0 24V15.2C0 6.587 5.6 1.387 16.8 0l2.24 3.52C13.28 4.907 9.547 8 9 12.8H14.4V24H0zm17.6 0V15.2C17.6 6.587 23.2 1.387 34.4 0l2.24 3.52C30.88 4.907 27.147 8 26.6 12.8H32V24H17.6z" fill="white"/>
-            </svg>
-            <p style={{ fontFamily:"var(--font-display)", fontSize:"clamp(18px,2.6vw,32px)", fontWeight:400, fontStyle:"italic", color:"rgba(255,255,255,0.72)", lineHeight:1.65, letterSpacing:"-0.3px", marginBottom:40 }}>
-              The best technology writing comes from engineers who actually build things — not observers watching from the outside.
-            </p>
-            <div style={{ display:"inline-flex", alignItems:"center", gap:14 }}>
-              <span style={{ width:28, height:1, background:"rgba(255,255,255,0.12)", display:"block" }}/>
-              <span style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.2)", letterSpacing:"3px", textTransform:"uppercase" }}>TechSphere · Open by Design</span>
-              <span style={{ width:28, height:1, background:"rgba(255,255,255,0.12)", display:"block" }}/>
-            </div>
-          </motion.div>
         </div>
       </section>
 
@@ -426,59 +419,6 @@ export default function HomePage() {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
-
-      {/* ══ A. MANIFESTO ═══════════════════════════ */}
-      <section style={{ background:"#010122", padding:"140px 24px", overflow:"hidden" }}>
-        <div style={{ maxWidth:1120, margin:"0 auto" }}>
-          <motion.p
-            initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
-            transition={{ duration:0.6 }}
-            style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.22)", letterSpacing:"3.5px", textTransform:"uppercase", marginBottom:48 }}
-          >
-            Our Belief
-          </motion.p>
-
-          {[
-            { text:"Knowledge",  muted:false, italic:false, delay:0.05 },
-            { text:"should be",  muted:true,  italic:true,  delay:0.18 },
-            { text:"free.",      muted:false, italic:false, delay:0.3  },
-          ].map((line, i) => (
-            <motion.p key={i}
-              initial={{ opacity:0, y:48 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
-              transition={{ duration:1.1, delay:line.delay, ease:[0.16,1,0.3,1] }}
-              style={{
-                fontFamily:"var(--font-display)",
-                fontSize:"clamp(68px,11vw,148px)",
-                fontWeight:800,
-                color: line.muted ? "rgba(255,255,255,0.14)" : "#fff",
-                letterSpacing:"-4px",
-                lineHeight:0.92,
-                fontStyle: line.italic ? "italic" : "normal",
-                margin:"0 0 6px",
-              }}
-            >
-              {line.text}
-            </motion.p>
-          ))}
-
-          <motion.div
-            initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
-            transition={{ duration:0.7, delay:0.5 }}
-            style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:24, marginTop:72, paddingTop:40, borderTop:"1px solid rgba(255,255,255,0.07)" }}
-          >
-            <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"rgba(255,255,255,0.3)", maxWidth:400, lineHeight:1.85, margin:0 }}>
-              No paywalls. No accounts. No noise. Just open technology knowledge for every curious mind on the planet.
-            </p>
-            <a href="/blog"
-              style={{ display:"inline-flex", alignItems:"center", gap:8, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.45)", textDecoration:"none", border:"1px solid rgba(255,255,255,0.1)", borderRadius:100, padding:"13px 26px", transition:"all 0.22s" }}
-              onMouseEnter={e=>{ e.currentTarget.style.color="#fff"; e.currentTarget.style.borderColor="rgba(255,255,255,0.35)"; e.currentTarget.style.background="rgba(255,255,255,0.05)"; }}
-              onMouseLeave={e=>{ e.currentTarget.style.color="rgba(255,255,255,0.45)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; e.currentTarget.style.background="transparent"; }}>
-              Start reading
-              <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </a>
-          </motion.div>
         </div>
       </section>
 
@@ -559,6 +499,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══ D. PERSPECTIVE ═════════════════════════ */}
+      <section style={{ background:"#010122", padding:"96px 24px" }}>
+        <div style={{ maxWidth:760, margin:"0 auto", textAlign:"center" }}>
+          <motion.div
+            initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+            transition={{ duration:1.1, ease:[0.16,1,0.3,1] }}
+          >
+            <svg width="28" height="20" fill="none" viewBox="0 0 32 24" style={{ marginBottom:32, opacity:0.15 }}>
+              <path d="M0 24V15.2C0 6.587 5.6 1.387 16.8 0l2.24 3.52C13.28 4.907 9.547 8 9 12.8H14.4V24H0zm17.6 0V15.2C17.6 6.587 23.2 1.387 34.4 0l2.24 3.52C30.88 4.907 27.147 8 26.6 12.8H32V24H17.6z" fill="white"/>
+            </svg>
+            <p style={{ fontFamily:"var(--font-display)", fontSize:"clamp(18px,2.6vw,32px)", fontWeight:400, fontStyle:"italic", color:"rgba(255,255,255,0.72)", lineHeight:1.65, letterSpacing:"-0.3px", marginBottom:40 }}>
+              The best technology writing comes from engineers who actually build things — not observers watching from the outside.
+            </p>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:14 }}>
+              <span style={{ width:28, height:1, background:"rgba(255,255,255,0.12)", display:"block" }}/>
+              <span style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.2)", letterSpacing:"3px", textTransform:"uppercase" }}>TechSphere · Open by Design</span>
+              <span style={{ width:28, height:1, background:"rgba(255,255,255,0.12)", display:"block" }}/>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ══ 10. COMMUNITY (one blue accent section) ═ */}
             <section style={{ background:"#010122", padding:"120px 24px", position:"relative", overflow:"hidden" }}>
         {/* grid pattern */}
@@ -607,27 +569,6 @@ export default function HomePage() {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* ══ C. SIGNAL LINES ════════════════════════ */}
-      <div style={{ background:"#fff", padding:"72px 0", overflow:"hidden", borderTop:"1px solid #EBEBF0", borderBottom:"1px solid #EBEBF0" }}>
-        {[
-          { items:["AI & Machine Learning","Web Development","Cybersecurity","Cloud Computing","Mobile Dev","Data Science"], reverse:false, speed:"50s", color:"#010122" },
-          { items:["Open Source","DevOps","UI & UX Design","Tech & Startups","Hardware & IoT","Programming"],                reverse:true,  speed:"40s", color:"#D2D2D7" },
-        ].map((row, ri) => (
-          <div key={ri} style={{ overflow:"hidden", padding:"8px 0" }}>
-            <div className={row.reverse ? "marquee-track-reverse" : "marquee-track"} style={{ animationDuration: row.speed }}>
-              {[...row.items, ...row.items, ...row.items].map((item, i) => (
-                <span key={i} style={{ display:"inline-flex", alignItems:"center", gap:20, flexShrink:0 }}>
-                  <span style={{ fontFamily:"var(--font-display)", fontSize:"clamp(30px,4.2vw,52px)", fontWeight:700, color: row.color, letterSpacing:"-1.2px", whiteSpace:"nowrap", paddingRight:20 }}>
-                    {item}
-                  </span>
-                  <span style={{ width:5, height:5, borderRadius:"50%", background:"#E2E2EA", flexShrink:0, marginRight:20 }}/>
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
 
       {/* ══ 11. TOPICS EXPLORER ════════════════════ */}
             <section style={{ background:"#fff", borderTop:"1px solid #EBEBF0", padding:"90px 24px" }}>
