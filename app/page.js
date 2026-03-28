@@ -127,11 +127,9 @@ export default function HomePage() {
       </div>
 
       {/* ══ 2. TICKER ══════════════════════════════ */}
-      <div style={{  borderBottom:"1px solid #E8E8ED", overflow:"hidden" }}>
+      <div style={{ borderBottom:"1px solid #E8E8ED", borderTop:"1px solid #E8E8ED", overflow:"hidden" }}>
         <div className="marquee-track" style={{ padding:"12px 0" }}>
-          {[..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),
-            ..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),
-          ].map((item, i) => (
+          {[..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(","),..."Open Tech Publication,Always Free,No Login Required,Community Driven,50+ Topics,AI & Machine Learning,Web Development,Cybersecurity,Write & Share Today,Open Knowledge".split(",")].map((item, i) => (
             <span key={i} style={{ display:"inline-flex", alignItems:"center", gap:20, padding:"0 28px", flexShrink:0 }}>
               <span style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:500, color:"#6E6E73", letterSpacing:"1px", textTransform:"uppercase", whiteSpace:"nowrap" }}>{item}</span>
               <span style={{ width:3, height:3, borderRadius:"50%", background:"#D2D2D7", flexShrink:0 }}/>
@@ -139,6 +137,48 @@ export default function HomePage() {
           ))}
         </div>
       </div>
+
+      {/* ══ A. MANIFESTO ═══════════════════════════ */}
+      <section style={{ background:"#010122", padding:"140px 24px", overflow:"hidden" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <motion.p
+            initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
+            transition={{ duration:0.6 }}
+            style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.22)", letterSpacing:"3.5px", textTransform:"uppercase", marginBottom:48 }}
+          >
+            Our Belief
+          </motion.p>
+          {[
+            { text:"Knowledge",  muted:false, italic:false, delay:0.05 },
+            { text:"should be",  muted:true,  italic:true,  delay:0.18 },
+            { text:"free.",      muted:false, italic:false, delay:0.3  },
+          ].map((line, i) => (
+            <motion.p key={i}
+              initial={{ opacity:0, y:48 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+              transition={{ duration:1.1, delay:line.delay, ease:[0.16,1,0.3,1] }}
+              style={{ fontFamily:"var(--font-display)", fontSize:"clamp(68px,11vw,148px)", fontWeight:800, color: line.muted ? "rgba(255,255,255,0.14)" : "#fff", letterSpacing:"-4px", lineHeight:0.92, fontStyle: line.italic ? "italic" : "normal", margin:"0 0 6px" }}
+            >
+              {line.text}
+            </motion.p>
+          ))}
+          <motion.div
+            initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
+            transition={{ duration:0.7, delay:0.5 }}
+            style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:24, marginTop:72, paddingTop:40, borderTop:"1px solid rgba(255,255,255,0.07)" }}
+          >
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"rgba(255,255,255,0.3)", maxWidth:400, lineHeight:1.85, margin:0 }}>
+              No paywalls. No accounts. No noise. Just open technology knowledge for every curious mind on the planet.
+            </p>
+            <a href="/blog"
+              style={{ display:"inline-flex", alignItems:"center", gap:8, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.45)", textDecoration:"none", border:"1px solid rgba(255,255,255,0.1)", borderRadius:100, padding:"13px 26px", transition:"all 0.22s" }}
+              onMouseEnter={e=>{ e.currentTarget.style.color="#fff"; e.currentTarget.style.borderColor="rgba(255,255,255,0.35)"; e.currentTarget.style.background="rgba(255,255,255,0.05)"; }}
+              onMouseLeave={e=>{ e.currentTarget.style.color="rgba(255,255,255,0.45)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; e.currentTarget.style.background="transparent"; }}>
+              Start reading
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
+          </motion.div>
+        </div>
+      </section>
 
       {/* ══ 3. BENTO FEATURED ══════════════════════ */}
       <section style={{ background:"#fff", padding:"72px 24px 0" }}>
@@ -209,6 +249,51 @@ export default function HomePage() {
         <CategoryScroll categories={CATEGORIES}/>
       </section>
 
+      {/* ══ G. DOMAIN SPOTLIGHT ════════════════════ */}
+      <section style={{ background:"#010122", padding: isMobile ? "72px 16px" : "100px 24px", overflow:"hidden", position:"relative" }}>
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)", backgroundSize:"48px 48px", pointerEvents:"none" }}/>
+        <div style={{ maxWidth:1120, margin:"0 auto", display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80, alignItems:"center", position:"relative", zIndex:1 }}>
+          <ScrollReveal direction="up">
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.25)", letterSpacing:"3px", textTransform:"uppercase", marginBottom:20 }}>Featured Domain</p>
+            <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(40px,6vw,80px)", fontWeight:800, color:"#fff", letterSpacing:"-2.5px", lineHeight:0.9, marginBottom:28 }}>
+              AI &<br/>Machine<br/><em style={{ fontStyle:"italic", color:"rgba(255,255,255,0.25)" }}>Learning</em>
+            </h2>
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"rgba(255,255,255,0.35)", lineHeight:1.85, marginBottom:36, maxWidth:360 }}>
+              From neural networks to production deployments — the most comprehensive free AI knowledge base, built by engineers who actually ship AI.
+            </p>
+            <a href="/blog?category=ai"
+              style={{ display:"inline-flex", alignItems:"center", gap:8, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"#fff", textDecoration:"none", background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:100, padding:"12px 26px", transition:"all 0.22s" }}
+              onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.15)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.3)"; }}
+              onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.15)"; }}>
+              Explore AI articles
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
+          </ScrollReveal>
+          <div>
+            <StaggerContainer style={{ display:"flex", flexDirection:"column", gap:2 }}>
+              {[
+                { label:"Machine Learning",   count:"320+" },
+                { label:"Neural Networks",     count:"180+" },
+                { label:"Natural Language",    count:"140+" },
+                { label:"Computer Vision",     count:"95+"  },
+                { label:"MLOps & Deployment",  count:"110+" },
+                { label:"AI Ethics & Safety",  count:"60+"  },
+              ].map((sub, i) => (
+                <StaggerItem key={i}>
+                  <a href="/blog?category=ai"
+                    style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"16px 20px", background:"rgba(255,255,255,0.03)", borderRadius:8, textDecoration:"none", transition:"background 0.18s, transform 0.18s" }}
+                    onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.07)"; e.currentTarget.style.transform="translateX(4px)"; }}
+                    onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.03)"; e.currentTarget.style.transform="none"; }}>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:14, fontWeight:500, color:"rgba(255,255,255,0.6)" }}>{sub.label}</span>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"rgba(255,255,255,0.22)", letterSpacing:"0.5px" }}>{sub.count}</span>
+                  </a>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
       {/* ══ 6. STATS STRIP ═════════════════════════ */}
       <section style={{ padding:"80px 24px", marginTop:72, position:"relative", overflow:"hidden" }}>
         {/* fixed bg image */}
@@ -240,6 +325,27 @@ export default function HomePage() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* ══ C. SIGNAL LINES ════════════════════════ */}
+      <div style={{ background:"#fff", padding:"72px 0", overflow:"hidden", borderTop:"1px solid #EBEBF0", borderBottom:"1px solid #EBEBF0" }}>
+        {[
+          { items:["AI & Machine Learning","Web Development","Cybersecurity","Cloud Computing","Mobile Dev","Data Science"], reverse:false, speed:"50s", color:"#010122" },
+          { items:["Open Source","DevOps","UI & UX Design","Tech & Startups","Hardware & IoT","Programming"],                reverse:true,  speed:"40s", color:"#D2D2D7" },
+        ].map((row, ri) => (
+          <div key={ri} style={{ overflow:"hidden", padding:"8px 0" }}>
+            <div className={row.reverse ? "marquee-track-reverse" : "marquee-track"} style={{ animationDuration: row.speed }}>
+              {[...row.items, ...row.items, ...row.items].map((item, i) => (
+                <span key={i} style={{ display:"inline-flex", alignItems:"center", gap:20, flexShrink:0 }}>
+                  <span style={{ fontFamily:"var(--font-display)", fontSize:"clamp(30px,4.2vw,52px)", fontWeight:700, color: row.color, letterSpacing:"-1.2px", whiteSpace:"nowrap", paddingRight:20 }}>
+                    {item}
+                  </span>
+                  <span style={{ width:5, height:5, borderRadius:"50%", background:"#E2E2EA", flexShrink:0, marginRight:20 }}/>
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* ══ 7. ARTICLES + SIDEBAR ══════════════════ */}
       <section id="articles" style={{ background:"#fff", padding:"72px 24px 80px" }}>
@@ -361,6 +467,50 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══ H. ARTICLE JOURNEY ═════════════════════ */}
+      <section style={{ background:"#fff", padding: isMobile ? "72px 16px" : "100px 24px", borderTop:"1px solid #EBEBF0" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "flex-end", justifyContent:"space-between", marginBottom:72, gap:20 }}>
+              <div>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"#A1A1A6", letterSpacing:"3px", textTransform:"uppercase", marginBottom:12 }}>The Journey</p>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3.2vw,40px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, margin:0 }}>How knowledge travels</h2>
+              </div>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", maxWidth:300, lineHeight:1.8, margin:0 }}>
+                From a single idea to thousands of readers — in under 60 seconds.
+              </p>
+            </div>
+          </ScrollReveal>
+          <div style={{ position:"relative" }}>
+            {!isMobile && <div style={{ position:"absolute", top:28, left:"10%", right:"10%", height:1, background:"linear-gradient(90deg, transparent, #E8E8ED 15%, #E8E8ED 85%, transparent)", zIndex:0 }}/>}
+            <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(5,1fr)", gap:0 }}>
+              {[
+                { n:"01", title:"Idea",    icon:"💡", desc:"A developer has an insight worth sharing with the world" },
+                { n:"02", title:"Write",   icon:"✍️", desc:"Open the editor and start writing — no account needed" },
+                { n:"03", title:"Publish", icon:"🚀", desc:"One click, live in under 60 seconds, globally available" },
+                { n:"04", title:"Read",    icon:"📖", desc:"Thousands discover it for free, anywhere, instantly" },
+                { n:"05", title:"Impact",  icon:"🌐", desc:"Knowledge compounds and grows across the community" },
+              ].map((step, i) => (
+                <motion.div key={i}
+                  initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+                  transition={{ duration:0.5, delay:i*0.1 }}
+                  style={{ padding: isMobile ? "20px 0" : "0 16px", borderTop: isMobile ? "1px solid #EBEBF0" : "none", display:"flex", flexDirection: isMobile ? "row" : "column", alignItems:"center", gap: isMobile ? 20 : 0, textAlign: isMobile ? "left" : "center" }}
+                >
+                  <div style={{ width:56, height:56, borderRadius:"50%", background: i===2 ? "#010122" : "#F5F5F8", border:`1.5px solid ${i===2 ? "#010122" : "#EBEBF0"}`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, margin: isMobile ? "0" : "0 auto 20px", position:"relative", zIndex:1, fontSize:20 }}>
+                    {step.icon}
+                  </div>
+                  <div>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, color: i===2 ? "#010122" : "#C8C8D0", letterSpacing:"2px", textTransform:"uppercase", marginBottom:6 }}>{step.n}</p>
+                    <h3 style={{ fontFamily:"var(--font-display)", fontSize:17, fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.3px", marginBottom:8 }}>{step.title}</h3>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"#A1A1A6", lineHeight:1.7, margin:0 }}>{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ══ 9. PLATFORM FEATURES ═══════════════════ */}
       <section style={{ background:"#fff", padding: isMobile ? "60px 16px" : "100px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
@@ -404,8 +554,98 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══ B. PILLARS ══════════════════════════════ */}
+      <section style={{ background:"#fff", padding:"110px 24px", borderTop:"1px solid #EBEBF0" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"#A1A1A6", letterSpacing:"3px", textTransform:"uppercase", marginBottom:64 }}>
+              What We Stand For
+            </p>
+          </ScrollReveal>
+          {[
+            { n:"01", title:"Openness",   desc:"Every article is accessible to everyone — no account, no payment, no barrier between curiosity and knowledge." },
+            { n:"02", title:"Velocity",   desc:"From idea to published in under 60 seconds. We remove friction so great ideas reach the world faster." },
+            { n:"03", title:"Breadth",    desc:"12 technology domains under one roof. The full spectrum from silicon to software to cloud." },
+            { n:"04", title:"Community",  desc:"Built by developers, designers, and engineers sharing real knowledge — not press releases or marketing copy." },
+          ].map((item, i) => (
+            <motion.div key={item.n}
+              initial={{ opacity:0, y:14 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true, margin:"-60px" }}
+              transition={{ duration:0.55, delay:i*0.07, ease:[0.16,1,0.3,1] }}
+            >
+              <div
+                className="pillar-row"
+                style={{ display:"grid", gridTemplateColumns: isMobile ? "40px 1fr" : "60px 1fr 1fr", gap: isMobile ? "16px" : 32, alignItems:"center", padding:"28px 0", borderTop:"1px solid #EBEBF0", transition:"background 0.2s", borderRadius:4, cursor:"default" }}
+                onMouseEnter={e=>{ e.currentTarget.style.background="#FAFAFA"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.background="transparent"; }}
+              >
+                <span style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:700, color:"#C8C8D0", letterSpacing:"1.5px" }}>{item.n}</span>
+                <h3 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(22px,2.8vw,34px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.7px", margin:0 }}>{item.title}</h3>
+                {!isMobile && <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", lineHeight:1.85, margin:0 }}>{item.desc}</p>}
+              </div>
+            </motion.div>
+          ))}
+          <div style={{ borderTop:"1px solid #EBEBF0" }}/>
+        </div>
+      </section>
+
+      {/* ══ D. PERSPECTIVE ═════════════════════════ */}
+      <section style={{ background:"#010122", padding:"96px 24px" }}>
+        <div style={{ maxWidth:760, margin:"0 auto", textAlign:"center" }}>
+          <motion.div
+            initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+            transition={{ duration:1.1, ease:[0.16,1,0.3,1] }}
+          >
+            <svg width="28" height="20" fill="none" viewBox="0 0 32 24" style={{ marginBottom:32, opacity:0.15 }}>
+              <path d="M0 24V15.2C0 6.587 5.6 1.387 16.8 0l2.24 3.52C13.28 4.907 9.547 8 9 12.8H14.4V24H0zm17.6 0V15.2C17.6 6.587 23.2 1.387 34.4 0l2.24 3.52C30.88 4.907 27.147 8 26.6 12.8H32V24H17.6z" fill="white"/>
+            </svg>
+            <p style={{ fontFamily:"var(--font-display)", fontSize:"clamp(18px,2.6vw,32px)", fontWeight:400, fontStyle:"italic", color:"rgba(255,255,255,0.72)", lineHeight:1.65, letterSpacing:"-0.3px", marginBottom:40 }}>
+              The best technology writing comes from engineers who actually build things — not observers watching from the outside.
+            </p>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:14 }}>
+              <span style={{ width:28, height:1, background:"rgba(255,255,255,0.12)", display:"block" }}/>
+              <span style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.2)", letterSpacing:"3px", textTransform:"uppercase" }}>TechSphere · Open by Design</span>
+              <span style={{ width:28, height:1, background:"rgba(255,255,255,0.12)", display:"block" }}/>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══ I. COMMUNITY VOICES ════════════════════ */}
+      <section style={{ background:"#0A0A12", padding: isMobile ? "72px 16px" : "110px 24px", overflow:"hidden" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.22)", letterSpacing:"3px", textTransform:"uppercase", marginBottom:56 }}>
+              Community Voices
+            </p>
+          </ScrollReveal>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap:1, background:"rgba(255,255,255,0.05)", borderRadius:20, overflow:"hidden" }}>
+            {[
+              { quote:"TechSphere is the only place I actually look forward to reading. No noise, no paywalls — just pure signal from people who build things.", name:"Aiden R.", role:"Senior Backend Engineer" },
+              { quote:"Published my first tutorial in under a minute. The frictionless writing experience is unlike anything else I've tried.", name:"Priya M.", role:"Full-Stack Developer" },
+              { quote:"Rare to find a platform that genuinely treats open knowledge as a public good. TechSphere is exactly that.", name:"Carlos T.", role:"DevOps Architect" },
+            ].map((v, i) => (
+              <motion.div key={i}
+                initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+                transition={{ duration:0.7, delay:i*0.12, ease:[0.16,1,0.3,1] }}
+              >
+                <div style={{ padding: isMobile ? "40px 28px" : "52px 44px", background:"#0A0A12", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between", minHeight:260 }}>
+                  <p style={{ fontFamily:"var(--font-display)", fontSize:"clamp(15px,1.6vw,20px)", fontStyle:"italic", fontWeight:400, color:"rgba(255,255,255,0.72)", lineHeight:1.7, marginBottom:40 }}>
+                    &ldquo;{v.quote}&rdquo;
+                  </p>
+                  <div>
+                    <div style={{ width:24, height:1, background:"rgba(255,255,255,0.12)", marginBottom:14 }}/>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.5)", margin:0 }}>{v.name}</p>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"rgba(255,255,255,0.22)", margin:"4px 0 0" }}>{v.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ 10. COMMUNITY (one blue accent section) ═ */}
-            <section style={{ background:"#010048", padding:"120px 24px", position:"relative", overflow:"hidden" }}>
+            <section style={{ background:"#010122", padding:"120px 24px", position:"relative", overflow:"hidden" }}>
         {/* grid pattern */}
         <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize:"64px 64px", pointerEvents:"none" }}/>
         {/* glow */}
@@ -497,6 +737,62 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══ E. READING PATHS ════════════════════════ */}
+      <section style={{ background:"#010122", padding: isMobile ? "72px 16px" : "110px 24px", position:"relative", overflow:"hidden" }}>
+        {/* grid overlay */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize:"56px 56px", pointerEvents:"none" }}/>
+        {/* radial glow */}
+        <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:700, height:500, background:"radial-gradient(ellipse, rgba(99,102,241,0.14) 0%, transparent 70%)", pointerEvents:"none" }}/>
+        <div style={{ maxWidth:1120, margin:"0 auto", position:"relative", zIndex:1 }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", alignItems: isMobile ? "flex-start" : "flex-end", flexDirection: isMobile ? "column" : "row", justifyContent:"space-between", gap:24, marginBottom:56 }}>
+              <div>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.3)", letterSpacing:"3px", textTransform:"uppercase", marginBottom:14 }}>Curated</p>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3.5vw,42px)", fontWeight:700, color:"#fff", letterSpacing:"-1px", lineHeight:1.1, margin:0 }}>Reading paths</h2>
+              </div>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"rgba(255,255,255,0.35)", maxWidth:300, lineHeight:1.85, margin:0 }}>
+                Hand-curated collections for every level and domain of tech.
+              </p>
+            </div>
+          </ScrollReveal>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "repeat(3,1fr)", gap:1, background:"rgba(255,255,255,0.07)", borderRadius:20, overflow:"hidden" }}>
+            {[
+              { tag:"Beginner",     accent:"#9f9f9f", title:"Start with AI",    desc:"Ground-up foundations in machine learning, from basic concepts to your first working model.", topics:["What is Machine Learning?","Neural Networks Explained","Python for AI Beginners","Your First ML Model"], href:"/blog?category=ai"       },
+              { tag:"Intermediate", accent:"#9f9f9f", title:"Master the Web",   desc:"Modern full-stack patterns, architecture decisions, and deployment from zero to production.",  topics:["Modern React Patterns","Node.js Architecture","REST vs GraphQL","Deploying Full-Stack Apps"],  href:"/blog?category=web"      },
+              { tag:"Advanced",     accent:"#9f9f9f", title:"Cloud at Scale",   desc:"Production-grade cloud architecture, container orchestration, and distributed systems.",         topics:["Kubernetes in Production","Microservices Design","CI/CD Pipelines","Distributed Systems 101"], href:"/blog?category=cloud"    },
+            ].map((path, i) => (
+              <ScrollReveal key={i} direction="up">
+                <div
+                  style={{ padding: isMobile ? "36px 28px" : "44px 36px", background:"#010133", height:"100%", display:"flex", flexDirection:"column", position:"relative", overflow:"hidden", transition:"background 0.22s" }}
+                  onMouseEnter={e=>e.currentTarget.style.background="#010144"}
+                  onMouseLeave={e=>e.currentTarget.style.background="#010133"}
+                >
+                  <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:path.accent, opacity:0.8 }}/>
+                  <span style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, color:path.accent, letterSpacing:"2px", textTransform:"uppercase", background:`${path.accent}18`, borderRadius:100, padding:"5px 14px", alignSelf:"flex-start", marginBottom:28 }}>{path.tag}</span>
+                  <h3 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,2.2vw,26px)", fontWeight:700, color:"#fff", letterSpacing:"-0.5px", marginBottom:12, lineHeight:1.2 }}>{path.title}</h3>
+                  <p style={{ fontFamily:"var(--font-sans)", fontSize:13, color:"rgba(255,255,255,0.28)", lineHeight:1.8, marginBottom:28 }}>{path.desc}</p>
+                  <div style={{ display:"flex", flexDirection:"column", gap:10, flexGrow:1, marginBottom:32 }}>
+                    {path.topics.map((t, ti) => (
+                      <div key={ti} style={{ display:"flex", alignItems:"center", gap:10 }}>
+                        <span style={{ width:3, height:3, borderRadius:"50%", background:"rgba(255,255,255,0.18)", flexShrink:0 }}/>
+                        <span style={{ fontFamily:"var(--font-sans)", fontSize:13, color:"rgba(255,255,255,0.38)", lineHeight:1.5 }}>{t}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <a href={path.href}
+                    style={{ display:"inline-flex", alignItems:"center", gap:7, fontFamily:"var(--font-sans)", fontSize:12, fontWeight:600, color:path.accent, textDecoration:"none", transition:"gap 0.2s" }}
+                    onMouseEnter={e=>e.currentTarget.style.gap="12px"}
+                    onMouseLeave={e=>e.currentTarget.style.gap="7px"}>
+                    Begin exploring
+                    <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </a>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section style={{ background:"#F8F8FB", borderTop:"1px solid #EBEBF0", padding: isMobile ? "60px 16px" : "100px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <ScrollReveal direction="up">
@@ -534,6 +830,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══ F. FAQ ════════════════════════════════ */}
+      <FAQSection isMobile={isMobile}/>
+
     </div>
   );
 }
@@ -541,6 +840,74 @@ export default function HomePage() {
 /* ══════════════════════════════════════════════
    SECTION COMPONENTS
 ══════════════════════════════════════════════ */
+
+/* ── FAQ ────────────────────────────────────── */
+function FAQSection({ isMobile }) {
+  const [open, setOpen] = useState(null);
+  const items = [
+    { q:"Is TechSphere really free?",                a:"Yes, completely. Reading, writing, and browsing are all 100% free — no subscription, no paywall, no hidden tier, ever." },
+    { q:"Do I need an account to read articles?",    a:"No. Every article is openly accessible to anyone with a browser. No login, no signup, no friction of any kind." },
+    { q:"How do I publish an article?",              a:"Click 'Write a Post', add a title, write your content, and optionally attach a cover image. Hit publish — the whole process takes under 60 seconds." },
+    { q:"What topics are covered on TechSphere?",    a:"TechSphere covers 12 major tech domains: AI & ML, Web Development, Cloud & DevOps, Cybersecurity, Mobile Dev, Data Science, Open Source, Programming, UI/UX Design, Tech & Startups, Hardware & IoT, and DevOps." },
+    { q:"Can anyone write on TechSphere?",           a:"Yes. We believe great knowledge comes from practitioners. Any developer, designer, or engineer can share tutorials, insights, or breakthroughs — no account approval required." },
+    { q:"How does TechSphere sustain itself?",       a:"TechSphere is built lean and mission-first. We keep infrastructure costs low and our goal clear: open knowledge as a public good, free and independent." },
+  ];
+  return (
+    <section style={{ background:"#fff", padding: isMobile ? "72px 16px" : "110px 24px", borderTop:"1px solid #EBEBF0" }}>
+      <div style={{ maxWidth:1120, margin:"0 auto", display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1.4fr", gap: isMobile ? 48 : 80, alignItems:"start" }}>
+        {/* Left label */}
+        <ScrollReveal direction="up">
+          <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"#A1A1A6", letterSpacing:"3px", textTransform:"uppercase", marginBottom:16 }}>FAQ</p>
+          <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3.2vw,40px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, marginBottom:18 }}>Common<br/>questions</h2>
+          <p style={{ fontFamily:"var(--font-sans)", fontSize:15, color:"#6E6E73", lineHeight:1.8, marginBottom:28, maxWidth:260 }}>
+            Everything you need to know about TechSphere.
+          </p>
+          <a href="/blog"
+            style={{ display:"inline-flex", alignItems:"center", gap:6, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"#010048", textDecoration:"none", borderBottom:"1.5px solid rgba(1,0,72,0.2)", paddingBottom:2, transition:"border-color 0.18s, gap 0.2s" }}
+            onMouseEnter={e=>{ e.currentTarget.style.borderColor="#010048"; e.currentTarget.style.gap="10px"; }}
+            onMouseLeave={e=>{ e.currentTarget.style.borderColor="rgba(1,0,72,0.2)"; e.currentTarget.style.gap="6px"; }}>
+            Browse articles instead
+            <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </a>
+        </ScrollReveal>
+        {/* Right accordion */}
+        <div>
+          {items.map((item, i) => (
+            <motion.div key={i}
+              initial={{ opacity:0, y:8 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+              transition={{ duration:0.4, delay:i*0.04 }}
+            >
+              <div style={{ borderTop:"1px solid #EBEBF0" }}>
+                <button
+                  onClick={()=>setOpen(open===i ? null : i)}
+                  style={{ width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between", gap:16, padding:"22px 0", background:"none", border:"none", cursor:"pointer", textAlign:"left" }}
+                >
+                  <span style={{ fontFamily:"var(--font-display)", fontSize:15, fontWeight:600, color: open===i ? "#010048" : "#0A0A0F", lineHeight:1.4, transition:"color 0.18s" }}>
+                    {item.q}
+                  </span>
+                  <span style={{ width:26, height:26, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all 0.22s", background: open===i ? "#010048" : "#F5F5F8", border: open===i ? "none" : "1.5px solid #E8E8ED" }}>
+                    <svg width="10" height="10" fill="none" viewBox="0 0 24 24" style={{ transform: open===i ? "rotate(180deg)" : "none", transition:"transform 0.22s" }}>
+                      <path d="M6 9l6 6 6-6" stroke={open===i ? "#fff" : "#A1A1A6"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </button>
+                <motion.div
+                  initial={false}
+                  animate={{ height: open===i ? "auto" : 0, opacity: open===i ? 1 : 0 }}
+                  transition={{ duration:0.32, ease:[0.16,1,0.3,1] }}
+                  style={{ overflow:"hidden" }}
+                >
+                  <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", lineHeight:1.9, paddingBottom:22, margin:0 }}>{item.a}</p>
+                </motion.div>
+              </div>
+            </motion.div>
+          ))}
+          <div style={{ borderTop:"1px solid #EBEBF0" }}/>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /* ── Bento Grid ─────────────────────────────── */
 function BentoGrid({ posts }) {

@@ -29,7 +29,7 @@ export default function ScrollToTop() {
       className="scroll-to-top"
       style={{
         position: "fixed",
-        left: 16,
+        right: 16,
         top: "50%",
         transform: "translateY(-50%)",
         zIndex: 200,

@@ -194,6 +194,16 @@ img { display: block; max-width: 100%; }
 }
 .marquee-track:hover { animation-play-state: paused; }
 
+@keyframes marqueeReverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  animation: marqueeReverse 40s linear infinite;
+}
+
 /* ── Bento grid layout ───────────────────────── */
 .bento-grid {
   display: grid;
