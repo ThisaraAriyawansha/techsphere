@@ -249,6 +249,51 @@ export default function HomePage() {
         <CategoryScroll categories={CATEGORIES}/>
       </section>
 
+      {/* ══ G. DOMAIN SPOTLIGHT ════════════════════ */}
+      <section style={{ background:"#010122", padding: isMobile ? "72px 16px" : "100px 24px", overflow:"hidden", position:"relative" }}>
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)", backgroundSize:"48px 48px", pointerEvents:"none" }}/>
+        <div style={{ maxWidth:1120, margin:"0 auto", display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80, alignItems:"center", position:"relative", zIndex:1 }}>
+          <ScrollReveal direction="up">
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.25)", letterSpacing:"3px", textTransform:"uppercase", marginBottom:20 }}>Featured Domain</p>
+            <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(40px,6vw,80px)", fontWeight:800, color:"#fff", letterSpacing:"-2.5px", lineHeight:0.9, marginBottom:28 }}>
+              AI &<br/>Machine<br/><em style={{ fontStyle:"italic", color:"rgba(255,255,255,0.25)" }}>Learning</em>
+            </h2>
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"rgba(255,255,255,0.35)", lineHeight:1.85, marginBottom:36, maxWidth:360 }}>
+              From neural networks to production deployments — the most comprehensive free AI knowledge base, built by engineers who actually ship AI.
+            </p>
+            <a href="/blog?category=ai"
+              style={{ display:"inline-flex", alignItems:"center", gap:8, fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"#fff", textDecoration:"none", background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:100, padding:"12px 26px", transition:"all 0.22s" }}
+              onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.15)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.3)"; }}
+              onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.15)"; }}>
+              Explore AI articles
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
+          </ScrollReveal>
+          <div>
+            <StaggerContainer style={{ display:"flex", flexDirection:"column", gap:2 }}>
+              {[
+                { label:"Machine Learning",   count:"320+" },
+                { label:"Neural Networks",     count:"180+" },
+                { label:"Natural Language",    count:"140+" },
+                { label:"Computer Vision",     count:"95+"  },
+                { label:"MLOps & Deployment",  count:"110+" },
+                { label:"AI Ethics & Safety",  count:"60+"  },
+              ].map((sub, i) => (
+                <StaggerItem key={i}>
+                  <a href="/blog?category=ai"
+                    style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"16px 20px", background:"rgba(255,255,255,0.03)", borderRadius:8, textDecoration:"none", transition:"background 0.18s, transform 0.18s" }}
+                    onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.07)"; e.currentTarget.style.transform="translateX(4px)"; }}
+                    onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,0.03)"; e.currentTarget.style.transform="none"; }}>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:14, fontWeight:500, color:"rgba(255,255,255,0.6)" }}>{sub.label}</span>
+                    <span style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"rgba(255,255,255,0.22)", letterSpacing:"0.5px" }}>{sub.count}</span>
+                  </a>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
       {/* ══ 6. STATS STRIP ═════════════════════════ */}
       <section style={{ padding:"80px 24px", marginTop:72, position:"relative", overflow:"hidden" }}>
         {/* fixed bg image */}
@@ -422,6 +467,50 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══ H. ARTICLE JOURNEY ═════════════════════ */}
+      <section style={{ background:"#fff", padding: isMobile ? "72px 16px" : "100px 24px", borderTop:"1px solid #EBEBF0" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <div style={{ display:"flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "flex-end", justifyContent:"space-between", marginBottom:72, gap:20 }}>
+              <div>
+                <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"#A1A1A6", letterSpacing:"3px", textTransform:"uppercase", marginBottom:12 }}>The Journey</p>
+                <h2 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(26px,3.2vw,40px)", fontWeight:700, color:"#0A0A0F", letterSpacing:"-1px", lineHeight:1.1, margin:0 }}>How knowledge travels</h2>
+              </div>
+              <p style={{ fontFamily:"var(--font-sans)", fontSize:14, color:"#6E6E73", maxWidth:300, lineHeight:1.8, margin:0 }}>
+                From a single idea to thousands of readers — in under 60 seconds.
+              </p>
+            </div>
+          </ScrollReveal>
+          <div style={{ position:"relative" }}>
+            {!isMobile && <div style={{ position:"absolute", top:28, left:"10%", right:"10%", height:1, background:"linear-gradient(90deg, transparent, #E8E8ED 15%, #E8E8ED 85%, transparent)", zIndex:0 }}/>}
+            <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(5,1fr)", gap:0 }}>
+              {[
+                { n:"01", title:"Idea",    icon:"💡", desc:"A developer has an insight worth sharing with the world" },
+                { n:"02", title:"Write",   icon:"✍️", desc:"Open the editor and start writing — no account needed" },
+                { n:"03", title:"Publish", icon:"🚀", desc:"One click, live in under 60 seconds, globally available" },
+                { n:"04", title:"Read",    icon:"📖", desc:"Thousands discover it for free, anywhere, instantly" },
+                { n:"05", title:"Impact",  icon:"🌐", desc:"Knowledge compounds and grows across the community" },
+              ].map((step, i) => (
+                <motion.div key={i}
+                  initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+                  transition={{ duration:0.5, delay:i*0.1 }}
+                  style={{ padding: isMobile ? "20px 0" : "0 16px", borderTop: isMobile ? "1px solid #EBEBF0" : "none", display:"flex", flexDirection: isMobile ? "row" : "column", alignItems:"center", gap: isMobile ? 20 : 0, textAlign: isMobile ? "left" : "center" }}
+                >
+                  <div style={{ width:56, height:56, borderRadius:"50%", background: i===2 ? "#010122" : "#F5F5F8", border:`1.5px solid ${i===2 ? "#010122" : "#EBEBF0"}`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, margin: isMobile ? "0" : "0 auto 20px", position:"relative", zIndex:1, fontSize:20 }}>
+                    {step.icon}
+                  </div>
+                  <div>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:10, fontWeight:700, color: i===2 ? "#010122" : "#C8C8D0", letterSpacing:"2px", textTransform:"uppercase", marginBottom:6 }}>{step.n}</p>
+                    <h3 style={{ fontFamily:"var(--font-display)", fontSize:17, fontWeight:700, color:"#0A0A0F", letterSpacing:"-0.3px", marginBottom:8 }}>{step.title}</h3>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:12, color:"#A1A1A6", lineHeight:1.7, margin:0 }}>{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ══ 9. PLATFORM FEATURES ═══════════════════ */}
       <section style={{ background:"#fff", padding: isMobile ? "60px 16px" : "100px 24px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
@@ -518,6 +607,40 @@ export default function HomePage() {
               <span style={{ width:28, height:1, background:"rgba(255,255,255,0.12)", display:"block" }}/>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ══ I. COMMUNITY VOICES ════════════════════ */}
+      <section style={{ background:"#0A0A12", padding: isMobile ? "72px 16px" : "110px 24px", overflow:"hidden" }}>
+        <div style={{ maxWidth:1120, margin:"0 auto" }}>
+          <ScrollReveal direction="up">
+            <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.22)", letterSpacing:"3px", textTransform:"uppercase", marginBottom:56 }}>
+              Community Voices
+            </p>
+          </ScrollReveal>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap:1, background:"rgba(255,255,255,0.05)", borderRadius:20, overflow:"hidden" }}>
+            {[
+              { quote:"TechSphere is the only place I actually look forward to reading. No noise, no paywalls — just pure signal from people who build things.", name:"Aiden R.", role:"Senior Backend Engineer" },
+              { quote:"Published my first tutorial in under a minute. The frictionless writing experience is unlike anything else I've tried.", name:"Priya M.", role:"Full-Stack Developer" },
+              { quote:"Rare to find a platform that genuinely treats open knowledge as a public good. TechSphere is exactly that.", name:"Carlos T.", role:"DevOps Architect" },
+            ].map((v, i) => (
+              <motion.div key={i}
+                initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+                transition={{ duration:0.7, delay:i*0.12, ease:[0.16,1,0.3,1] }}
+              >
+                <div style={{ padding: isMobile ? "40px 28px" : "52px 44px", background:"#0A0A12", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between", minHeight:260 }}>
+                  <p style={{ fontFamily:"var(--font-display)", fontSize:"clamp(15px,1.6vw,20px)", fontStyle:"italic", fontWeight:400, color:"rgba(255,255,255,0.72)", lineHeight:1.7, marginBottom:40 }}>
+                    &ldquo;{v.quote}&rdquo;
+                  </p>
+                  <div>
+                    <div style={{ width:24, height:1, background:"rgba(255,255,255,0.12)", marginBottom:14 }}/>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.5)", margin:0 }}>{v.name}</p>
+                    <p style={{ fontFamily:"var(--font-sans)", fontSize:11, color:"rgba(255,255,255,0.22)", margin:"4px 0 0" }}>{v.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
