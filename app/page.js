@@ -611,14 +611,14 @@ export default function HomePage() {
       </section>
 
       {/* ══ I. COMMUNITY VOICES ════════════════════ */}
-      <section style={{ background:"#0A0A12", padding: isMobile ? "72px 16px" : "110px 24px", overflow:"hidden" }}>
+      <section style={{ background:"#010122", padding: isMobile ? "72px 16px" : "110px 24px", overflow:"hidden", borderTop:"1px solid rgba(255,255,255,0.08)", borderBottom:"1px solid rgba(255,255,255,0.08)" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <ScrollReveal direction="up">
             <p style={{ fontFamily:"var(--font-sans)", fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.22)", letterSpacing:"3px", textTransform:"uppercase", marginBottom:56 }}>
               Community Voices
             </p>
           </ScrollReveal>
-          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap:1, background:"rgba(255,255,255,0.05)", borderRadius:20, overflow:"hidden" }}>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap:1, background:"rgba(100,120,255,0.08)", borderRadius:20, overflow:"hidden" }}>
             {[
               { quote:"TechSphere is the only place I actually look forward to reading. No noise, no paywalls — just pure signal from people who build things.", name:"Aiden R.", role:"Senior Backend Engineer" },
               { quote:"Published my first tutorial in under a minute. The frictionless writing experience is unlike anything else I've tried.", name:"Priya M.", role:"Full-Stack Developer" },
@@ -628,7 +628,7 @@ export default function HomePage() {
                 initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
                 transition={{ duration:0.7, delay:i*0.12, ease:[0.16,1,0.3,1] }}
               >
-                <div style={{ padding: isMobile ? "40px 28px" : "52px 44px", background:"#0A0A12", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between", minHeight:260 }}>
+                <div style={{ padding: isMobile ? "40px 28px" : "52px 44px", background:"#010133", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between", minHeight:260 }}>
                   <p style={{ fontFamily:"var(--font-display)", fontSize:"clamp(15px,1.6vw,20px)", fontStyle:"italic", fontWeight:400, color:"rgba(255,255,255,0.72)", lineHeight:1.7, marginBottom:40 }}>
                     &ldquo;{v.quote}&rdquo;
                   </p>
